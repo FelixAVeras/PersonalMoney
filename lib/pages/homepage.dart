@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personalmoney/bloc/transactions_bloc.dart';
+import 'package:personalmoney/pages/currencyPage.dart';
 import 'package:personalmoney/pages/dashboradpage.dart';
 import 'package:personalmoney/pages/historypage.dart';
 import 'package:personalmoney/pages/transactionpage.dart';
@@ -51,8 +52,8 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               title: Text('Convertidor de Divisas'),
               onTap: () => {
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => CurrencyPage()))
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CurrencyPage()))
               },
             ),
             ListTile(

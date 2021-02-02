@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:personalmoney/bloc/register_provider.dart';
+// import 'package:personalmoney/bloc/register_provider.dart';
 import 'package:personalmoney/pages/homepage.dart';
 import 'package:personalmoney/pages/loginpage.dart';
 
 class RegisterPage extends StatelessWidget {
+  String _name;
+  String _email;
+  String _password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +18,7 @@ class RegisterPage extends StatelessWidget {
 
   Widget _registerForm(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final bloc = CustomRegisterProvider.of(context);
+    // final bloc = CustomRegisterProvider.of(context);
 
     return SingleChildScrollView(
       child: Column(
@@ -43,13 +47,18 @@ class RegisterPage extends StatelessWidget {
                   style: TextStyle(fontSize: 20.0),
                 ),
                 SizedBox(height: 40.0),
-                _nameField(bloc),
-                SizedBox(height: 40.0),
-                _emailField(bloc),
-                SizedBox(height: 40.0),
-                _passwordField(bloc),
-                SizedBox(height: 60.0),
-                _btnRegister(context)
+                Form(
+                    child: Column(
+                  children: [
+                    _nameField(),
+                    SizedBox(height: 40.0),
+                    _emailField(),
+                    SizedBox(height: 40.0),
+                    _passwordField(),
+                    SizedBox(height: 60.0),
+                    _btnRegister(context)
+                  ],
+                ))
               ],
             ),
           ),
@@ -78,72 +87,86 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
-  Widget _nameField(RegisterBloc bloc) {
-    return StreamBuilder(
-        stream: bloc.emailStream,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: TextField(
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                  icon: Icon(
-                    Icons.person_outline,
-                    color: Colors.teal,
-                  ),
-                  labelText: 'Nombre y Apellido',
-                  hintText: 'Tu nombre aqui',
-                  counterText: snapshot.data),
-              onChanged: bloc.changeEmail,
-            ),
-          );
-        });
+  Widget _nameField() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.0),
+      child: TextFormField(
+        maxLength: 20,
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+          icon: Icon(
+            Icons.person_outline,
+            color: Colors.teal,
+          ),
+          labelText: 'Nombre y Apellido',
+          hintText: 'Tu nombre aqui',
+        ),
+        validator: (String value) {
+          if (value.isEmpty) {
+            return 'Este campo es obligatorio';
+          }
+        },
+        onSaved: (String value) {
+          _name = value;
+        },
+      ),
+    );
   }
 
-  Widget _emailField(RegisterBloc bloc) {
-    return StreamBuilder(
-        stream: bloc.emailStream,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: TextField(
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                  icon: Icon(
-                    Icons.alternate_email,
-                    color: Colors.teal,
-                  ),
-                  labelText: 'Correo Electronico',
-                  hintText: 'ejemplo@ejemplo.com',
-                  counterText: snapshot.data,
-                  errorText: snapshot.error),
-              onChanged: bloc.changeEmail,
-            ),
-          );
-        });
+  Widget _emailField() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.0),
+      child: TextFormField(
+        decoration: InputDecoration(
+          icon: Icon(
+            Icons.alternate_email,
+            color: Colors.teal,
+          ),
+          labelText: 'Correo Electronico',
+          hintText: 'ejemplo@ejemplo.com',
+        ),
+        validator: (String value) {
+          if (value.isEmpty) {
+            return 'Este campo es obligatorio';
+          }
+
+          if (!RegExp(
+                  "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
+              .hasMatch(value)) {
+            return 'Email no valido';
+          }
+
+          return null;
+        },
+        onSaved: (String value) {
+          _email = value;
+        },
+      ),
+    );
   }
 
-  Widget _passwordField(RegisterBloc bloc) {
-    return StreamBuilder(
-        stream: bloc.passwordStream,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: TextField(
-              keyboardType: TextInputType.emailAddress,
-              obscureText: true,
-              decoration: InputDecoration(
-                  icon: Icon(
-                    Icons.lock_outline,
-                    color: Colors.teal,
-                  ),
-                  labelText: 'Contraseña',
-                  counterText: snapshot.data,
-                  errorText: snapshot.error),
-              onChanged: bloc.changePassword,
-            ),
-          );
-        });
+  Widget _passwordField() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.0),
+      child: TextFormField(
+        keyboardType: TextInputType.visiblePassword,
+        decoration: InputDecoration(
+          icon: Icon(
+            Icons.lock_outline,
+            color: Colors.teal,
+          ),
+          labelText: 'Contraseña',
+        ),
+        validator: (String value) {
+          if (value.isEmpty) {
+            return 'Este campo es obligatorio';
+          }
+        },
+        onSaved: (String value) {
+          _password = value;
+        },
+      ),
+    );
   }
 
   Widget _btnRegister(BuildContext context) {
@@ -156,8 +179,8 @@ class RegisterPage extends StatelessWidget {
       color: Colors.teal,
       textColor: Colors.white,
       onPressed: () => {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()))
+        // Navigator.push(
+        //     context, MaterialPageRoute(builder: (context) => HomePage()))
       },
     );
   }
