@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:personalmoney/bloc/transactions_bloc.dart';
-import 'package:personalmoney/models/databasehelper.dart';
-import 'package:personalmoney/models/transactionmodel.dart';
-import 'package:personalmoney/pages/historypage.dart';
 
 class CurrencyPage extends StatefulWidget {
   @override
@@ -35,16 +31,6 @@ class _CurrencyPageState extends State<CurrencyPage> {
             ),
             CurrencyExchangeForm(),
             SizedBox(height: 20.0),
-            // OutlineButton(
-            //   onPressed: () {
-            //     // if (_formKey.currentState.validate()) {
-            //     //   // Process data.
-            //     // }
-            //     doConvertion();
-            //   },
-            //   textColor: Theme.of(context).primaryColor,
-            //   child: Text('Convertir'),
-            // ),
             RaisedButton(
               child: Container(
                 child: Text('Convertir'),

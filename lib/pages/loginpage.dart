@@ -8,7 +8,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(
-      children: [_customAppBackground(context), _loginForm(context)],
+      children: [_customLoginAppBackground(context), _loginForm(context)],
     ));
   }
 
@@ -154,7 +154,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _customAppBackground(BuildContext context) {
+  Widget _customLoginAppBackground(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
     final backgroundApp = Container(
