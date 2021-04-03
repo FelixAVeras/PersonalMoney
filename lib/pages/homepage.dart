@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personalmoney/bloc/transactions_bloc.dart';
 import 'package:personalmoney/pages/currencyPage.dart';
 import 'package:personalmoney/pages/dashboradpage.dart';
+import 'package:personalmoney/pages/historypage.dart';
 // import 'package:personalmoney/pages/historypage.dart';
 // import 'package:personalmoney/pages/transactionpage.dart';
 import 'package:personalmoney/pages/loginpage.dart';
@@ -50,7 +51,10 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: Icon(Icons.calendar_today),
               title: Text('Presupuesto Mensual'),
-              onTap: () {},
+              onTap: () => {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HistoryPage()))
+              },
             ),
             ListTile(
               leading: Icon(Icons.sync_alt),

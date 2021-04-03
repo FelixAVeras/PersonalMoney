@@ -64,6 +64,14 @@ class HistoryPage extends StatelessWidget {
                   ),
                 ));
       },
+      // floatingActionButton: FloatingActionButton.extended(
+      //   label: Text('Nueva Transacción'),
+      //   icon: Icon(Icons.add),
+      //   onPressed: () => {
+      //   //     Navigator.push(context,
+      //   //         MaterialPageRoute(builder: (context) => TransactionPage()))
+      //   },
+      // ),
     );
   }
 }
