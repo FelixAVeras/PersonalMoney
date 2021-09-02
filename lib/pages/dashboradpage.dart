@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personalmoney/pages/transactionpage.dart';
+import 'package:personalmoney/pages/transactions/transactionpage.dart';
 
 class DashboardPage extends StatefulWidget {
   @override

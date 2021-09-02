@@ -33,15 +33,26 @@ class _TransactionPageState extends State<TransactionPage> {
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).primaryColor),
             ),
+            SizedBox(height: 10.0),
+            Text(
+              'Todas las transacciones se guardaran con la fecha y hora actual en la que se registre.',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.grey[600]),
+              textAlign: TextAlign.center,
+            ),
             TransactionForm(),
-            OutlineButton(
+            SizedBox(height: 80.0),
+            RaisedButton(
               onPressed: () {
-                // if (_formKey.currentState.validate()) {
-                //   // Process data.
-                // }
                 saveTransaction();
               },
-              textColor: Theme.of(context).primaryColor,
+              padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 105.0),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0)),
+              textColor: Colors.white,
+              color: Theme.of(context).primaryColor,
               child: Text('Agregar Transacción'),
             ),
           ]),
@@ -51,8 +62,6 @@ class _TransactionPageState extends State<TransactionPage> {
   }
 
   saveTransaction() async {
-    // String futureString = Text(descriptionField.text);
-    // final streamTransaction = new TransactionsBloc();
     String futureString = 'Hola Mundo y Felix';
     String currentDatetime =
         DateFormat("dd/MM/yyyy - hh:mm:ss").format(DateTime.now());
@@ -95,6 +104,7 @@ class _TransactionFormState extends State<TransactionForm> {
             padding: EdgeInsets.only(top: 25.0),
             child: TextFormField(
               decoration: new InputDecoration(
+                  prefixIcon: Icon(Icons.title),
                   labelText: 'Descripción de la Transacción',
                   border: OutlineInputBorder(),
                   hintText: 'Descripcion del gasto o ingreso'),
@@ -112,6 +122,7 @@ class _TransactionFormState extends State<TransactionForm> {
             child: TextFormField(
               keyboardType: TextInputType.number,
               decoration: new InputDecoration(
+                prefixIcon: Icon(Icons.local_atm),
                 labelText: 'Monto de la Transacción',
                 border: OutlineInputBorder(),
                 hintText: 'Valores solo númericos',
