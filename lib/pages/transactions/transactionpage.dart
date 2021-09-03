@@ -15,12 +15,25 @@ class TransactionPage extends StatefulWidget {
 class _TransactionPageState extends State<TransactionPage> {
   final streamTransaction = new TransactionsBloc();
 
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
+  String currentDatetime =
+      DateFormat("dd/MM/yyyy - hh:mm").format(DateTime.now());
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    amountController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text('Personal Money - Transacciones'),
+        title: Text('Transacciones'),
         centerTitle: true,
       ),
       body: Container(
@@ -47,7 +60,18 @@ class _TransactionPageState extends State<TransactionPage> {
             SizedBox(height: 80.0),
             RaisedButton(
               onPressed: () {
-                saveTransaction();
+                if (titleController != null) {
+                  final trans = TransactionModel(
+                      description: titleController.text,
+                      currentDate: currentDatetime,
+                      amount: double.parse(amountController.text));
+
+                  streamTransaction.addStream(trans);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HistoryPage()),
+                  );
+                }
               },
               padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 105.0),
               shape: RoundedRectangleBorder(
@@ -61,27 +85,6 @@ class _TransactionPageState extends State<TransactionPage> {
       ),
     );
   }
-
-  saveTransaction() async {
-    String futureString = 'Hola Mundo y Felix';
-    String currentDatetime =
-        DateFormat("dd/MM/yyyy - hh:mm").format(DateTime.now());
-
-    if (futureString != null) {
-      final trans = TransactionModel(
-        description: futureString,
-        currentDate: currentDatetime,
-        // moneyExpend: 200.00,
-        // savingMoney: 452.00
-      );
-
-      streamTransaction.addStream(trans);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HistoryPage()),
-      );
-    }
-  }
 }
 
 class TransactionForm extends StatefulWidget {
@@ -93,7 +96,9 @@ class TransactionForm extends StatefulWidget {
 
 class _TransactionFormState extends State<TransactionForm> {
   final _formKey = GlobalKey<FormState>();
-  final descriptionField = TextEditingController();
+
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -105,37 +110,36 @@ class _TransactionFormState extends State<TransactionForm> {
           Padding(
             padding: EdgeInsets.only(top: 25.0),
             child: TextFormField(
-              decoration: new InputDecoration(
-                  prefixIcon: Icon(Icons.title),
-                  labelText: 'Descripción de la Transacción',
-                  border: OutlineInputBorder(),
-                  hintText: 'Descripcion del gasto o ingreso'),
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Ingrese una descripción valida';
-                }
-                return null;
-              },
-              controller: descriptionField,
-            ),
+                controller: titleController,
+                decoration: new InputDecoration(
+                    prefixIcon: Icon(Icons.title),
+                    labelText: 'Descripción de la Transacción',
+                    border: OutlineInputBorder(),
+                    hintText: 'Descripcion del gasto o ingreso'),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Ingrese una descripción valida';
+                  }
+                  return null;
+                }),
           ),
           Padding(
             padding: EdgeInsets.only(top: 25.0),
             child: TextFormField(
-              keyboardType: TextInputType.number,
-              decoration: new InputDecoration(
-                prefixIcon: Icon(Icons.local_atm),
-                labelText: 'Monto de la Transacción',
-                border: OutlineInputBorder(),
-                hintText: 'Valores solo númericos',
-              ),
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Monto de la Transacción es incorrecto o vacío';
-                }
-                return null;
-              },
-            ),
+                controller: amountController,
+                keyboardType: TextInputType.number,
+                decoration: new InputDecoration(
+                  prefixIcon: Icon(Icons.local_atm),
+                  labelText: 'Monto de la Transacción',
+                  border: OutlineInputBorder(),
+                  hintText: 'Valores solo númericos',
+                ),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Monto de la Transacción es incorrecto o vacío';
+                  }
+                  return null;
+                }),
           ),
         ],
       ),

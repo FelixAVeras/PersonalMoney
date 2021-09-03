@@ -29,8 +29,7 @@ class DatabaseHelper {
           'id INTEGER PRIMARY KEY,'
           'description TEXT,'
           'currentDate TEXT,'
-          'moneyExpend INTEGER,'
-          'savingMoney INTEGER'
+          'amount REAL'
           ')');
     });
   }
