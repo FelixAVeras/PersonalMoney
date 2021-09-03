@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Personal Money"),
+        centerTitle: true,
         // actions: [
         //   IconButton(
         //       icon: Icon(Icons.delete_forever),
@@ -40,39 +41,51 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              child: Text('Personal Money - Menu'),
-              decoration: BoxDecoration(color: Colors.teal),
+              decoration: BoxDecoration(
+                color: Colors.teal,
+              ),
+              child: Text('Personal Money - Menu',
+                  style: TextStyle(color: Colors.white, fontSize: 24)),
             ),
             ListTile(
               leading: Icon(Icons.list_alt),
               title: Text('Resumen'),
-              onTap: () {},
+              onTap: () => {
+                Navigator.of(context).pop(),
+              },
             ),
+            Divider(),
             ListTile(
               leading: Icon(Icons.calendar_today),
               title: Text('Presupuesto Mensual'),
               onTap: () => {
+                Navigator.of(context).pop(),
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => HistoryPage()))
               },
             ),
+            Divider(),
             ListTile(
               leading: Icon(Icons.sync_alt),
               title: Text('Convertidor de Divisas'),
               onTap: () => {
+                Navigator.of(context).pop(),
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => CurrencyPage()))
               },
             ),
+            Divider(),
             ListTile(
               leading: Icon(Icons.settings),
               title: Text('Configuración'),
               onTap: () {},
             ),
+            Divider(),
             ListTile(
               leading: Icon(Icons.logout),
               title: Text('Cerrar Sesión'),
               onTap: () => {
+                Navigator.of(context).pop(),
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => LoginPage()))
               },

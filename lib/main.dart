@@ -15,7 +15,7 @@ class PersonalMoney extends StatelessWidget {
       title: 'Personal Money',
       theme: ThemeData(primarySwatch: Colors.teal),
       debugShowCheckedModeBanner: false,
-      initialRoute: 'login',
+      initialRoute: 'Home',
       routes: {
         'login': (BuildContext context) => LoginPage(),
         'register': (BuildContext context) => RegisterPage(),

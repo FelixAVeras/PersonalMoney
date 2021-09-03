@@ -94,10 +94,11 @@ class RegisterPage extends StatelessWidget {
         maxLength: 20,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
-          icon: Icon(
+          prefixIcon: Icon(
             Icons.person_outline,
             color: Colors.teal,
           ),
+          border: OutlineInputBorder(),
           labelText: 'Nombre y Apellido',
           hintText: 'Tu nombre aqui',
         ),
@@ -118,10 +119,11 @@ class RegisterPage extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: TextFormField(
         decoration: InputDecoration(
-          icon: Icon(
+          prefixIcon: Icon(
             Icons.alternate_email,
             color: Colors.teal,
           ),
+          border: OutlineInputBorder(),
           labelText: 'Correo Electronico',
           hintText: 'ejemplo@ejemplo.com',
         ),
@@ -151,10 +153,11 @@ class RegisterPage extends StatelessWidget {
       child: TextFormField(
         keyboardType: TextInputType.visiblePassword,
         decoration: InputDecoration(
-          icon: Icon(
+          prefixIcon: Icon(
             Icons.lock_outline,
             color: Colors.teal,
           ),
+          border: OutlineInputBorder(),
           labelText: 'Contraseña',
         ),
         validator: (String value) {

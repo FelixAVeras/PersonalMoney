@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:personalmoney/bloc/transactions_bloc.dart';
-import 'package:personalmoney/models/databasehelper.dart';
+import 'package:personalmoney/helpers/databasehelper.dart';
 import 'package:personalmoney/models/transactionmodel.dart';
 import 'package:personalmoney/pages/historypage.dart';
 
@@ -20,7 +20,8 @@ class _TransactionPageState extends State<TransactionPage> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text('Personal Money'),
+        title: Text('Personal Money - Transacciones'),
+        centerTitle: true,
       ),
       body: Container(
         child: Padding(
@@ -64,14 +65,15 @@ class _TransactionPageState extends State<TransactionPage> {
   saveTransaction() async {
     String futureString = 'Hola Mundo y Felix';
     String currentDatetime =
-        DateFormat("dd/MM/yyyy - hh:mm:ss").format(DateTime.now());
+        DateFormat("dd/MM/yyyy - hh:mm").format(DateTime.now());
 
     if (futureString != null) {
       final trans = TransactionModel(
-          description: futureString,
-          currentDate: currentDatetime,
-          moneyExpend: 200.00,
-          savingMoney: 452.00);
+        description: futureString,
+        currentDate: currentDatetime,
+        // moneyExpend: 200.00,
+        // savingMoney: 452.00
+      );
 
       streamTransaction.addStream(trans);
       Navigator.push(

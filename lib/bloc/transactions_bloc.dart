@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:personalmoney/models/databasehelper.dart';
+import 'package:personalmoney/helpers/databasehelper.dart';
 
 class TransactionsBloc {
   static final TransactionsBloc _singelton = new TransactionsBloc._internal();

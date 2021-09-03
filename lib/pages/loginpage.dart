@@ -3,7 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:personalmoney/pages/homepage.dart';
 import 'package:personalmoney/pages/registerpage.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  LoginPageState createState() => LoginPageState();
+}
+
+class LoginPageState extends State<LoginPage> {
+  bool hidePassword = true;
+
+  @override
+  void initState() {
+    // httpService = new APIHttpService();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +61,7 @@ class LoginPage extends StatelessWidget {
                 SizedBox(height: 40.0),
                 // _passwordField(bloc),
                 _passwordField(),
-                SizedBox(height: 60.0),
+                SizedBox(height: 40.0),
                 _btnLogin(context)
               ],
             ),
@@ -92,17 +105,17 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  // Widget _emailField(LoginBloc bloc) {
   Widget _emailField() {
     return StreamBuilder(
         // stream: bloc.emailStream,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
         padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: TextField(
+        child: TextFormField(
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-              icon: Icon(
+              border: OutlineInputBorder(),
+              prefixIcon: Icon(
                 Icons.alternate_email,
                 color: Colors.teal,
               ),
@@ -115,7 +128,6 @@ class LoginPage extends StatelessWidget {
     });
   }
 
-  // Widget _passwordField(LoginBloc bloc) {
   Widget _passwordField() {
     return StreamBuilder(
         // stream: bloc.passwordStream,
@@ -124,12 +136,18 @@ class LoginPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20.0),
         child: TextField(
           keyboardType: TextInputType.emailAddress,
-          obscureText: true,
+          obscureText: hidePassword,
           decoration: InputDecoration(
-              icon: Icon(
+              prefixIcon: Icon(
                 Icons.lock_outline,
                 color: Colors.teal,
               ),
+              suffix: InkWell(
+                onTap: togglePasswordView,
+                child: Icon(
+                    hidePassword ? Icons.visibility : Icons.visibility_off),
+              ),
+              border: OutlineInputBorder(),
               labelText: 'Contraseña',
               counterText: snapshot.data),
           // onChanged: bloc.changePassword,
@@ -185,5 +203,11 @@ class LoginPage extends StatelessWidget {
         )
       ],
     );
+  }
+
+  void togglePasswordView() {
+    setState(() {
+      hidePassword = !hidePassword;
+    });
   }
 }
