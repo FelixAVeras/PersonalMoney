@@ -66,7 +66,9 @@ class _TransactionPageState extends State<TransactionPage> {
                       currentDate: currentDatetime,
                       amount: double.parse(amountController.text));
 
-                  streamTransaction.addStream(trans);
+                  // streamTransaction.addStream(trans);
+                  print('Nombre: ' + titleController.text);
+                  print('Dinero: ' + amountController.text);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => HistoryPage()),

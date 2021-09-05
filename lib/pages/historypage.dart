@@ -9,10 +9,10 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Historial'),
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //   title: Text('Historial'),
+      //   centerTitle: true,
+      // ),
       body: FutureBuilder<List<TransactionModel>>(
           future: DatabaseHelper.db.getAllTransactions(),
           builder: (BuildContext context,

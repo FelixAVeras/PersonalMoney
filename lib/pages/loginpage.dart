@@ -117,7 +117,7 @@ class LoginPageState extends State<LoginPage> {
               border: OutlineInputBorder(),
               prefixIcon: Icon(
                 Icons.alternate_email,
-                color: Colors.teal,
+                color: Theme.of(context).primaryColor,
               ),
               labelText: 'Correo Electronico',
               hintText: 'ejemplo@ejemplo.com',
@@ -140,7 +140,7 @@ class LoginPageState extends State<LoginPage> {
           decoration: InputDecoration(
               prefixIcon: Icon(
                 Icons.lock_outline,
-                color: Colors.teal,
+                color: Theme.of(context).primaryColor,
               ),
               suffix: InkWell(
                 onTap: togglePasswordView,
@@ -163,7 +163,7 @@ class LoginPageState extends State<LoginPage> {
         padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-      color: Colors.teal,
+      color: Theme.of(context).primaryColor,
       textColor: Colors.white,
       onPressed: () => {
         Navigator.push(
@@ -182,6 +182,7 @@ class LoginPageState extends State<LoginPage> {
           gradient: LinearGradient(colors: <Color>[
         Color.fromRGBO(26, 188, 156, 1.0),
         Color.fromRGBO(26, 188, 156, 1.0)
+        // Color.fromRGBO(26, 188, 156, 1.0)
       ])),
     );
 

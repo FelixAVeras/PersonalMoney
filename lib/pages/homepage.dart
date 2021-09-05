@@ -3,9 +3,9 @@ import 'package:personalmoney/bloc/transactions_bloc.dart';
 import 'package:personalmoney/pages/currencyPage.dart';
 import 'package:personalmoney/pages/dashboradpage.dart';
 import 'package:personalmoney/pages/historypage.dart';
-// import 'package:personalmoney/pages/historypage.dart';
-// import 'package:personalmoney/pages/transactionpage.dart';
+import 'package:flutter/widgets.dart';
 import 'package:personalmoney/pages/loginpage.dart';
+import 'package:personalmoney/pages/myprofile.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,6 +15,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String currentAddress;
   int currentIndex = 0;
+  TabController _controller;
+  String _value = "";
+
   final transactionBloc = new TransactionsBloc();
 
   @override
@@ -24,85 +27,115 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Personal Money"),
-        centerTitle: true,
-        // actions: [
-        //   IconButton(
-        //       icon: Icon(Icons.delete_forever),
-        //       onPressed: transactionBloc.deleteAllStreams),
-        // ],
-      ),
-      // body: _loadPage(currentIndex),
-      body: DashboardPage(),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.teal,
-              ),
-              child: Text('Personal Money - Menu',
-                  style: TextStyle(color: Colors.white, fontSize: 24)),
+    return DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("Personal Money"),
+            centerTitle: true,
+            // actions: [
+            //   PopupMenuButton(
+            //       icon: Icon(Icons.more_vert),
+            //       itemBuilder: (context) => [
+            //             PopupMenuItem(
+            //               child: Text('Mi Perfil'),
+            //               value: 1,
+            //             ),
+            //             PopupMenuItem(
+            //               child: Text('Configuracion'),
+            //               value: 2,
+            //             ),
+            //             PopupMenuItem(
+            //               child: Text('Cerrar Sesion'),
+            //               value: 3,
+            //             ),
+            //           ])
+            // ],
+            bottom: TabBar(
+              tabs: [
+                Tab(/*icon: Icon(Icons.home),*/ text: 'Inicio'),
+                Tab(/*icon: Icon(Icons.calendar_today),*/ text: 'Historial'),
+                Tab(/*icon: Icon(Icons.sync_alt),*/ text: 'Convertidor Div.'),
+              ],
+              indicatorColor: Colors.white,
+              indicatorWeight: 4,
             ),
-            ListTile(
-              leading: Icon(Icons.list_alt),
-              title: Text('Resumen'),
-              onTap: () => {
-                Navigator.of(context).pop(),
-              },
+          ),
+          // body: _loadPage(currentIndex),
+          // body: DashboardPage(),
+          body: TabBarView(
+              children: [DashboardPage(), HistoryPage(), CurrencyPage()]),
+          drawer: Drawer(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  child: Text('Personal Money - Menu',
+                      style: TextStyle(color: Colors.white, fontSize: 24)),
+                ),
+                ListTile(
+                  leading: Icon(Icons.person),
+                  title: Text('Mi Perfil'),
+                  onTap: () => {
+                    Navigator.of(context).pop(),
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyProfilePage()))
+                  },
+                ),
+                Divider(),
+                // ListTile(
+                //   leading: Icon(Icons.calendar_today),
+                //   title: Text('Historial'),
+                //   onTap: () => {
+                //     Navigator.of(context).pop(),
+                //     Navigator.push(context,
+                //         MaterialPageRoute(builder: (context) => HistoryPage()))
+                //   },
+                // ),
+                // Divider(),
+                // ListTile(
+                //   leading: Icon(Icons.sync_alt),
+                //   title: Text('Convertidor de Divisas'),
+                //   onTap: () => {
+                //     Navigator.of(context).pop(),
+                //     Navigator.push(context,
+                //         MaterialPageRoute(builder: (context) => CurrencyPage()))
+                //   },
+                // ),
+                // Divider(),
+                ListTile(
+                  leading: Icon(Icons.settings),
+                  title: Text('Configuración'),
+                  onTap: () {},
+                ),
+                Divider(),
+                ListTile(
+                  leading: Icon(Icons.logout),
+                  title: Text('Cerrar Sesión'),
+                  onTap: () => {
+                    Navigator.of(context).pop(),
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginPage()))
+                  },
+                )
+              ],
             ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.calendar_today),
-              title: Text('Presupuesto Mensual'),
-              onTap: () => {
-                Navigator.of(context).pop(),
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HistoryPage()))
-              },
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.sync_alt),
-              title: Text('Convertidor de Divisas'),
-              onTap: () => {
-                Navigator.of(context).pop(),
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CurrencyPage()))
-              },
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Configuración'),
-              onTap: () {},
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Cerrar Sesión'),
-              onTap: () => {
-                Navigator.of(context).pop(),
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginPage()))
-              },
-            )
-          ],
-        ),
-      ),
-      // bottomNavigationBar: _customBottomNavigationBar(),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   label: Text('Nueva Transacción'),
-      //   icon: Icon(Icons.add),
-      //   onPressed: () => {
-      //     Navigator.push(context,
-      //         MaterialPageRoute(builder: (context) => TransactionPage()))
-      //   },
-      // ),
-    );
+          ),
+          // bottomNavigationBar: _customBottomNavigationBar(),
+          // floatingActionButton: FloatingActionButton.extended(
+          //   label: Text('Nueva Transacción'),
+          //   icon: Icon(Icons.add),
+          //   onPressed: () => {
+          //     Navigator.push(context,
+          //         MaterialPageRoute(builder: (context) => TransactionPage()))
+          //   },
+          // ),
+        ));
   }
 
   // Widget _loadPage(int currentPage) {
