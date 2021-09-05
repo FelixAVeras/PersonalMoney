@@ -86,6 +86,5 @@ class _DashboardPageState extends State<DashboardPage> {
           icon: Icon(Icons.add),
           backgroundColor: Theme.of(context).primaryColor,
         ));
-    ;
   }
 }

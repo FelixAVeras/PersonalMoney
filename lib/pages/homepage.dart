@@ -15,8 +15,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String currentAddress;
   int currentIndex = 0;
-  TabController _controller;
-  String _value = "";
 
   final transactionBloc = new TransactionsBloc();
 
@@ -57,8 +55,8 @@ class _HomePageState extends State<HomePage> {
                 Tab(/*icon: Icon(Icons.calendar_today),*/ text: 'Historial'),
                 Tab(/*icon: Icon(Icons.sync_alt),*/ text: 'Convertidor Div.'),
               ],
-              indicatorColor: Colors.white,
               indicatorWeight: 4,
+              indicatorColor: Colors.white,
             ),
           ),
           // body: _loadPage(currentIndex),
@@ -87,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                             builder: (context) => MyProfilePage()))
                   },
                 ),
-                Divider(),
+                // Divider(),
                 // ListTile(
                 //   leading: Icon(Icons.calendar_today),
                 //   title: Text('Historial'),
@@ -107,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                 //         MaterialPageRoute(builder: (context) => CurrencyPage()))
                 //   },
                 // ),
-                // Divider(),
+                Divider(),
                 ListTile(
                   leading: Icon(Icons.settings),
                   title: Text('Configuración'),

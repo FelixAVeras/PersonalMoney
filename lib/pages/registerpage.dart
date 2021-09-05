@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:personalmoney/bloc/register_provider.dart';
-import 'package:personalmoney/pages/homepage.dart';
 import 'package:personalmoney/pages/loginpage.dart';
 
 class RegisterPage extends StatelessWidget {
