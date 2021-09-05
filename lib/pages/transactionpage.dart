@@ -3,14 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:personalmoney/bloc/transactions_bloc.dart';
 import 'package:personalmoney/helpers/databasehelper.dart';
 import 'package:personalmoney/models/transactionmodel.dart';
-import 'package:personalmoney/pages/dashboradpage.dart';
-import 'package:personalmoney/pages/historypage.dart';
 
 class TransactionPage extends StatefulWidget {
-  // final Function _addTransaction;
-
-  // TransactionPage(this._addTransaction);
-
   @override
   State<StatefulWidget> createState() {
     return _TransactionPageState();
@@ -37,11 +31,6 @@ class _TransactionPageState extends State<TransactionPage> {
 
   void _onSubmit() {
     if (_formKey.currentState.validate()) {
-      // final txtdescription = titleController.text;
-      // final txtamount = double.parse(amountController.text);
-      // final txtcurrentDate = currentDatetime;
-
-      // widget._addTransaction(txtdescription, txtamount, txtcurrentDate);
       _formKey.currentState.save();
       final initDb = DatabaseHelper.db.initDB();
 
@@ -53,10 +42,6 @@ class _TransactionPageState extends State<TransactionPage> {
       });
 
       Navigator.pop(context);
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => DashboardPage()),
-      // );
     }
   }
 
@@ -90,6 +75,7 @@ class _TransactionPageState extends State<TransactionPage> {
                       color: Colors.grey[600]),
                   textAlign: TextAlign.center,
                 ),
+                SizedBox(height: 20.0),
                 TextFormField(
                     controller: titleController,
                     decoration: new InputDecoration(
@@ -136,63 +122,3 @@ class _TransactionPageState extends State<TransactionPage> {
         ));
   }
 }
-
-// class TransactionForm extends StatefulWidget {
-//   TransactionForm({Key key}) : super(key: key);
-
-//   @override
-//   _TransactionFormState createState() => _TransactionFormState();
-// }
-
-// class _TransactionFormState extends State<TransactionForm> {
-//   final _formKey = GlobalKey<FormState>();
-
-//   final titleController = TextEditingController();
-//   final amountController = TextEditingController();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Form(
-//       key: _formKey,
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: <Widget>[
-//           Padding(
-//             padding: EdgeInsets.only(top: 25.0),
-//             child: TextFormField(
-//                 controller: titleController,
-//                 decoration: new InputDecoration(
-//                     prefixIcon: Icon(Icons.title),
-//                     labelText: 'Descripción de la Transacción',
-//                     border: OutlineInputBorder(),
-//                     hintText: 'Descripcion del gasto o ingreso'),
-//                 validator: (value) {
-//                   if (value.isEmpty) {
-//                     return 'Ingrese una descripción valida';
-//                   }
-//                   return null;
-//                 }),
-//           ),
-//           Padding(
-//             padding: EdgeInsets.only(top: 25.0),
-//             child: TextFormField(
-//                 controller: amountController,
-//                 keyboardType: TextInputType.number,
-//                 decoration: new InputDecoration(
-//                   prefixIcon: Icon(Icons.local_atm),
-//                   labelText: 'Monto de la Transacción',
-//                   border: OutlineInputBorder(),
-//                   hintText: 'Valores solo númericos',
-//                 ),
-//                 validator: (value) {
-//                   if (value.isEmpty) {
-//                     return 'Monto de la Transacción es incorrecto o vacío';
-//                   }
-//                   return null;
-//                 }),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

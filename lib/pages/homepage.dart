@@ -26,34 +26,16 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             title: Text("Personal Money"),
-            centerTitle: true,
-            // actions: [
-            //   PopupMenuButton(
-            //       icon: Icon(Icons.more_vert),
-            //       itemBuilder: (context) => [
-            //             PopupMenuItem(
-            //               child: Text('Mi Perfil'),
-            //               value: 1,
-            //             ),
-            //             PopupMenuItem(
-            //               child: Text('Configuracion'),
-            //               value: 2,
-            //             ),
-            //             PopupMenuItem(
-            //               child: Text('Cerrar Sesion'),
-            //               value: 3,
-            //             ),
-            //           ])
-            // ],
+            // centerTitle: true,
             bottom: TabBar(
               tabs: [
                 Tab(/*icon: Icon(Icons.home),*/ text: 'Inicio'),
                 Tab(/*icon: Icon(Icons.calendar_today),*/ text: 'Historial'),
-                Tab(/*icon: Icon(Icons.sync_alt),*/ text: 'Convertidor Div.'),
+                // Tab(/*icon: Icon(Icons.sync_alt),*/ text: 'Convertidor Div.'),
               ],
               indicatorWeight: 4,
               indicatorColor: Colors.white,
@@ -62,68 +44,48 @@ class _HomePageState extends State<HomePage> {
           // body: _loadPage(currentIndex),
           // body: DashboardPage(),
           body: TabBarView(
-              children: [DashboardPage(), HistoryPage(), CurrencyPage()]),
-          drawer: Drawer(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  child: Text('Personal Money - Menu',
-                      style: TextStyle(color: Colors.white, fontSize: 24)),
-                ),
-                ListTile(
-                  leading: Icon(Icons.person),
-                  title: Text('Mi Perfil'),
-                  onTap: () => {
-                    Navigator.of(context).pop(),
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MyProfilePage()))
-                  },
-                ),
-                // Divider(),
-                // ListTile(
-                //   leading: Icon(Icons.calendar_today),
-                //   title: Text('Historial'),
-                //   onTap: () => {
-                //     Navigator.of(context).pop(),
-                //     Navigator.push(context,
-                //         MaterialPageRoute(builder: (context) => HistoryPage()))
-                //   },
-                // ),
-                // Divider(),
-                // ListTile(
-                //   leading: Icon(Icons.sync_alt),
-                //   title: Text('Convertidor de Divisas'),
-                //   onTap: () => {
-                //     Navigator.of(context).pop(),
-                //     Navigator.push(context,
-                //         MaterialPageRoute(builder: (context) => CurrencyPage()))
-                //   },
-                // ),
-                Divider(),
-                ListTile(
-                  leading: Icon(Icons.settings),
-                  title: Text('Configuración'),
-                  onTap: () {},
-                ),
-                Divider(),
-                ListTile(
-                  leading: Icon(Icons.logout),
-                  title: Text('Cerrar Sesión'),
-                  onTap: () => {
-                    Navigator.of(context).pop(),
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginPage()))
-                  },
-                )
-              ],
-            ),
-          ),
+              children: [DashboardPage(), HistoryPage() /*, CurrencyPage()*/]),
+          // drawer: Drawer(
+          //   child: ListView(
+          //     padding: EdgeInsets.zero,
+          //     children: [
+          //       DrawerHeader(
+          //         decoration: BoxDecoration(
+          //           color: Theme.of(context).primaryColor,
+          //         ),
+          //         child: Text('Personal Money - Menu',
+          //             style: TextStyle(color: Colors.white, fontSize: 24)),
+          //       ),
+          //       ListTile(
+          //         leading: Icon(Icons.person),
+          //         title: Text('Mi Perfil'),
+          //         onTap: () => {
+          //           Navigator.of(context).pop(),
+          //           Navigator.push(
+          //               context,
+          //               MaterialPageRoute(
+          //                   builder: (context) => MyProfilePage()))
+          //         },
+          //       ),
+          //       Divider(),
+          //       ListTile(
+          //         leading: Icon(Icons.settings),
+          //         title: Text('Configuración'),
+          //         onTap: () {},
+          //       ),
+          //       Divider(),
+          //       ListTile(
+          //         leading: Icon(Icons.logout),
+          //         title: Text('Cerrar Sesión'),
+          //         onTap: () => {
+          //           Navigator.of(context).pop(),
+          //           Navigator.push(context,
+          //               MaterialPageRoute(builder: (context) => LoginPage()))
+          //         },
+          //       )
+          //     ],
+          //   ),
+          // ),
           // bottomNavigationBar: _customBottomNavigationBar(),
           // floatingActionButton: FloatingActionButton.extended(
           //   label: Text('Nueva Transacción'),
@@ -135,32 +97,4 @@ class _HomePageState extends State<HomePage> {
           // ),
         ));
   }
-
-  // Widget _loadPage(int currentPage) {
-  //   switch (currentPage) {
-  //     case 0:
-  //       return DashboardPage();
-  //     case 1:
-  //       return HistoryPage();
-
-  //     default:
-  //       return DashboardPage();
-  //   }
-  // }
-
-  // Widget _customBottomNavigationBar() {
-  //   return BottomNavigationBar(
-  //     currentIndex: currentIndex,
-  //     onTap: (index) {
-  //       setState(() {
-  //         currentIndex = index;
-  //       });
-  //     },
-  //     items: [
-  //       BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
-  //       BottomNavigationBarItem(
-  //           icon: Icon(Icons.access_time), label: 'Historial'),
-  //     ],
-  //   );
-  // }
 }
