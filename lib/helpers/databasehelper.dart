@@ -34,6 +34,16 @@ class DatabaseHelper {
     });
   }
 
+  Future<int> countTotal() async {
+    final Database db = await database;
+    final int sumEarning = Sqflite.firstIntValue(await db.rawQuery(
+        'SELECT SUM(amount) FROM transactions WHERE type = "earning"'));
+    final int sumExpense = Sqflite.firstIntValue(await db.rawQuery(
+        'SELECT SUM(amount) FROM transactions WHERE type = "expense"'));
+    return ((sumEarning == null ? 0 : sumEarning) -
+        (sumExpense == null ? 0 : sumExpense));
+  }
+
   // Get All transactions
   Future<List<TransactionModel>> getAllTransactions() async {
     final db = await database;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personalmoney/helpers/databasehelper.dart';
 import 'package:personalmoney/models/transactionmodel.dart';
+import 'package:personalmoney/pages/detailtransaction.dart';
 
 class HistoryPage extends StatelessWidget {
   // final transactionBloc = new TransactionsBloc();
@@ -34,6 +35,12 @@ class HistoryPage extends StatelessWidget {
                     onDismissed: (direction) =>
                         DatabaseHelper.db.deleteTransactionById(trans[i].id),
                     child: ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DetailsPage(trans[i])));
+                      },
                       leading: Icon(Icons.attach_money,
                           color: Theme.of(context).primaryColor),
                       title: Text(trans[i].description +
