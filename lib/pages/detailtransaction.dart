@@ -43,7 +43,16 @@ class DetailsPageState extends State<DetailsPage> {
                                     fontSize: 20.0,
                                   )),
                               SizedBox(height: 10.0),
-                              Text('Descripcion:',
+                              Text('Tipo de la Transaccion:',
+                                  style: TextStyle(
+                                      color: Colors.teal, fontSize: 16.0)),
+                              // Text(widget.transactionModel.transType,
+                              //     style: TextStyle(
+                              //       fontSize: 20.0,
+                              //     )),
+                              Text('???', style: TextStyle(fontSize: 20.0)),
+                              SizedBox(height: 10.0),
+                              Text('Monto:',
                                   style: TextStyle(
                                       color: Colors.teal, fontSize: 16.0)),
                               Text(
@@ -53,13 +62,36 @@ class DetailsPageState extends State<DetailsPage> {
                                     fontSize: 20.0,
                                   )),
                               SizedBox(height: 10.0),
-                              Text('Descripcion:',
+                              Text('Fecha de la Transaccion:',
                                   style: TextStyle(
                                       color: Colors.teal, fontSize: 16.0)),
                               Text(widget.transactionModel.currentDate,
                                   style: TextStyle(
                                     fontSize: 20.0,
                                   )),
+                              SizedBox(height: 30.0),
+                              Row(children: [
+                                Expanded(
+                                    child: ElevatedButton.icon(
+                                  onPressed: () => {},
+                                  icon: Icon(Icons.edit, color: Colors.black),
+                                  label: Text(
+                                    'Editar',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.yellow[600]),
+                                )),
+                                SizedBox(width: 30.0),
+                                Expanded(
+                                    child: ElevatedButton.icon(
+                                  onPressed: () => {},
+                                  label: Text('Eliminar'),
+                                  icon: Icon(Icons.delete),
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.red),
+                                ))
+                              ])
                             ],
                           ),
                         ),
