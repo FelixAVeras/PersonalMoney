@@ -4,6 +4,8 @@ import 'package:personalmoney/bloc/transactions_bloc.dart';
 import 'package:personalmoney/helpers/databasehelper.dart';
 import 'package:personalmoney/models/transactionmodel.dart';
 
+enum TransType { earning, expense }
+
 class TransactionPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -18,6 +20,8 @@ class _TransactionPageState extends State<TransactionPage> {
   final amountController = TextEditingController();
   String currentDatetime =
       DateFormat("dd/MM/yyyy - hh:mm").format(DateTime.now());
+  String transType = 'earning';
+  TransType _transType = TransType.earning;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -38,7 +42,8 @@ class _TransactionPageState extends State<TransactionPage> {
         await DatabaseHelper.db.createTransaction(TransactionModel(
             description: titleController.text,
             amount: double.parse(amountController.text),
-            currentDate: currentDatetime));
+            currentDate: currentDatetime,
+            transType: transType));
       });
 
       Navigator.pop(context);
@@ -51,7 +56,7 @@ class _TransactionPageState extends State<TransactionPage> {
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           title: Text('Transacciones'),
-          centerTitle: true,
+          // centerTitle: true,
         ),
         body: Form(
           key: _formKey,
@@ -89,6 +94,35 @@ class _TransactionPageState extends State<TransactionPage> {
                       }
                       return null;
                     }),
+                SizedBox(height: 20.0),
+                Row(children: [
+                  Expanded(
+                      child: ListTile(
+                    title: Text('Ingreso'),
+                    leading: Radio(
+                        value: TransType.earning,
+                        groupValue: _transType,
+                        onChanged: (TransType value) {
+                          setState(() {
+                            _transType = value;
+                            transType = 'earning';
+                          });
+                        }),
+                  )),
+                  Expanded(
+                      child: ListTile(
+                    title: Text('Gasto'),
+                    leading: Radio(
+                        value: TransType.expense,
+                        groupValue: _transType,
+                        onChanged: (TransType value) {
+                          setState(() {
+                            _transType = value;
+                            transType = 'expense';
+                          });
+                        }),
+                  )),
+                ]),
                 SizedBox(height: 20.0),
                 TextFormField(
                     controller: amountController,

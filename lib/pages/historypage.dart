@@ -9,50 +9,59 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Historial'),
-      //   centerTitle: true,
-      // ),
-      body: FutureBuilder<List<TransactionModel>>(
-          future: DatabaseHelper.db.getAllTransactions(),
-          builder: (BuildContext context,
-              AsyncSnapshot<List<TransactionModel>> snapshot) {
-            if (!snapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
-            }
+        // appBar: AppBar(
+        //   title: Text('Historial'),
+        //   centerTitle: true,
+        // ),
+        body: FutureBuilder<List<TransactionModel>>(
+            future: DatabaseHelper.db.getAllTransactions(),
+            builder: (BuildContext context,
+                AsyncSnapshot<List<TransactionModel>> snapshot) {
+              if (!snapshot.hasData) {
+                return Center(child: CircularProgressIndicator());
+              }
 
-            final trans = snapshot.data;
+              final trans = snapshot.data;
 
-            if (trans.length == 0) {
-              return Center(child: Text('No hay informacion'));
-            }
+              if (trans.length == 0) {
+                return Center(child: Text('No hay informacion'));
+              }
 
-            return ListView.builder(
-                itemCount: trans.length,
-                itemBuilder: (context, i) => Dismissible(
-                    key: UniqueKey(),
-                    background: Container(color: Colors.red),
-                    onDismissed: (direction) =>
-                        DatabaseHelper.db.deleteTransactionById(trans[i].id),
-                    child: ListTile(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DetailsPage(trans[i])));
-                      },
-                      leading: Icon(Icons.attach_money,
-                          color: Theme.of(context).primaryColor),
-                      title: Text(trans[i].description +
-                          ' - \$' +
-                          trans[i].amount.toString()),
-                      subtitle: Text(trans[i].currentDate),
-                      trailing: Icon(
-                        Icons.keyboard_arrow_right,
-                        color: Colors.grey,
-                      ),
-                    )));
-          }),
-    );
+              return ListView.builder(
+                  itemCount: trans.length,
+                  itemBuilder: (context, i) => Dismissible(
+                      key: UniqueKey(),
+                      background: Container(color: Colors.red),
+                      onDismissed: (direction) =>
+                          DatabaseHelper.db.deleteTransactionById(trans[i].id),
+                      child: ListTile(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DetailsPage(trans[i])));
+                        },
+                        // leading: trans[i].transType == 'earning'
+                        //     ? Icon(Icons.attach_money,
+                        //         color: Theme.of(context).primaryColor)
+                        //     : Icon(Icons.money_off, color: Colors.red),
+                        leading: Icon(Icons.local_atm),
+                        title: Text(trans[i].description +
+                            ' - \$' +
+                            trans[i].amount.toString()),
+                        subtitle: Text(trans[i].currentDate),
+                        trailing: Icon(
+                          Icons.keyboard_arrow_right,
+                          color: Colors.grey,
+                        ),
+                      )));
+            }),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            DatabaseHelper.db.deleteAllTransactions();
+          },
+          child: Icon(Icons.delete_forever),
+          backgroundColor: Colors.red,
+        ));
   }
 }

@@ -3,6 +3,7 @@ class TransactionModel {
   String description;
   double amount;
   String currentDate;
+  String transType;
   // DateTime currentDate;
   // double moneyExpend;
   // double savingMoney;
@@ -12,21 +13,19 @@ class TransactionModel {
   // double get txnAmount => amount;
   // DateTime get txnDateTime => currentDate;
 
-  TransactionModel({
-    this.id,
-    this.description,
-    this.amount,
-    this.currentDate,
-    // this.moneyExpend,
-    // this.savingMoney,
-  });
+  TransactionModel(
+      {this.id, this.description, this.amount, this.currentDate, this.transType
+      // this.moneyExpend,
+      // this.savingMoney,
+      });
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) =>
       TransactionModel(
           id: json["id"],
           description: json["description"],
           currentDate: json["currentDate"],
-          amount: json["amount"]
+          amount: json["amount"],
+          transType: json["transType"]
           // moneyExpend: json["moneyExpend"].toDouble(),
           // savingMoney: json["savingMoney"].toDouble(),
           );
@@ -35,7 +34,8 @@ class TransactionModel {
         "id": id,
         "description": description,
         "currentDate": currentDate,
-        "amount": amount
+        "amount": amount,
+        "type": transType
         // "moneyExpend": moneyExpend,
         // "savingMoney": savingMoney,
       };
