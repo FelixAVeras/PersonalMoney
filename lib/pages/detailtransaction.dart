@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personalmoney/helpers/databasehelper.dart';
+import 'package:personalmoney/models/transactionmodel.dart';
+import 'package:personalmoney/pages/homepage.dart';
 
 class DetailsPage extends StatefulWidget {
   DetailsPage(this.transactionModel);
@@ -13,95 +15,143 @@ class DetailsPage extends StatefulWidget {
 class DetailsPageState extends State<DetailsPage> {
   DetailsPageState();
 
-  DatabaseHelper dbHelper;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Detalles'),
-          // centerTitle: true,
-        ),
-        body: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Center(
-                  child: Column(
-                    children: [
-                      Card(
-                        child: Container(
-                          padding: EdgeInsets.all(10.0),
-                          width: 440,
-                          child: Column(
-                            children: [
-                              Text('Descripcion:',
-                                  style: TextStyle(
-                                      color: Colors.teal, fontSize: 16.0)),
-                              Text(widget.transactionModel.description,
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                  )),
-                              SizedBox(height: 10.0),
-                              Text('Tipo de la Transaccion:',
-                                  style: TextStyle(
-                                      color: Colors.teal, fontSize: 16.0)),
-                              // Text(widget.transactionModel.transType,
-                              //     style: TextStyle(
-                              //       fontSize: 20.0,
-                              //     )),
-                              Text('???', style: TextStyle(fontSize: 20.0)),
-                              SizedBox(height: 10.0),
-                              Text('Monto:',
-                                  style: TextStyle(
-                                      color: Colors.teal, fontSize: 16.0)),
-                              Text(
-                                  '\$' +
-                                      widget.transactionModel.amount.toString(),
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                  )),
-                              SizedBox(height: 10.0),
-                              Text('Fecha de la Transaccion:',
-                                  style: TextStyle(
-                                      color: Colors.teal, fontSize: 16.0)),
-                              Text(widget.transactionModel.currentDate,
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                  )),
-                              SizedBox(height: 30.0),
-                              Row(children: [
-                                Expanded(
-                                    child: ElevatedButton.icon(
-                                  onPressed: () => {},
-                                  icon: Icon(Icons.edit, color: Colors.black),
-                                  label: Text(
-                                    'Editar',
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Colors.yellow[600]),
-                                )),
-                                SizedBox(width: 30.0),
-                                Expanded(
-                                    child: ElevatedButton.icon(
-                                  onPressed: () => {},
-                                  label: Text('Eliminar'),
-                                  icon: Icon(Icons.delete),
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Colors.red),
-                                ))
-                              ])
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                )
+  DbConn dbconn = DbConn();
+
+  Future<void> _confirmDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Aviso!'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Esta seguro que desea esta transaccion?'),
               ],
             ),
           ),
-        ));
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Aceptar'),
+              onPressed: () {
+                final initDB = dbconn.initDB();
+                initDB.then((db) async {
+                  await dbconn.deleteTrans(widget.transactionModel.id);
+                });
+
+                // Navigator.popUntil(
+                //     context, ModalRoute.withName(Navigator.defaultRouteName));
+
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomePage()));
+              },
+            ),
+            FlatButton(
+              child: const Text('Cancelar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Detalles - ' + widget.transactionModel.description),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(20.0),
+          child: Card(
+              child: Container(
+                  padding: EdgeInsets.all(10.0),
+                  width: 440,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                        child: Column(
+                          children: <Widget>[
+                            Text('Descripcion:',
+                                style: TextStyle(
+                                    color: Colors.black.withOpacity(0.8))),
+                            Text(widget.transactionModel.description,
+                                style: Theme.of(context).textTheme.title)
+                          ],
+                        ),
+                      ),
+                      // Container(
+                      //   margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                      //   child: Column(
+                      //     children: <Widget>[
+                      //       Text('Tipo Transaccion:',
+                      //           style: TextStyle(
+                      //               color: Colors.black.withOpacity(0.8))),
+                      //       Text(widget.transactionModel.transType,
+                      //           style: Theme.of(context).textTheme.title)
+                      //     ],
+                      //   ),
+                      // ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                        child: Column(
+                          children: <Widget>[
+                            Text('Monto Transaccion:',
+                                style: TextStyle(
+                                    color: Colors.black.withOpacity(0.8))),
+                            Text(widget.transactionModel.amount.toString(),
+                                style: Theme.of(context).textTheme.title)
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                        child: Column(
+                          children: <Widget>[
+                            Text('Fecha de Transaccion:',
+                                style: TextStyle(
+                                    color: Colors.black.withOpacity(0.8))),
+                            Text(widget.transactionModel.currentDate,
+                                style: Theme.of(context).textTheme.title)
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                        child: Column(
+                          children: <Widget>[
+                            // RaisedButton(
+                            //   splashColor: Colors.red,
+                            //   onPressed: () {
+                            //     // _navigateToEditScreen(context, widget.trans);
+                            //   },
+                            //   child: Text('Editar',
+                            //       style: TextStyle(color: Colors.black)),
+                            //   color: Colors.yellow[600],
+                            // ),
+                            RaisedButton(
+                              splashColor: Colors.red,
+                              onPressed: () {
+                                _confirmDialog();
+                              },
+                              child: Text('Eliminar',
+                                  style: TextStyle(color: Colors.white)),
+                              color: Colors.red,
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ))),
+        ),
+      ),
+    );
   }
 }

@@ -5,7 +5,13 @@ import 'package:personalmoney/pages/homepage.dart';
 import 'package:personalmoney/pages/loginpage.dart';
 import 'package:personalmoney/pages/registerpage.dart';
 
-void main() => runApp(PersonalMoney());
+import 'package:personalmoney/helpers/databasehelper.dart';
+// void main() => runApp(PersonalMoney());
+
+void main() async {
+  await DbConn;
+  runApp(PersonalMoney());
+}
 
 class PersonalMoney extends StatelessWidget {
   @override
