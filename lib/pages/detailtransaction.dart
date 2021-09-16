@@ -40,6 +40,8 @@ class DetailsPageState extends State<DetailsPage> {
                   await dbconn.deleteTrans(widget.transactionModel.id);
                 });
 
+                // Navigator.of(context).pop();
+
                 // Navigator.popUntil(
                 //     context, ModalRoute.withName(Navigator.defaultRouteName));
 

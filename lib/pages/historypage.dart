@@ -119,12 +119,12 @@ class _HistoryPageState extends State<HistoryPage> {
           builder: (context, snapshot) {
             return Padding(
               padding: EdgeInsets.all(16.0),
-              child: Text('Total: $totalCount',
+              child: Text('Total: \$$totalCount',
                   style: TextStyle(fontSize: 20.0, color: Colors.white)),
             );
           },
         ),
-        color: Colors.grey,
+        color: Colors.teal,
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

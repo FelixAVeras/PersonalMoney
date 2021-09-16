@@ -22,7 +22,8 @@ class TransList extends StatelessWidget {
                     color: Colors.red,
                   ),
             title: Text(trans[index].description),
-            subtitle: Text(trans[index].amount.toString() +
+            subtitle: Text('\$' +
+                trans[index].amount.toString() +
                 ' - ' +
                 trans[index].currentDate),
             trailing: Icon(Icons.navigate_next),
