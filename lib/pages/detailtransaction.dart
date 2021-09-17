@@ -70,89 +70,88 @@ class DetailsPageState extends State<DetailsPage> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(20.0),
-          child: Card(
-              child: Container(
-                  padding: EdgeInsets.all(10.0),
-                  width: 440,
+            padding: EdgeInsets.all(10.0),
+            width: 440,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                   child: Column(
                     children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                        child: Column(
-                          children: <Widget>[
-                            Text('Descripcion:',
-                                style: TextStyle(
-                                    color: Colors.black.withOpacity(0.8))),
-                            Text(widget.transactionModel.description,
-                                style: Theme.of(context).textTheme.title)
-                          ],
-                        ),
-                      ),
-                      // Container(
-                      //   margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                      //   child: Column(
-                      //     children: <Widget>[
-                      //       Text('Tipo Transaccion:',
-                      //           style: TextStyle(
-                      //               color: Colors.black.withOpacity(0.8))),
-                      //       Text(widget.transactionModel.transType,
-                      //           style: Theme.of(context).textTheme.title)
-                      //     ],
-                      //   ),
-                      // ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                        child: Column(
-                          children: <Widget>[
-                            Text('Monto Transaccion:',
-                                style: TextStyle(
-                                    color: Colors.black.withOpacity(0.8))),
-                            Text(widget.transactionModel.amount.toString(),
-                                style: Theme.of(context).textTheme.title)
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                        child: Column(
-                          children: <Widget>[
-                            Text('Fecha de Transaccion:',
-                                style: TextStyle(
-                                    color: Colors.black.withOpacity(0.8))),
-                            Text(widget.transactionModel.currentDate,
-                                style: Theme.of(context).textTheme.title)
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                        child: Column(
-                          children: <Widget>[
-                            // RaisedButton(
-                            //   splashColor: Colors.red,
-                            //   onPressed: () {
-                            //     // _navigateToEditScreen(context, widget.trans);
-                            //   },
-                            //   child: Text('Editar',
-                            //       style: TextStyle(color: Colors.black)),
-                            //   color: Colors.yellow[600],
-                            // ),
-                            RaisedButton(
-                              splashColor: Colors.red,
-                              onPressed: () {
-                                _confirmDialog();
-                              },
-                              child: Text('Eliminar',
-                                  style: TextStyle(color: Colors.white)),
-                              color: Colors.red,
-                            )
-                          ],
-                        ),
-                      ),
+                      Text('Descripcion:',
+                          style:
+                              TextStyle(color: Colors.black.withOpacity(0.8))),
+                      Text(widget.transactionModel.description,
+                          style: Theme.of(context).textTheme.title)
                     ],
-                  ))),
-        ),
+                  ),
+                ),
+                // Container(
+                //   margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                //   child: Column(
+                //     children: <Widget>[
+                //       Text('Tipo Transaccion:',
+                //           style: TextStyle(
+                //               color: Colors.black.withOpacity(0.8))),
+                //       Text(widget.transactionModel.transType,
+                //           style: Theme.of(context).textTheme.title)
+                //     ],
+                //   ),
+                // ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                  child: Column(
+                    children: <Widget>[
+                      Text('Monto Transaccion:',
+                          style:
+                              TextStyle(color: Colors.black.withOpacity(0.8))),
+                      Text('\$' + widget.transactionModel.amount.toString(),
+                          style: Theme.of(context).textTheme.title)
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                  child: Column(
+                    children: <Widget>[
+                      Text('Fecha de Transaccion:',
+                          style:
+                              TextStyle(color: Colors.black.withOpacity(0.8))),
+                      Text(widget.transactionModel.currentDate,
+                          style: Theme.of(context).textTheme.title)
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                  child: Column(
+                    children: <Widget>[
+                      // RaisedButton(
+                      //   splashColor: Colors.red,
+                      //   onPressed: () {
+                      //     // _navigateToEditScreen(context, widget.trans);
+                      //   },
+                      //   child: Text('Editar',
+                      //       style: TextStyle(color: Colors.black)),
+                      //   color: Colors.yellow[600],
+                      // ),
+                      RaisedButton(
+                          splashColor: Colors.red,
+                          onPressed: () {
+                            _confirmDialog();
+                          },
+                          child: Text('Eliminar',
+                              style: TextStyle(color: Colors.white)),
+                          color: Colors.red,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 15.0, horizontal: 105.0),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.0)))
+                    ],
+                  ),
+                ),
+              ],
+            )),
       ),
     );
   }

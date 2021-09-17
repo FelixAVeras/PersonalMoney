@@ -21,11 +21,11 @@ class TransList extends StatelessWidget {
                     Icons.money_off,
                     color: Colors.red,
                   ),
-            title: Text(trans[index].description),
-            subtitle: Text('\$' +
-                trans[index].amount.toString() +
+            title: Text(trans[index].description +
                 ' - ' +
-                trans[index].currentDate),
+                '\$' +
+                trans[index].amount.toString()),
+            subtitle: Text(trans[index].currentDate),
             trailing: Icon(Icons.navigate_next),
             onTap: () {
               Navigator.push(
