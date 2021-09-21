@@ -40,13 +40,13 @@ class DetailsPageState extends State<DetailsPage> {
                   await dbconn.deleteTrans(widget.transactionModel.id);
                 });
 
-                // Navigator.of(context).pop();
+                // Navigator.pop(context);
 
-                // Navigator.popUntil(
-                //     context, ModalRoute.withName(Navigator.defaultRouteName));
+                Navigator.popUntil(
+                    context, ModalRoute.withName(Navigator.defaultRouteName));
 
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomePage()));
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => HomePage()));
               },
             ),
             FlatButton(

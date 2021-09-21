@@ -235,7 +235,7 @@ class _TransactionPageState extends State<TransactionPage> {
                       TextFormField(
                         controller: _transNameController,
                         decoration: const InputDecoration(
-                            hintText: 'Compra de Zapatos',
+                            hintText: 'Ejemplo: Compra de Zapatos',
                             prefixIcon: Icon(Icons.title_rounded),
                             labelText: 'Descripcion de la Transaccion',
                             border: OutlineInputBorder()),
@@ -291,7 +291,6 @@ class _TransactionPageState extends State<TransactionPage> {
                       TextFormField(
                         controller: _amountController,
                         decoration: const InputDecoration(
-                            hintText: '284.69',
                             prefixIcon: Icon(Icons.local_atm_rounded),
                             labelText: 'Monto de la Transaccion',
                             border: OutlineInputBorder()),
@@ -307,6 +306,7 @@ class _TransactionPageState extends State<TransactionPage> {
                     ],
                   ),
                 ),
+                SizedBox(height: 60.0),
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                   child: Column(

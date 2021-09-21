@@ -21,12 +21,13 @@ class PersonalMoney extends StatelessWidget {
       title: 'Personal Money',
       theme: ThemeData(primarySwatch: Colors.teal),
       debugShowCheckedModeBanner: false,
-      initialRoute: 'Home',
-      routes: {
-        'login': (BuildContext context) => LoginPage(),
-        'register': (BuildContext context) => RegisterPage(),
-        'Home': (BuildContext context) => HomePage(),
-      },
+      // initialRoute: 'Home',
+      // routes: {
+      //   'login': (BuildContext context) => LoginPage(),
+      //   'register': (BuildContext context) => RegisterPage(),
+      //   'Home': (BuildContext context) => HomePage(),
+      // },
+      home: HomePage(),
     ));
   }
 }
