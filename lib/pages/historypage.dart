@@ -124,7 +124,7 @@ class _HistoryPageState extends State<HistoryPage> {
             );
           },
         ),
-        color: Colors.teal,
+        color: Colors.grey[600],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

@@ -196,7 +196,7 @@ class _TransactionPageState extends State<TransactionPage> {
         key: _addFormKey,
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(10.0),
             child: Column(
               children: <Widget>[
                 // Container(
@@ -235,10 +235,10 @@ class _TransactionPageState extends State<TransactionPage> {
                       TextFormField(
                         controller: _transNameController,
                         decoration: const InputDecoration(
-                            hintText: 'Ej: Compra de Zapatos',
-                            border: OutlineInputBorder(),
-                            prefixIcon: Icon(Icons.title),
-                            labelText: 'Descripcion de la Transaccion'),
+                            hintText: 'Ejemplo: Compra de Zapatos',
+                            prefixIcon: Icon(Icons.title_rounded),
+                            labelText: 'Descripcion de la Transaccion',
+                            border: OutlineInputBorder()),
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Por favor ingrese una descripcion';
@@ -291,8 +291,7 @@ class _TransactionPageState extends State<TransactionPage> {
                       TextFormField(
                         controller: _amountController,
                         decoration: const InputDecoration(
-                            hintText: 'Ej: 555.00',
-                            prefixIcon: Icon(Icons.local_atm),
+                            prefixIcon: Icon(Icons.local_atm_rounded),
                             labelText: 'Monto de la Transaccion',
                             border: OutlineInputBorder()),
                         keyboardType: TextInputType.number,
@@ -307,36 +306,35 @@ class _TransactionPageState extends State<TransactionPage> {
                     ],
                   ),
                 ),
-                SizedBox(height: 15.0),
+                SizedBox(height: 60.0),
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                   child: Column(
                     children: <Widget>[
                       RaisedButton(
-                        splashColor: Colors.red,
-                        onPressed: () {
-                          if (_addFormKey.currentState.validate()) {
-                            _addFormKey.currentState.save();
-                            final initDB = dbconn.initDB();
-                            initDB.then((db) async {
-                              await dbconn.insertTrans(TransactionModel(
-                                  currentDate: currentDatetime,
-                                  description: _transNameController.text,
-                                  transType: transType,
-                                  amount: int.parse(_amountController.text)));
-                            });
+                          splashColor: Colors.red,
+                          onPressed: () {
+                            if (_addFormKey.currentState.validate()) {
+                              _addFormKey.currentState.save();
+                              final initDB = dbconn.initDB();
+                              initDB.then((db) async {
+                                await dbconn.insertTrans(TransactionModel(
+                                    currentDate: currentDatetime,
+                                    description: _transNameController.text,
+                                    transType: transType,
+                                    amount: int.parse(_amountController.text)));
+                              });
 
-                            Navigator.pop(context);
-                          }
-                        },
-                        child: Text('Guardar',
-                            style: TextStyle(color: Colors.white)),
-                        color: Colors.teal,
-                        padding: EdgeInsets.symmetric(
-                            vertical: 15.0, horizontal: 105.0),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                      )
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: Text('Guardar',
+                              style: TextStyle(color: Colors.white)),
+                          color: Colors.teal,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 15.0, horizontal: 105.0),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.0)))
                     ],
                   ),
                 ),
