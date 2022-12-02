@@ -12,8 +12,6 @@ class CustomRegisterProvider extends InheritedWidget {
   bool updateShouldNotify(covariant InheritedWidget oldWidget) => true;
 
   static RegisterBloc of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(CustomRegisterProvider)
-            as CustomRegisterProvider)
-        .registerBloc;
+    return (context.dependOnInheritedWidgetOfExactType<CustomRegisterProvider>()).registerBloc;
   }
 }

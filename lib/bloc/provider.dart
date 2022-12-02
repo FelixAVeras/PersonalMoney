@@ -11,8 +11,6 @@ class CustomProvider extends InheritedWidget {
   bool updateShouldNotify(covariant InheritedWidget oldWidget) => true;
 
   static LoginBloc of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(CustomProvider)
-            as CustomProvider)
-        .loginBloc;
+    return (context.dependOnInheritedWidgetOfExactType<CustomProvider>()).loginBloc;
   }
 }
