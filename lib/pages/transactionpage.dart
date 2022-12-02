@@ -234,6 +234,7 @@ class _TransactionPageState extends State<TransactionPage> {
                     children: <Widget>[
                       TextFormField(
                         controller: _transNameController,
+                        textCapitalization: TextCapitalization.sentences,
                         decoration: const InputDecoration(
                             hintText: 'Ejemplo: Compra de Zapatos',
                             prefixIcon: Icon(Icons.title_rounded),
