@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
-class CurrencyPage extends StatelessWidget {
+class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('Convertidor de Divisas'),
-      ),
+      body: const Center(child: Text('Pantalla de Inicio')),
     );
   }
 }

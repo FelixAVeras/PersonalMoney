@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:personalmoney/pages/homepage.dart';
+import 'package:personalmoney/home_page.dart';
 
-void main() => runApp(const PersonalMoney());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(const PersonalMoney());
+}
 
 class PersonalMoney extends StatelessWidget {
   const PersonalMoney({super.key});
@@ -14,13 +18,9 @@ class PersonalMoney extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+        // colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.teal).copyWith(secondary: Colors.red.shade300),
       ),
-      // initialRoute: '/login',
-      initialRoute: '/home',
-      routes: {
-        // '/login': (context) => LoginPage(),
-        '/home': (context) => HomePage(),
-      },
+      home: HomePage()
     );
   }
 }
