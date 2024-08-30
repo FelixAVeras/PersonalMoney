@@ -19,4 +19,13 @@ class ImprevistoModel {
       'date': date,
     };
   }
+
+  static ImprevistoModel fromMap(Map<String, dynamic> map) {
+    return ImprevistoModel(
+      id: map['id'],
+      description: map['description'],
+      amount: map['amount'],
+      date: map['date'],
+    );
+  }
 }
