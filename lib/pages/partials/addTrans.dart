@@ -28,141 +28,142 @@ class _AddDataWidgetState extends State<AddDataWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Data'),
+        title: Text('Nueva Transaccion'),
+        elevation: 2,
+        scrolledUnderElevation: 4,
+        centerTitle: false,
+        backgroundColor: Colors.teal,
       ),
       body: Form(
         key: _addFormKey,
         child: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.all(20.0),
-            child: Card(
-                child: Container(
-                    padding: EdgeInsets.all(10.0),
-                    width: 440,
+            child: Container(
+              padding: EdgeInsets.all(10.0),
+              width: 440,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                    // child: Column(
+                    //   children: <Widget>[
+                    //     Text('Transaction Date'),
+                    //     DateTimeField(
+                    //       format: format,
+                    //       controller: _transDateController,
+                    //       onShowPicker: (context, currentValue) {
+                    //         return showDatePicker(
+                    //             context: context,
+                    //             firstDate: DateTime(1900),
+                    //             initialDate: currentValue ?? DateTime.now(),
+                    //             lastDate: DateTime(2100));
+                    //       },
+                    //       onChanged: (value) {},
+                    //     ),
+                    //   ],
+                    // ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                     child: Column(
                       children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                          // child: Column(
-                          //   children: <Widget>[
-                          //     Text('Transaction Date'),
-                          //     DateTimeField(
-                          //       format: format,
-                          //       controller: _transDateController,
-                          //       onShowPicker: (context, currentValue) {
-                          //         return showDatePicker(
-                          //             context: context,
-                          //             firstDate: DateTime(1900),
-                          //             initialDate: currentValue ?? DateTime.now(),
-                          //             lastDate: DateTime(2100));
-                          //       },
-                          //       onChanged: (value) {},
-                          //     ),
-                          //   ],
-                          // ),
+                        TextFormField(
+                          controller: _transNameController,
+                          decoration: const InputDecoration(
+                            hintText: 'Ej: Compra de Zapatos',
+                            label: Text('Descripcion')
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Por favor, ingrese un nombre para la transaccion.';
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {},
                         ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                          child: Column(
-                            children: <Widget>[
-                              Text('Transaction Name'),
-                              TextFormField(
-                                controller: _transNameController,
-                                decoration: const InputDecoration(
-                                  hintText: 'Transaction Name',
-                                ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please enter transaction name';
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) {},
-                              ),
-                            ],
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                    child: Column(
+                      children: <Widget>[
+                        Text('Tipo de Transaccion'),
+                        ListTile(
+                          title: const Text('Ganancia'),
+                          leading: Radio(
+                            value: TransType.earning,
+                            groupValue: _transType,
+                            onChanged: (TransType? value) {
+                              setState(() {
+                                _transType = value!;
+                                transType = 'earning';
+                              });
+                            },
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                          child: Column(
-                            children: <Widget>[
-                              Text('Transaction Type'),
-                              ListTile(
-                                title: const Text('Earning'),
-                                leading: Radio(
-                                  value: TransType.earning,
-                                  groupValue: _transType,
-                                  onChanged: (TransType? value) {
-                                    setState(() {
-                                      _transType = value!;
-                                      transType = 'earning';
-                                    });
-                                  },
-                                ),
-                              ),
-                              ListTile(
-                                title: const Text('Expense'),
-                                leading: Radio(
-                                  value: TransType.expense,
-                                  groupValue: _transType,
-                                  onChanged: (TransType? value) {
-                                    setState(() {
-                                      _transType = value!;
-                                      transType = 'expense';
-                                    });
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                          child: Column(
-                            children: <Widget>[
-                              Text('Amount'),
-                              TextFormField(
-                                controller: _amountController,
-                                decoration: const InputDecoration(
-                                  hintText: 'Amount',
-                                ),
-                                keyboardType: TextInputType.number,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please enter amount';
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) {},
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                          child: Column(
-                            children: <Widget>[
-                              ElevatedButton(
-                                onPressed: () {
-                                  if (_addFormKey.currentState!.validate()) {
-                                    _addFormKey.currentState!.save();
-                                    final initDB = dbconn.initDB();
-                                    initDB.then((db) async {
-                                      await dbconn.insertTransaction(TransactionModel(date: _transDateController.text, name: _transNameController.text, transType: transType, amount: double.parse(_amountController.text)));
-                                    });
-
-                                    Navigator.pop(context) ;
-                                  }
-                                },
-                                child: Text('Save', style: TextStyle(color: Colors.white)),
-                              )
-                            ],
+                        ListTile( 
+                          title: const Text('Gasto'),
+                          leading: Radio(
+                            value: TransType.expense,
+                            groupValue: _transType,
+                            onChanged: (TransType? value) {
+                              setState(() {
+                                _transType = value!;
+                                transType = 'expense';
+                              });
+                            },
                           ),
                         ),
                       ],
-                    )
-                )
-            ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                    child: Column(
+                      children: <Widget>[
+                        TextFormField(
+                          controller: _amountController,
+                          decoration: const InputDecoration(
+                            label: Text('Monto')
+                          ),
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Por favor, ingrese un monto.';
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {},
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                    child: Column(
+                      children: <Widget>[
+                        ElevatedButton(
+                          onPressed: () {
+                            if (_addFormKey.currentState!.validate()) {
+                              _addFormKey.currentState!.save();
+                              final initDB = dbconn.initDB();
+                              initDB.then((db) async {
+                                await dbconn.insertTransaction(TransactionModel(date: _transDateController.text, name: _transNameController.text, transType: transType, amount: double.parse(_amountController.text)));
+                              });
+
+                              Navigator.pop(context) ;
+                            }
+                          },
+                          child: Text('Guardar', style: TextStyle(color: Colors.white)),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              )
+          )
           ),
         ),
       ),

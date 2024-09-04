@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
 import 'package:personalmoney/models/TransactionModel.dart';
 import 'package:personalmoney/pages/addBudgetPage.dart';
+import 'package:personalmoney/pages/partials/addTrans.dart';
 import 'package:personalmoney/pages/partials/translist.dart';
 
 class TransactionPage extends StatefulWidget {
@@ -46,7 +47,7 @@ class _TransactionPageState extends State<TransactionPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async => Navigator.push(context, MaterialPageRoute(builder: (context) => AddExpensePage())),
+        onPressed: () async => Navigator.push(context, MaterialPageRoute(builder: (context) => AddDataWidget())),
         child: Icon(Icons.add_rounded),
         tooltip: 'Agregar Transaccion',
         elevation: 2,
