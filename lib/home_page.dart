@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personalmoney/pages/budgetPage.dart';
+import 'package:personalmoney/pages/dashboardPage.dart';
+import 'package:personalmoney/pages/transactionPage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -38,7 +40,11 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: Icon(Icons.sync_alt),
               title: Text('Transacciones'),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+
+                Navigator.push(context, MaterialPageRoute(builder: (context) => TransactionPage()));
+              },
               splashColor: Colors.teal.shade200,
             ),
             const Divider(),
@@ -57,39 +63,8 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
-      )
-      // body: [
-      //   DashboardPage(),
-      //   ImprevistosPage(),
-      //   FixedExpensesPage()
-      // ][currentPageIndex],
-      // bottomNavigationBar: NavigationBar(
-      //   labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-      //   selectedIndex: currentPageIndex,
-      //   onDestinationSelected: (int index) {
-      //     setState(() {
-      //       currentPageIndex = index;
-      //     });
-      //   },
-      //   destinations: const <Widget>[
-      //     NavigationDestination(
-      //       icon: Icon(Icons.home_outlined),
-      //       selectedIcon: Icon(Icons.home_rounded),
-      //       label: 'Inicio',
-      //     ),
-      //     NavigationDestination(
-      //       icon: Icon(Icons.timer_outlined),
-      //       selectedIcon: Icon(Icons.timer_rounded),
-      //       label: 'Trans. Rápidas',
-      //     ),
-      //     NavigationDestination(
-      //       icon: Icon(Icons.pie_chart_outline_rounded),
-      //       selectedIcon: Icon(Icons.pie_chart_rounded),
-      //       label: 'Gastos Fijos',
-      //     ),
-      //   ],
-
-      // ),
+      ),
+      body: DashboardPage()
     );
   }
 }

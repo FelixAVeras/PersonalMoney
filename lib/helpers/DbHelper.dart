@@ -45,15 +45,6 @@ class SQLHelper {
     ''');
 
     await db.execute('''
-      CREATE TABLE imprevistos (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        description TEXT NOT NULL,
-        amount REAL NOT NULL,
-        date TEXT
-      )
-    ''');
-
-    await db.execute('''
       CREATE TABLE expenses (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         category_id INTEGER,
@@ -231,6 +222,57 @@ class SQLHelper {
   void addImprevistosToStream() async {
     final imprevistos = await getImprevistos();
     _imprevistoController.sink.add(imprevistos);
+  }
+
+  // Transactions
+  Future<List<TransactionModel>> trans() async {
+    // final Database db = await database;
+    final Database dbClient = await db;
+
+    final List<Map<String, dynamic>> maps = await dbClient.query('transactions');
+
+    return List.generate(maps.length, (i) {
+      return TransactionModel(
+        id: maps[i]['id'],
+        date: maps[i]['date'],
+        name: maps[i]['name'],
+        transType: maps[i]['type'],
+        amount: maps[i]['amount'],
+      );
+    });
+  }
+
+  Future<int> countTotal() async {
+    final Database dbClient = await db;
+
+    final int? sumEarning = Sqflite
+        .firstIntValue(await dbClient.rawQuery('SELECT SUM(amount) FROM transactions WHERE type = "earning"'));
+    
+    final int? sumExpense = Sqflite
+        .firstIntValue(await dbClient.rawQuery('SELECT SUM(amount) FROM transactions WHERE type = "expense"'));
+    
+    return ((sumEarning  == null? 0: sumEarning) - (sumExpense == null? 0: sumExpense));
+  }
+
+  Future<void> updateTrans(TransactionModel trans) async {
+    final Database dbClient = await db;
+
+    await dbClient.update(
+      'transactions',
+      trans.toMap(),
+      where: "id = ?",
+      whereArgs: [trans.id],
+    );
+  }
+
+  Future<void> deleteTrans(int id) async {
+    final Database dbClient = await db;
+
+    await dbClient.delete(
+      'transactions',
+      where: "id = ?",
+      whereArgs: [id],
+    );
   }
 
   void dispose() {
