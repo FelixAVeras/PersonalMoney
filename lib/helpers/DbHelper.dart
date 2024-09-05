@@ -37,9 +37,11 @@ class SQLHelper {
     await db.execute('''
       CREATE TABLE transactions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
         category_id INTEGER,
         amount REAL NOT NULL,
         date TEXT,
+        type TEXT,
         FOREIGN KEY (category_id) REFERENCES categories (id)
       )
     ''');
@@ -83,7 +85,7 @@ class SQLHelper {
     return List.generate(maps.length, (i) {
       return CategoryModel.fromMap(maps[i]);
     });
-  }
+  } 
 
   Future<int> insertTransaction(TransactionModel transaction) async {
     Database dbClient = await db;

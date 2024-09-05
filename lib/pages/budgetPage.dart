@@ -170,16 +170,7 @@ class _BudgetPageState extends State<BudgetPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              // builder: (context) => AddExpensePage(onAddExpense: _addExpense),
-              // builder: (context) => AddExpensePage(onAddExpense: (int , int , double , DateTime ) {  },),
-              builder: (context) => AddExpensePage(),
-            ),
-          );
-        },
+        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddExpensePage())),
         child: Icon(Icons.add_rounded),
         tooltip: 'Agregar monto',
         elevation: 2,

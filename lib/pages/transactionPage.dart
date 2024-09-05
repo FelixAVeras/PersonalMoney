@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
 import 'package:personalmoney/models/TransactionModel.dart';
-import 'package:personalmoney/pages/addBudgetPage.dart';
 import 'package:personalmoney/pages/partials/addTrans.dart';
 import 'package:personalmoney/pages/partials/translist.dart';
 
@@ -33,48 +32,51 @@ class _TransactionPageState extends State<TransactionPage> {
         scrolledUnderElevation: 4,
         centerTitle: false,
         backgroundColor: Colors.teal,
+        actions: [
+          IconButton(
+            onPressed: () async {
+              final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => AddDataWidget()));
+
+              if (result == true) {
+                setState(() => loadTransactionList());
+              }
+            }, 
+            icon: Icon(Icons.add_circle_rounded),
+            tooltip: 'Agregar Transaccion',
+          )
+        ],
       ),
-      body: new Container(
-        child: new Center(
-          child: new FutureBuilder(
+      body: Container(
+        padding: EdgeInsets.all(8.0),
+        child: Center(
+          child: FutureBuilder(
             future: loadTransactionList(), 
             builder: (context, snapshot) {
-              return transList!.length > 0 
-              ? new TransList(trans: transList!) 
-              : new Center(child: Text('No hay informacion para mostrar')); 
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasData && snapshot.data!.length > 0) {
+                return TransList(trans: snapshot.data!);
+              } else {
+                return Center(child: Text('No hay información para mostrar'));
+              }
             }
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async => Navigator.push(context, MaterialPageRoute(builder: (context) => AddDataWidget())),
-        child: Icon(Icons.add_rounded),
-        tooltip: 'Agregar Transaccion',
-        elevation: 2,
-        backgroundColor: Colors.teal,
-      ),
     );
   }
 
-  Future loadTransactionList() {
-    final Future futureDb = _sqlHelper.initDB();
+  Future<List<TransactionModel>> loadTransactionList() async {
+    await _sqlHelper.initDB();
 
-    return futureDb.then((db) {
-      Future<List<TransactionModel>> futureTrans = _sqlHelper.trans();
-
-      futureTrans.then((value) => setState(() { this.transList = transList; }));
-    });
+    return await _sqlHelper.trans();
   }
 
-  Future loadTotal() {
-    final Future futureDB = _sqlHelper.initDB();
-    return futureDB.then((db) {
-      Future<int> futureTotal = _sqlHelper.countTotal();
-      futureTotal.then((ft) {
-        setState(() {
-          this.totalCount = ft;
-        });
-      });
-    });
+  Future<void> loadTotal() async {
+    await _sqlHelper.initDB();
+
+    int total = await _sqlHelper.countTotal();
+
+    setState(() => this.totalCount = total);
   }
 }

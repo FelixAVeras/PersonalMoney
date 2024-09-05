@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 import 'package:flutter/material.dart';
 import 'package:personalmoney/models/TransactionModel.dart';
 
@@ -10,16 +12,19 @@ class TransList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: trans == null ? 0 : trans.length,
-      itemBuilder: (BuildContext context, index) => Card(
-        child: InkWell(
-          onTap: () {},
-          child: ListTile(
-            leading: trans[index].transType == 'earning' ? Icon(Icons.attach_money): Icon(Icons.money_off),
-            title: Text(trans[index].name),
-            subtitle: Text(trans[index].amount.toString()),
+      itemBuilder: (BuildContext context, index) {
+        
+        return Card(
+          child: InkWell(
+            onTap: () {},
+            child: ListTile(
+              leading: trans[index].transType == 'earning' ? Icon(Icons.attach_money, color: Colors.green): Icon(Icons.money_off, color: Colors.red,),
+              title: Text(trans[index].name),
+              subtitle: Text('RD\$${trans[index].amount.toString()}' + ' - ' + trans[index].date),
+            ),
           ),
-        ),
-      )
+        );
+      }
     );
   }
 }

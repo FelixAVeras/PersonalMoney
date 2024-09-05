@@ -33,7 +33,7 @@ class TransactionModel {
       categoryId: map['category_id'],
       amount: map['amount'],
       date: map['date'], 
-      transType: map['transType'],
+      transType: map['type'],
     );
   }
 

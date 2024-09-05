@@ -18,7 +18,6 @@ class PersonalMoney extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: false,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-        // colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.teal).copyWith(secondary: Colors.red.shade300),
       ),
       home: HomePage()
     );

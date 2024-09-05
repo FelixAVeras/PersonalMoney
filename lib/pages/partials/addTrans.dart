@@ -145,15 +145,24 @@ class _AddDataWidgetState extends State<AddDataWidget> {
                     child: Column(
                       children: <Widget>[
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (_addFormKey.currentState!.validate()) {
                               _addFormKey.currentState!.save();
-                              final initDB = dbconn.initDB();
-                              initDB.then((db) async {
-                                await dbconn.insertTransaction(TransactionModel(date: _transDateController.text, name: _transNameController.text, transType: transType, amount: double.parse(_amountController.text)));
-                              });
+                              
+                              await dbconn.initDB();
 
-                              Navigator.pop(context) ;
+                              final now = DateTime.now();
+                              final formattedDate = DateFormat('dd/MM/yyyy').format(now);
+
+                              await dbconn.insertTransaction(TransactionModel(
+                                // date: _transDateController.text,
+                                date: formattedDate,
+                                name: _transNameController.text,
+                                transType: transType,
+                                amount: double.parse(_amountController.text),
+                              ));
+                              
+                              Navigator.pop(context);
                             }
                           },
                           child: Text('Guardar', style: TextStyle(color: Colors.white)),
