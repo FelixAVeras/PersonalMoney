@@ -27,11 +27,12 @@ class _TransactionPageState extends State<TransactionPage> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: Text('Transacciones'),
+        title: Text('Transacciones', style: TextStyle(color: Colors.white)),
         elevation: 2,
         scrolledUnderElevation: 4,
         centerTitle: false,
         backgroundColor: Colors.teal,
+        iconTheme: IconThemeData(color: Colors.white),
         actions: [
           IconButton(
             onPressed: () async {
@@ -63,6 +64,13 @@ class _TransactionPageState extends State<TransactionPage> {
           ),
         ),
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddDataWidget())),
+      //   child: Icon(Icons.add_rounded),
+      //   tooltip: 'Agregar monto',
+      //   elevation: 2,
+      //   backgroundColor: Colors.teal,
+      // ),
     );
   }
 

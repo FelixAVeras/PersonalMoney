@@ -28,11 +28,12 @@ class _AddDataWidgetState extends State<AddDataWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Nueva Transaccion'),
+        title: Text('Nueva Transaccion', style: TextStyle(color: Colors.white)),
         elevation: 2,
         scrolledUnderElevation: 4,
         centerTitle: false,
         backgroundColor: Colors.teal,
+        iconTheme: IconThemeData(color: Colors.white)
       ),
       body: Form(
         key: _addFormKey,

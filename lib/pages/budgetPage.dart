@@ -48,31 +48,32 @@ class _BudgetPageState extends State<BudgetPage> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: Text('Presupuestos'),
+        title: Text('Presupuestos', style: TextStyle(color: Colors.white)),
         elevation: 2,
         scrolledUnderElevation: 4,
         centerTitle: false,
         backgroundColor: Colors.teal,
+        iconTheme: IconThemeData(color: Colors.white)
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Card(
-              child: ListTile(
-                leading: Icon(Icons.attach_money_rounded, size: 50.0, color: Colors.teal,),
-                title: const Text('RD\$ 95,487.69', style: TextStyle(fontSize: 18.0)),
-                subtitle: const Text('Ingreso Principal', style: TextStyle(fontWeight: FontWeight.w600)),
-                trailing: IconButton(
-                  icon: Icon(Icons.edit),
-                  tooltip: 'Editar Monto', 
-                  onPressed: () {},
-                  splashColor: Colors.teal[200],
-                ),
-              ),
-            ),
-            Divider(),
-            SizedBox(height: 10.0),
+            // Card(
+            //   child: ListTile(
+            //     leading: Icon(Icons.attach_money_rounded, size: 50.0, color: Colors.teal,),
+            //     title: const Text('RD\$ 95,487.69', style: TextStyle(fontSize: 18.0)),
+            //     subtitle: const Text('Ingreso Principal', style: TextStyle(fontWeight: FontWeight.w600)),
+            //     trailing: IconButton(
+            //       icon: Icon(Icons.edit),
+            //       tooltip: 'Editar Monto', 
+            //       onPressed: () {},
+            //       splashColor: Colors.teal[200],
+            //     ),
+            //   ),
+            // ),
+            // Divider(),
+            // SizedBox(height: 10.0),
             const Text('Desglose de Gastos', style: TextStyle(fontSize: 18.0)),
             SizedBox(height: 10.0),
             ExpansionPanelList(
@@ -85,11 +86,7 @@ class _BudgetPageState extends State<BudgetPage> {
               },
               children: [
                 ExpansionPanel(
-                  headerBuilder: (BuildContext context, bool isExpanded) {
-                    return ListTile(
-                      title: Text('Necesidades (50%)'),
-                    );
-                  },
+                  headerBuilder: (context, bool isExpanded) => ListTile(title: Text('Necesidades (50%)')),
                   body: Column(
                     children: needsExpenses.map((expense) {
                       return FutureBuilder(
@@ -114,8 +111,7 @@ class _BudgetPageState extends State<BudgetPage> {
                   canTapOnHeader: true,
                 ),
                 ExpansionPanel(
-                  headerBuilder: (context, isExpanded) =>
-                      ListTile(title: Text('Deseos (30%)')),
+                  headerBuilder: (context, isExpanded) => ListTile(title: Text('Deseos (30%)')),
                   body: Column(
                     children: wantsExpenses.map((expense) {
                       return FutureBuilder(
@@ -139,8 +135,7 @@ class _BudgetPageState extends State<BudgetPage> {
                   isExpanded: isExpanded2,
                 ),
                 ExpansionPanel(
-                  headerBuilder: (context, isExpanded) =>
-                      ListTile(title: Text('Ahorros (20%)')),
+                  headerBuilder: (context, isExpanded) => ListTile(title: Text('Ahorros (20%)')),
                   body: Column(
                     children: savingsExpenses.map((expense) {
                       return FutureBuilder(
@@ -171,7 +166,7 @@ class _BudgetPageState extends State<BudgetPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddExpensePage())),
-        child: Icon(Icons.add_rounded),
+        child: Icon(Icons.add_rounded, color: Colors.white),
         tooltip: 'Agregar monto',
         elevation: 2,
         backgroundColor: Colors.teal,

@@ -29,8 +29,9 @@ class _AddExpensePageState extends State<AddExpensePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Agregar Gasto'),
+        title: Text('Agregar Gasto', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.teal,
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
