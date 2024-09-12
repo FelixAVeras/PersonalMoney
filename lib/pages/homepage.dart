@@ -16,13 +16,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Personal Money', style: TextStyle(color: Colors.white)),
-        centerTitle: true,
-        // backgroundColor: Colors.teal,
+        // centerTitle: true,
         backgroundColor: Color(0xFF78c2ad),
       ),
       body: <Widget>[
         DashboardPage(),
-        AccountsPage(),
+        // AccountsPage(),
         TransactionsPage(),
         Center(child: Text('Pantalla de Reportes')),
       ][currentPageIndex],
@@ -39,10 +38,10 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.home),
             label: 'Inicio',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.attach_money_sharp),
-            label: 'Cuentas',
-          ),
+          // NavigationDestination(
+          //   icon: Icon(Icons.attach_money_sharp),
+          //   label: 'Cuentas',
+          // ),
           NavigationDestination(
             icon: Icon(Icons.sync_alt_rounded),
             label: 'Transacciones',
