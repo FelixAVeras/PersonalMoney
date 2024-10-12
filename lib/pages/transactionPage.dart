@@ -26,27 +26,27 @@ class _TransactionPageState extends State<TransactionPage> {
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      appBar: AppBar(
-        title: Text('Transacciones', style: TextStyle(color: Colors.white)),
-        elevation: 2,
-        scrolledUnderElevation: 4,
-        centerTitle: false,
-        backgroundColor: Colors.teal,
-        iconTheme: IconThemeData(color: Colors.white),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => AddDataWidget()));
+      // appBar: AppBar(
+      //   title: Text('Transacciones', style: TextStyle(color: Colors.white)),
+      //   elevation: 2,
+      //   scrolledUnderElevation: 4,
+      //   centerTitle: false,
+      //   backgroundColor: Colors.teal,
+      //   iconTheme: IconThemeData(color: Colors.white),
+      //   actions: [
+      //     IconButton(
+      //       onPressed: () async {
+      //         final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => AddDataWidget()));
 
-              if (result == true) {
-                setState(() => loadTransactionList());
-              }
-            }, 
-            icon: Icon(Icons.add_circle_rounded),
-            tooltip: 'Agregar Transaccion',
-          )
-        ],
-      ),
+      //         if (result == true) {
+      //           setState(() => loadTransactionList());
+      //         }
+      //       }, 
+      //       icon: Icon(Icons.add_circle_rounded),
+      //       tooltip: 'Agregar Transaccion',
+      //     )
+      //   ],
+      // ),
       body: Container(
         padding: EdgeInsets.all(8.0),
         child: Center(
@@ -64,13 +64,13 @@ class _TransactionPageState extends State<TransactionPage> {
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddDataWidget())),
-      //   child: Icon(Icons.add_rounded),
-      //   tooltip: 'Agregar monto',
-      //   elevation: 2,
-      //   backgroundColor: Colors.teal,
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddDataWidget())),
+        child: Icon(Icons.add_rounded),
+        tooltip: 'Agregar monto',
+        elevation: 2,
+        backgroundColor: Colors.teal,
+      ),
     );
   }
 

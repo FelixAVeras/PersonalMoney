@@ -109,7 +109,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 },
                 child: Text('Agregar'),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.teal,
+                  backgroundColor: Colors.teal,
                 ),
               ),
             ],

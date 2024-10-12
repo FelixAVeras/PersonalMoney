@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personalmoney/pages/accounts/accountPage.dart';
-import 'package:personalmoney/pages/dashboradpage.dart';
-import 'package:personalmoney/pages/transaccions/transactionPage.dart';
+import 'package:personalmoney/pages/dashboardPage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,13 +14,14 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Personal Money', style: TextStyle(color: Colors.white)),
-        // centerTitle: true,
+        centerTitle: true,
         backgroundColor: Color(0xFF78c2ad),
       ),
       body: <Widget>[
         DashboardPage(),
         // AccountsPage(),
-        TransactionsPage(),
+        // TransactionsPage(),
+        Center(child: Text('Pantalla de Transacciones')),
         Center(child: Text('Pantalla de Reportes')),
       ][currentPageIndex],
       bottomNavigationBar: NavigationBar(

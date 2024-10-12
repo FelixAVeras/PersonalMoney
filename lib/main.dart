@@ -16,7 +16,7 @@ class PersonalMoney extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Personal Money',
       theme: ThemeData(
-        useMaterial3: true,
+        useMaterial3: false,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         // iconTheme: IconThemeData(color: Colors.white)
       ),

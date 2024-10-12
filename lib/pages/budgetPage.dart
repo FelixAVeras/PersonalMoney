@@ -47,14 +47,14 @@ class _BudgetPageState extends State<BudgetPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      appBar: AppBar(
-        title: Text('Presupuestos', style: TextStyle(color: Colors.white)),
-        elevation: 2,
-        scrolledUnderElevation: 4,
-        centerTitle: false,
-        backgroundColor: Colors.teal,
-        iconTheme: IconThemeData(color: Colors.white)
-      ),
+      // appBar: AppBar(
+      //   title: Text('Presupuestos', style: TextStyle(color: Colors.white)),
+      //   elevation: 2,
+      //   scrolledUnderElevation: 4,
+      //   centerTitle: false,
+      //   backgroundColor: Colors.teal,
+      //   iconTheme: IconThemeData(color: Colors.white)
+      // ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(8.0),
         child: Column(

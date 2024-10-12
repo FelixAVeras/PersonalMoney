@@ -18,7 +18,6 @@ class _AddDataWidgetState extends State<AddDataWidget> {
   SQLHelper dbconn = SQLHelper();
   final _addFormKey = GlobalKey<FormState>();
   final format = DateFormat("dd-MM-yyyy");
-  final _transDateController = TextEditingController();
   final _transNameController = TextEditingController();
   String transType = 'earning';
   final _amountController = TextEditingController();
@@ -27,6 +26,7 @@ class _AddDataWidgetState extends State<AddDataWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: Text('Nueva Transaccion', style: TextStyle(color: Colors.white)),
         elevation: 2,
