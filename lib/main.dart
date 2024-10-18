@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personalmoney/home_page.dart';
+import 'package:personalmoney/pages/home_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +18,6 @@ class PersonalMoney extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: false,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-        // iconTheme: IconThemeData(color: Colors.white)
       ),
       home: HomePage()
     );
