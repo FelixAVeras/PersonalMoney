@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
       child: Card(
         elevation: 2,
         child: ListTile(
-          leading: Icon(Icons.attach_money, size: 40, color: Colors.teal),
+          leading: Icon(Icons.wallet, size: 40, color: Colors.teal),
           title: Text(
             _formatAmount(_totalAmount),
             style: TextStyle(
@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
               color: _totalAmount >= 0 ? Colors.green : Colors.red,
             ),
           ),
-          subtitle: Text('Monto Total', style: TextStyle(fontSize: 16.0)),
+          subtitle: Text('Monto Total (Monto Actual)', style: TextStyle(fontSize: 16.0)),
         ),
       ),
     );
@@ -107,58 +107,6 @@ class _HomePageState extends State<HomePage> {
     
     return formatter.format(parsedDate);
   }
-
-  // Widget _buildTransactionList() {
-  //   if (_transactions.isEmpty) {
-  //     return Center(child: Text('No hay transacciones'));
-  //   }
-
-  //   return ListView.builder(
-  //     padding: EdgeInsets.all(8.0),
-  //     itemCount: _transactions.length,
-  //     itemBuilder: (context, index) {
-  //       TransactionModel transaction = _transactions[index];
-  //       // return ListTile(
-  //       //   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => DetailTransactionPage())),
-  //       //   leading: Icon(
-  //       //     transaction.transType == 'income' ? Icons.arrow_upward : Icons.arrow_downward,
-  //       //     color: transaction.transType == 'income' ? Colors.green : Colors.red,
-  //       //   ),
-  //       //   title: Text(transaction.name),
-  //       //   subtitle: Text(_formatDate(transaction.date)),
-  //       //   trailing: Text(
-  //       //     _formatAmount(transaction.amount),
-  //       //     style: TextStyle(
-  //       //       fontSize: 16.0,
-  //       //       color: transaction.transType == 'income' ? Colors.green : Colors.red,
-  //       //     ),
-  //       //   ),
-  //       // );
-  //       return Dismissible(
-  //         key: ,
-  //         onDismissed: (direction) {
-            
-  //         },
-  //         child: ListTile(
-  //           onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => DetailTransactionPage())),
-  //           leading: Icon(
-  //             transaction.transType == 'income' ? Icons.arrow_upward : Icons.arrow_downward,
-  //             color: transaction.transType == 'income' ? Colors.green : Colors.red,
-  //           ),
-  //           title: Text(transaction.name),
-  //           subtitle: Text(_formatDate(transaction.date)),
-  //           trailing: Text(
-  //             _formatAmount(transaction.amount),
-  //             style: TextStyle(
-  //               fontSize: 16.0,
-  //               color: transaction.transType == 'income' ? Colors.green : Colors.red,
-  //             ),
-  //           ),
-  //         )
-  //       );
-  //     },
-  //   );
-  // }
 
   Widget _buildTransactionList() {
     if (_transactions.isEmpty) {
