@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
 import 'package:personalmoney/pages/transactions/addTransaction.dart';
 import 'package:personalmoney/models/TransactionModel.dart';
+import 'package:personalmoney/pages/transactions/detailtransaction.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -75,9 +76,9 @@ class _HomePageState extends State<HomePage> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
-        elevation: 4.0,
+        elevation: 2,
         child: ListTile(
-          leading: Icon(Icons.account_balance_wallet, size: 40, color: Colors.teal),
+          leading: Icon(Icons.attach_money, size: 40, color: Colors.teal),
           title: Text(
             _formatAmount(_totalAmount),
             style: TextStyle(
@@ -107,9 +108,61 @@ class _HomePageState extends State<HomePage> {
     return formatter.format(parsedDate);
   }
 
+  // Widget _buildTransactionList() {
+  //   if (_transactions.isEmpty) {
+  //     return Center(child: Text('No hay transacciones'));
+  //   }
+
+  //   return ListView.builder(
+  //     padding: EdgeInsets.all(8.0),
+  //     itemCount: _transactions.length,
+  //     itemBuilder: (context, index) {
+  //       TransactionModel transaction = _transactions[index];
+  //       // return ListTile(
+  //       //   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => DetailTransactionPage())),
+  //       //   leading: Icon(
+  //       //     transaction.transType == 'income' ? Icons.arrow_upward : Icons.arrow_downward,
+  //       //     color: transaction.transType == 'income' ? Colors.green : Colors.red,
+  //       //   ),
+  //       //   title: Text(transaction.name),
+  //       //   subtitle: Text(_formatDate(transaction.date)),
+  //       //   trailing: Text(
+  //       //     _formatAmount(transaction.amount),
+  //       //     style: TextStyle(
+  //       //       fontSize: 16.0,
+  //       //       color: transaction.transType == 'income' ? Colors.green : Colors.red,
+  //       //     ),
+  //       //   ),
+  //       // );
+  //       return Dismissible(
+  //         key: ,
+  //         onDismissed: (direction) {
+            
+  //         },
+  //         child: ListTile(
+  //           onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => DetailTransactionPage())),
+  //           leading: Icon(
+  //             transaction.transType == 'income' ? Icons.arrow_upward : Icons.arrow_downward,
+  //             color: transaction.transType == 'income' ? Colors.green : Colors.red,
+  //           ),
+  //           title: Text(transaction.name),
+  //           subtitle: Text(_formatDate(transaction.date)),
+  //           trailing: Text(
+  //             _formatAmount(transaction.amount),
+  //             style: TextStyle(
+  //               fontSize: 16.0,
+  //               color: transaction.transType == 'income' ? Colors.green : Colors.red,
+  //             ),
+  //           ),
+  //         )
+  //       );
+  //     },
+  //   );
+  // }
+
   Widget _buildTransactionList() {
     if (_transactions.isEmpty) {
-      return Center(child: Text('No hay transacciones'));
+      return Center(child: Text('No hay transacciones', style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600, color: Colors.grey)));
     }
 
     return ListView.builder(
@@ -117,8 +170,33 @@ class _HomePageState extends State<HomePage> {
       itemCount: _transactions.length,
       itemBuilder: (context, index) {
         TransactionModel transaction = _transactions[index];
-        return Card(
+        
+        return Dismissible(
+          key: Key(transaction.id.toString()),
+          background: Container(
+            color: Colors.red,
+            alignment: Alignment.centerRight,
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Icon(Icons.delete, color: Colors.white),
+          ),
+          onDismissed: (direction) async {
+            await _sqlHelper.deleteTrans(transaction.id!);
+            
+            setState(() {
+              _transactions.removeAt(index);
+            });
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('${transaction.name} eliminada', style: TextStyle(fontSize: 16.0)))
+            );
+
+            _loadTransactions();
+          },
           child: ListTile(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DetailTransactionPage())
+            ),
             leading: Icon(
               transaction.transType == 'income' ? Icons.arrow_upward : Icons.arrow_downward,
               color: transaction.transType == 'income' ? Colors.green : Colors.red,
@@ -137,4 +215,5 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
+
 }
