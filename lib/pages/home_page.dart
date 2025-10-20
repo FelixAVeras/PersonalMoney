@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
+import 'package:personalmoney/pages/AllocateBudget/allocateBudget_page.dart';
 import 'package:personalmoney/pages/transactions/addTransaction.dart';
 import 'package:personalmoney/models/TransactionModel.dart';
 import 'package:personalmoney/pages/transactions/detailtransaction.dart';
@@ -46,11 +47,6 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: Text('PersonalMoney', style: TextStyle(color: Colors.white)),
-        elevation: 2,
-        scrolledUnderElevation: 4,
-        centerTitle: false,
-        backgroundColor: Colors.teal,
-        iconTheme: IconThemeData(color: Colors.white),
         actions: [
           IconButton(
             onPressed: () async {
@@ -61,6 +57,44 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.add),
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.teal,
+              ),
+              child: Text(
+                'Menú',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.filter_alt),
+              title: Text('Distribucion de Presupuesto'),
+              onTap: () {
+                Navigator.pop(context);
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AllocateBudgetPage())
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Configuración'),
+              onTap: () {
+                
+              },
+            ),
+          ],
+        ),
       ),
       body: Column(
         children: [
