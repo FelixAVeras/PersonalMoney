@@ -13,7 +13,6 @@ class SQLHelper {
   final _imprevistoController = StreamController<List<ImprevistoModel>>.broadcast();
 
   Stream<List<TransactionModel>> get transactionsStream => _transactionController.stream;
-  Stream<List<ImprevistoModel>> get imprevistosStream => _imprevistoController.stream;
 
   Future<Database> get db async {
     _db ??= await initDB();
@@ -57,19 +56,32 @@ class SQLHelper {
     ''');
 
     // Insertar categorías fijas para el modelo 50-30-20
-    await db.execute('''
-      INSERT INTO categories (name, description)
-      VALUES ('Needs', 'Essential expenses like housing, food, etc.')
-    ''');
+    // await db.execute('''
+    //   INSERT INTO categories (name, description)
+    //   VALUES ('Needs', 'Essential expenses like housing, food, etc.')
+    // ''');
 
-    await db.execute('''
-      INSERT INTO categories (name, description)
-      VALUES ('Wants', 'Expenses on entertainment, leisure, etc.')
-    ''');
+    // await db.execute('''
+    //   INSERT INTO categories (name, description)
+    //   VALUES ('Wants', 'Expenses on entertainment, leisure, etc.')
+    // ''');
 
+    // await db.execute('''
+    //   INSERT INTO categories (name, description)
+    //   VALUES ('Savings', 'Savings and investments for future financial security.')
+    // ''');
     await db.execute('''
-      INSERT INTO categories (name, description)
-      VALUES ('Savings', 'Savings and investments for future financial security.')
+      INSERT INTO categories (name)
+      VALUES ('Home'), 
+      ('Entertainment'),
+      ('Food'),
+      ('Charity'),
+      ('Utilities'),
+      ('Auto'),
+      ('Education'),
+      ('Health & Wellness'),
+      ('Shopping'),
+      ('Others')
     ''');
   }
 
@@ -95,14 +107,14 @@ class SQLHelper {
     return id;
   }
 
-  Future<List<TransactionModel>> getTransactions() async {
-    Database dbClient = await db;
-    final List<Map<String, dynamic>> maps = await dbClient.query('transactions');
+  // Future<List<TransactionModel>> getTransactions() async {
+  //   Database dbClient = await db;
+  //   final List<Map<String, dynamic>> maps = await dbClient.query('transactions');
     
-    return List.generate(maps.length, (i) {
-      return TransactionModel.fromMap(maps[i]);
-    });
-  }
+  //   return List.generate(maps.length, (i) {
+  //     return TransactionModel.fromMap(maps[i]);
+  //   });
+  // }
 
   Future<int> insertImprevisto(ImprevistoModel imprevisto) async {
     Database dbClient = await db;
@@ -275,6 +287,24 @@ class SQLHelper {
       where: "id = ?",
       whereArgs: [id],
     );
+  }
+  
+  Future<List<TransactionModel>> getTransactions() async {
+    final Database dbClient = await db;
+
+    final List<Map<String, dynamic>> maps = await dbClient.rawQuery('''
+      SELECT t.*, c.name as category_name
+      FROM transactions t
+      LEFT JOIN categories c ON c.id = t.category_id
+      ORDER BY t.date DESC
+    ''');
+
+    return maps.map((map) {
+      return TransactionModel.fromMap({
+        ...map,
+        "category_name": map["category_name"],
+      });
+    }).toList();
   }
 
   void dispose() {

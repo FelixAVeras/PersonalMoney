@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
-import 'package:personalmoney/pages/AllocateBudget/allocateBudget_page.dart';
+import 'package:personalmoney/helpers/SnakcHelper.dart';
+import 'package:personalmoney/pages/categoryPage.dart';
 import 'package:personalmoney/pages/transactions/addTransaction.dart';
 import 'package:personalmoney/models/TransactionModel.dart';
 import 'package:personalmoney/pages/transactions/detailtransaction.dart';
+import 'package:personalmoney/pages/transactions/transactionPage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -46,17 +48,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: Text('PersonalMoney', style: TextStyle(color: Colors.white)),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await Navigator.push(context, MaterialPageRoute(builder: (context) => AddtransactionPage()));
-              
-              _loadTransactions();
-            },
-            icon: Icon(Icons.add),
-          ),
-        ],
+        title: Text('Overview'),
       ),
       drawer: Drawer(
         child: ListView(
@@ -67,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.teal,
               ),
               child: Text(
-                'Menú',
+                'Personal Money',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -75,23 +67,81 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.filter_alt),
-              title: Text('Distribucion de Presupuesto'),
+              leading: Icon(Icons.person),
+              title: Text('Profile'),
+              onTap: () {
+                Navigator.pop(context);
+
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => AllocateBudgetPage())
+                // );
+              },
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            const Divider(),
+            // ListTile(
+            //   leading: Icon(Icons.category),
+            //   title: Text('Categories'),
+            //   onTap: () {
+            //     Navigator.pop(context);
+
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => CategoryPage())
+            //     );
+            //   },
+            //   trailing: Icon(Icons.arrow_forward),
+            // ),
+            // const Divider(),
+            ListTile(
+              leading: Icon(Icons.sync_alt),
+              title: Text('Transactions'),
               onTap: () {
                 Navigator.pop(context);
 
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AllocateBudgetPage())
+                  MaterialPageRoute(builder: (context) => TransactionPage())
                 );
               },
+              trailing: Icon(Icons.arrow_forward),
             ),
+            const Divider(),
             ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Configuración'),
+              leading: Icon(Icons.attach_money),
+              title: Text('Budget'),
               onTap: () {
                 
               },
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            const Divider(),
+            ListTile(
+              leading: Icon(Icons.bar_chart),
+              title: Text('Trends'),
+              onTap: () {
+                
+              },
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            const Divider(),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+              onTap: () {
+                
+              },
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            const Divider(),
+            ListTile(
+              leading: Icon(Icons.output),
+              title: Text('Sign Out'),
+              onTap: () {
+                
+              },
+              trailing: Icon(Icons.arrow_back, color: Colors.red,),
             ),
           ],
         ),
@@ -99,8 +149,6 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           _buildTotalCard(),
-          
-          Expanded(child: _buildTransactionList()),
         ],
       ),
     );
@@ -109,8 +157,7 @@ class _HomePageState extends State<HomePage> {
   Widget _buildTotalCard() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Card(
-        elevation: 2,
+      child: Card.outlined(
         child: ListTile(
           leading: Icon(Icons.wallet, size: 40, color: Colors.teal),
           title: Text(
@@ -141,61 +188,4 @@ class _HomePageState extends State<HomePage> {
     
     return formatter.format(parsedDate);
   }
-
-  Widget _buildTransactionList() {
-    if (_transactions.isEmpty) {
-      return Center(child: Text('No hay transacciones', style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600, color: Colors.grey)));
-    }
-
-    return ListView.builder(
-      padding: EdgeInsets.all(8.0),
-      itemCount: _transactions.length,
-      itemBuilder: (context, index) {
-        TransactionModel transaction = _transactions[index];
-        
-        return Dismissible(
-          key: Key(transaction.id.toString()),
-          background: Container(
-            color: Colors.red,
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Icon(Icons.delete, color: Colors.white),
-          ),
-          onDismissed: (direction) async {
-            await _sqlHelper.deleteTrans(transaction.id!);
-            
-            setState(() {
-              _transactions.removeAt(index);
-            });
-
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('${transaction.name} eliminada', style: TextStyle(fontSize: 16.0)))
-            );
-
-            _loadTransactions();
-          },
-          child: ListTile(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => DetailTransactionPage())
-            ),
-            leading: Icon(
-              transaction.transType == 'income' ? Icons.arrow_upward : Icons.arrow_downward,
-              color: transaction.transType == 'income' ? Colors.green : Colors.red,
-            ),
-            title: Text(transaction.name),
-            subtitle: Text(_formatDate(transaction.date)),
-            trailing: Text(
-              _formatAmount(transaction.amount),
-              style: TextStyle(
-                fontSize: 16.0,
-                color: transaction.transType == 'income' ? Colors.green : Colors.red,
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
 }
