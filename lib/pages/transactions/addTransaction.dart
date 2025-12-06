@@ -179,7 +179,7 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.teal
                     ),
-                    icon: Icon(Icons.cloud_upload),
+                    icon: Icon(Icons.cloud_upload_outlined),
                     label: Text('Save Changes')
                   )
                 ]

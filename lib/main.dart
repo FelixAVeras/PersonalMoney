@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personalmoney/pages/auth/loginPage.dart';
 import 'package:personalmoney/pages/home_page.dart';
 
 void main() {
@@ -27,7 +28,7 @@ class PersonalMoney extends StatelessWidget {
           iconTheme: IconThemeData(color: Colors.white),
         ),
       ),
-      home: HomePage()
+      home: LoginPage() //HomePage()
     );
   }
 }

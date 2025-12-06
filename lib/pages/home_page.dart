@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
-import 'package:personalmoney/helpers/SnakcHelper.dart';
-import 'package:personalmoney/pages/categoryPage.dart';
-import 'package:personalmoney/pages/transactions/addTransaction.dart';
 import 'package:personalmoney/models/TransactionModel.dart';
-import 'package:personalmoney/pages/transactions/detailtransaction.dart';
+import 'package:personalmoney/pages/budgets/budgetPage.dart';
 import 'package:personalmoney/pages/transactions/transactionPage.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,26 +19,26 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _loadTransactions();
+    // _loadTransactions();
   }
 
-  Future<void> _loadTransactions() async {
-    List<TransactionModel> transactions = await _sqlHelper.getTransactions();
-    double totalAmount = 0.0;
+  // Future<void> _loadTransactions() async {
+  //   List<TransactionModel> transactions = await _sqlHelper.getTransactions();
+  //   double totalAmount = 0.0;
 
-    for (var transaction in transactions) {
-      if (transaction.transType == 'income') {
-        totalAmount += transaction.amount;
-      } else if (transaction.transType == 'expense') {
-        totalAmount -= transaction.amount;
-      }
-    }
+  //   for (var transaction in transactions) {
+  //     if (transaction.transType == 'income') {
+  //       totalAmount += transaction.amount;
+  //     } else if (transaction.transType == 'expense') {
+  //       totalAmount -= transaction.amount;
+  //     }
+  //   }
 
-    setState(() {
-      _transactions = transactions;
-      _totalAmount = totalAmount;
-    });
-  }
+  //   setState(() {
+  //     _transactions = transactions;
+  //     _totalAmount = totalAmount;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -58,42 +55,17 @@ class _HomePageState extends State<HomePage> {
               decoration: BoxDecoration(
                 color: Colors.teal,
               ),
-              child: Text(
-                'Personal Money',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
+              child: Image.asset('assets/pigbank.png', width: 128.0)
             ),
             ListTile(
               leading: Icon(Icons.person),
               title: Text('Profile'),
               onTap: () {
                 Navigator.pop(context);
-
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => AllocateBudgetPage())
-                // );
               },
               trailing: Icon(Icons.arrow_forward),
             ),
             const Divider(),
-            // ListTile(
-            //   leading: Icon(Icons.category),
-            //   title: Text('Categories'),
-            //   onTap: () {
-            //     Navigator.pop(context);
-
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => CategoryPage())
-            //     );
-            //   },
-            //   trailing: Icon(Icons.arrow_forward),
-            // ),
-            // const Divider(),
             ListTile(
               leading: Icon(Icons.sync_alt),
               title: Text('Transactions'),
@@ -112,7 +84,12 @@ class _HomePageState extends State<HomePage> {
               leading: Icon(Icons.attach_money),
               title: Text('Budget'),
               onTap: () {
-                
+                Navigator.pop(context);
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BudgetPage())
+                );
               },
               trailing: Icon(Icons.arrow_forward),
             ),
@@ -120,15 +97,6 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: Icon(Icons.bar_chart),
               title: Text('Trends'),
-              onTap: () {
-                
-              },
-              trailing: Icon(Icons.arrow_forward),
-            ),
-            const Divider(),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
               onTap: () {
                 
               },
@@ -146,25 +114,112 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: Column(
-        children: [
-          _buildTotalCard(),
-        ],
-      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            _buildTotalCard(),
+            DataTable(
+              columns: <DataColumn> [
+                DataColumn(label: Expanded(child: Text('Category'))),
+                DataColumn(label: Expanded(child: Text('Spent'))),
+                DataColumn(label: Expanded(child: Text('Balance'))),
+              ], 
+              rows: <DataRow> [
+                DataRow(cells: <DataCell>[
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                ]),
+                DataRow(cells: <DataCell>[
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                ]),
+                DataRow(cells: <DataCell>[
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                ]),
+                DataRow(cells: <DataCell>[
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                ]),
+                DataRow(cells: <DataCell>[
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                ]),
+                DataRow(cells: <DataCell>[
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                ]),
+                DataRow(cells: <DataCell>[
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                ]),
+                DataRow(cells: <DataCell>[
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                ]),
+                DataRow(cells: <DataCell>[
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                ]),
+                DataRow(cells: <DataCell>[
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                ]),
+                DataRow(cells: <DataCell>[
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                ]),
+                DataRow(cells: <DataCell>[
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                ]),
+                DataRow(cells: <DataCell>[
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                ]),
+                DataRow(cells: <DataCell>[
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                ]),
+                DataRow(cells: <DataCell>[
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                  DataCell(Text('Elemento')),
+                ]),
+              ]
+            )
+          ],
+        ),
+      )
     );
   }
 
   Widget _buildTotalCard() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Card.outlined(
+      child: Card(
         child: ListTile(
           leading: Icon(Icons.wallet, size: 40, color: Colors.teal),
           title: Text(
             _formatAmount(_totalAmount),
             style: TextStyle(
               fontSize: 19.0, fontWeight: FontWeight.bold,
-              color: _totalAmount >= 0 ? Colors.green : Colors.red,
+              color: _totalAmount >= 0 ? Colors.green : Colors.grey.shade600,
             ),
           ),
           subtitle: Text('Monto Total (Monto Actual)', style: TextStyle(fontSize: 16.0)),
