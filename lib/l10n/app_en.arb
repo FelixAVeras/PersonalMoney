@@ -10,6 +10,7 @@
     "transactions": "Transactions",
     "budget": "Budget",
     "trends": "Trends",
+    "settings": "Settings",
     "signOut": "Sign Out",
     "category": "Category",
     "spent": "Spent",
@@ -30,5 +31,10 @@
     "btnSaveChanges": "Save Changes",
     "detailTransactionTitle": "Detail Transaction",
     "edit": "Edit",
-    "delete": "Delete"
+    "delete": "Delete",
+    "appTheme": "App Theme",
+    "light": "light",
+    "dark": "Dark",
+    "system": "Default System",
+    "language": "Language"
 }

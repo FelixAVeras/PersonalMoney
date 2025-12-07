@@ -1,47 +1,103 @@
 import 'package:flutter/material.dart';
 import 'package:personalmoney/pages/auth/loginPage.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:personalmoney/pages/home_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'l10n/app_localizations.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const PersonalMoney());
+  final prefs = await SharedPreferences.getInstance();
+  final savedTheme = prefs.getString('themeMode') ?? 'system';
+  final savedLang = prefs.getString('language');
+  Locale? initialLocale;
+
+  ThemeMode initialTheme;
+
+  switch (savedTheme) {
+    case 'light':
+      initialTheme = ThemeMode.light;
+      break;
+    case 'dark':
+      initialTheme = ThemeMode.dark;
+      break;
+    default:
+      initialTheme = ThemeMode.system;
+  }
+
+  if (savedLang != null) {
+    initialLocale = Locale(savedLang);
+  }
+
+
+  runApp(PersonalMoney(initialTheme: initialTheme, initialLocale: initialLocale,));
 }
 
 class PersonalMoney extends StatelessWidget {
-  const PersonalMoney({super.key});
+  static final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
+  static final ValueNotifier<Locale?> localeNotifier = ValueNotifier(null);
+
+  final ThemeMode initialTheme;
+  final Locale? initialLocale;
+
+  PersonalMoney({required this.initialTheme, this.initialLocale}) {
+    themeNotifier.value = initialTheme;
+    localeNotifier.value = initialLocale;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Personal Money',
-      theme: ThemeData(
-        useMaterial3: false,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-        appBarTheme: AppBarTheme(
-          elevation: 2,
-          centerTitle: false,
-          scrolledUnderElevation: 4,
-          backgroundColor: Colors.teal,
-          foregroundColor: Colors.white,
-          iconTheme: IconThemeData(color: Colors.white),
-        ),
-      ),
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        Locale('en'), // English
-        Locale('es'), // Spanish
-        // Locale('pr'), // Portuguese
-        // Locale('fr'), // French
-      ],
-      home: LoginPage() //HomePage()
+    return ValueListenableBuilder<Locale?>(
+      valueListenable: localeNotifier,
+      builder: (_, Locale? currentLocale, __) {
+        return ValueListenableBuilder<ThemeMode>(
+          valueListenable: themeNotifier,
+          builder: (_, ThemeMode currentMode, __) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Personal Money',
+              locale: currentLocale, // ← idioma actual dinámico
+              theme: ThemeData(
+                useMaterial3: false,
+                colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+                appBarTheme: AppBarTheme(
+                  elevation: 2,
+                  centerTitle: false,
+                  scrolledUnderElevation: 4,
+                  backgroundColor: Colors.teal,
+                  foregroundColor: Colors.white,
+                  iconTheme: IconThemeData(color: Colors.white),
+                ),
+              ),
+              darkTheme: ThemeData.dark().copyWith(
+                useMaterial3: false,
+                appBarTheme: const AppBarTheme(
+                  foregroundColor: Color(0xFFF8EDD9),
+                  elevation: 2,
+                  centerTitle: false,
+                  scrolledUnderElevation: 4,
+                ),
+              ),
+              themeMode: currentMode,
+              localizationsDelegates: [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: const [
+                Locale('en'),
+                Locale('es'),
+                Locale('pt'),
+                Locale('fr'),
+              ],
+              home: HomePage(),
+            );
+          },
+        );
+      },
     );
   }
+
 }

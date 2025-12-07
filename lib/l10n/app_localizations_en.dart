@@ -42,6 +42,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get trends => 'Trends';
 
   @override
+  String get settings => 'Settings';
+
+  @override
   String get signOut => 'Sign Out';
 
   @override
@@ -103,4 +106,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get delete => 'Delete';
+
+  @override
+  String get appTheme => 'App Theme';
+
+  @override
+  String get light => 'light';
+
+  @override
+  String get dark => 'Dark';
+
+  @override
+  String get system => 'Default System';
+
+  @override
+  String get language => 'Language';
 }

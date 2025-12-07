@@ -3,7 +3,9 @@ import 'package:intl/intl.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/models/TransactionModel.dart';
+import 'package:personalmoney/pages/auth/profilePage.dart';
 import 'package:personalmoney/pages/budgets/budgetPage.dart';
+import 'package:personalmoney/pages/settingPage.dart';
 import 'package:personalmoney/pages/transactions/transactionPage.dart';
 
 class HomePage extends StatefulWidget {
@@ -44,7 +46,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.overview),
       ),
@@ -58,15 +60,20 @@ class _HomePageState extends State<HomePage> {
               ),
               child: Image.asset('assets/pigbank.png', width: 128.0)
             ),
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text(AppLocalizations.of(context)!.profile),
-              onTap: () {
-                Navigator.pop(context);
-              },
-              trailing: Icon(Icons.arrow_forward),
-            ),
-            const Divider(),
+            // ListTile(
+            //   leading: Icon(Icons.person),
+            //   title: Text(AppLocalizations.of(context)!.profile),
+            //   onTap: () {
+            //     Navigator.pop(context);
+
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => ProfilePage())
+            //     );
+            //   },
+            //   trailing: Icon(Icons.arrow_forward),
+            // ),
+            // const Divider(),
             ListTile(
               leading: Icon(Icons.sync_alt),
               title: Text(AppLocalizations.of(context)!.transactions),
@@ -94,24 +101,38 @@ class _HomePageState extends State<HomePage> {
               },
               trailing: Icon(Icons.arrow_forward),
             ),
+            // const Divider(),
+            // ListTile(
+            //   leading: Icon(Icons.bar_chart),
+            //   title: Text(AppLocalizations.of(context)!.trends),
+            //   onTap: () {
+                
+            //   },
+            //   trailing: Icon(Icons.arrow_forward),
+            // ),
             const Divider(),
             ListTile(
-              leading: Icon(Icons.bar_chart),
-              title: Text(AppLocalizations.of(context)!.trends),
+              leading: Icon(Icons.settings),
+              title: Text(AppLocalizations.of(context)!.settings),
               onTap: () {
-                
+                Navigator.pop(context);
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SettingsPage())
+                );
               },
               trailing: Icon(Icons.arrow_forward),
             ),
-            const Divider(),
-            ListTile(
-              leading: Icon(Icons.output),
-              title: Text(AppLocalizations.of(context)!.signOut),
-              onTap: () {
+            // const Divider(),
+            // ListTile(
+            //   leading: Icon(Icons.output),
+            //   title: Text(AppLocalizations.of(context)!.signOut),
+            //   onTap: () {
                 
-              },
-              trailing: Icon(Icons.arrow_back, color: Colors.red,),
-            ),
+            //   },
+            //   trailing: Icon(Icons.arrow_back, color: Colors.red,),
+            // ),
           ],
         ),
       ),
@@ -213,7 +234,7 @@ class _HomePageState extends State<HomePage> {
   Widget _buildTotalCard() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Card(
+      child: Card.outlined(
         child: ListTile(
           leading: Icon(Icons.wallet, size: 40, color: Colors.teal),
           title: Text(

@@ -42,6 +42,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get trends => 'Tendencias';
 
   @override
+  String get settings => 'Configuración';
+
+  @override
   String get signOut => 'Salir';
 
   @override
@@ -96,11 +99,26 @@ class AppLocalizationsEs extends AppLocalizations {
   String get btnSaveChanges => 'Guardar Cambios';
 
   @override
-  String get detailTransactionTitle => 'Detalle de Transacción';
+  String get detailTransactionTitle => 'Detalle de la Transacción';
 
   @override
   String get edit => 'Editar';
 
   @override
   String get delete => 'Eliminar';
+
+  @override
+  String get appTheme => 'Tema de la App';
+
+  @override
+  String get light => 'Claro';
+
+  @override
+  String get dark => 'Oscuro';
+
+  @override
+  String get system => 'Predeterminado del sistema';
+
+  @override
+  String get language => 'Idioma';
 }

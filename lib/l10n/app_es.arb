@@ -10,6 +10,7 @@
     "transactions": "Transacciones",
     "budget": "Presupuesto",
     "trends": "Tendencias",
+    "settings": "Configuración",
     "signOut": "Salir",
     "category": "Categoría",
     "spent": "Gastado",
@@ -28,7 +29,12 @@
     "transactionSaved": "Transacción guardada",
     "errorSavingTransactionMsg": "Error al guardar la transacción",
     "btnSaveChanges": "Guardar Cambios",
-    "detailTransactionTitle": "Detalle de Transacción",
+    "detailTransactionTitle": "Detalle de la Transacción",
     "edit": "Editar",
-    "delete": "Eliminar"
+    "delete": "Eliminar",
+    "appTheme": "Tema de la App",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Predeterminado del sistema",
+    "language": "Idioma"
 }
