@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
 import 'package:personalmoney/helpers/SnakcHelper.dart';
+import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/models/CategoryModel.dart';
 import 'package:personalmoney/models/TransactionModel.dart';
 
@@ -46,7 +47,7 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
 
   Future<bool> _saveTransaction() async {
     if (_selectedCategoryId == null) {
-      SnackHelper.showMessage(context, "You must choose a category");
+      SnackHelper.showMessage(context, AppLocalizations.of(context)!.emptyCategory);
       return false;
     }
 
@@ -75,7 +76,7 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: Text('Add Transaction'),
+        title: Text(AppLocalizations.of(context)!.addTransactionTitle),
       ),
       body: Container(
         padding: EdgeInsets.all(10.0),
@@ -88,14 +89,14 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
                   const SizedBox(height: 10.0),
                   TextFormField(
                     controller: _descriptionController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         prefixIcon: Icon(Icons.title),
                         border: OutlineInputBorder(),
-                        labelText: 'Description',
-                        hintText: 'Coffee, new shoes, etc...'),
+                        labelText: AppLocalizations.of(context)!.description,
+                        hintText: AppLocalizations.of(context)!.descriptionHint),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Insert description.';
+                        return AppLocalizations.of(context)!.emptyDescriptionMsg;
                       }
                       return null;
                     },
@@ -103,7 +104,7 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
                   const SizedBox(height: 10.0),
                   DropdownButtonFormField<int>(
                     decoration: InputDecoration(
-                      labelText: 'Category',
+                      labelText: AppLocalizations.of(context)!.category,
                       border: OutlineInputBorder(),
                     ),
                     value: _selectedCategoryId,
@@ -121,7 +122,7 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
                   ),
                   const SizedBox(height: 10.0),
                   ListTile(
-                    title: const Text('Expense'),
+                    title: Text(AppLocalizations.of(context)!.expense),
                     leading: Radio<ExpenseType>(
                       activeColor: Colors.red,
                       value: ExpenseType.expense,
@@ -134,7 +135,7 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
                     ),
                   ),
                   ListTile(
-                    title: const Text('Income'),
+                    title: Text(AppLocalizations.of(context)!.income),
                     leading: Radio<ExpenseType>(
                       activeColor: Colors.teal,
                       value: ExpenseType.income,
@@ -150,13 +151,13 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
                   TextFormField(
                     controller: _amountController,
                     keyboardType: TextInputType.numberWithOptions(decimal: true),
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         prefixIcon: Icon(Icons.money),
                         border: OutlineInputBorder(),
-                        labelText: 'Amount'),
+                        labelText: AppLocalizations.of(context)!.amount),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Insert a valid amount';
+                        return AppLocalizations.of(context)!.emptyAmountMsg;
                       }
                       return null;
                     },
@@ -168,11 +169,11 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
                         bool _success = await _saveTransaction();
 
                         if (_success && context.mounted) {
-                          SnackHelper.showMessage(context, ' Transaction Saved');
+                          SnackHelper.showMessage(context, AppLocalizations.of(context)!.transactionSaved);
                           
                           Navigator.pop(context);
                         } else {
-                          SnackHelper.showMessage(context, 'Error saving transaction');
+                          SnackHelper.showMessage(context, AppLocalizations.of(context)!.errorSavingTransactionMsg);
                         }
                       }
                     },
@@ -180,7 +181,7 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
                       backgroundColor: Colors.teal
                     ),
                     icon: Icon(Icons.cloud_upload_outlined),
-                    label: Text('Save Changes')
+                    label: Text(AppLocalizations.of(context)!.btnSaveChanges)
                   )
                 ]
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
+import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/models/TransactionModel.dart';
 import 'package:personalmoney/pages/budgets/budgetPage.dart';
 import 'package:personalmoney/pages/transactions/transactionPage.dart';
@@ -45,7 +46,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: Text('Overview'),
+        title: Text(AppLocalizations.of(context)!.overview),
       ),
       drawer: Drawer(
         child: ListView(
@@ -59,7 +60,7 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: Icon(Icons.person),
-              title: Text('Profile'),
+              title: Text(AppLocalizations.of(context)!.profile),
               onTap: () {
                 Navigator.pop(context);
               },
@@ -68,7 +69,7 @@ class _HomePageState extends State<HomePage> {
             const Divider(),
             ListTile(
               leading: Icon(Icons.sync_alt),
-              title: Text('Transactions'),
+              title: Text(AppLocalizations.of(context)!.transactions),
               onTap: () {
                 Navigator.pop(context);
 
@@ -82,7 +83,7 @@ class _HomePageState extends State<HomePage> {
             const Divider(),
             ListTile(
               leading: Icon(Icons.attach_money),
-              title: Text('Budget'),
+              title: Text(AppLocalizations.of(context)!.budget),
               onTap: () {
                 Navigator.pop(context);
 
@@ -96,7 +97,7 @@ class _HomePageState extends State<HomePage> {
             const Divider(),
             ListTile(
               leading: Icon(Icons.bar_chart),
-              title: Text('Trends'),
+              title: Text(AppLocalizations.of(context)!.trends),
               onTap: () {
                 
               },
@@ -105,7 +106,7 @@ class _HomePageState extends State<HomePage> {
             const Divider(),
             ListTile(
               leading: Icon(Icons.output),
-              title: Text('Sign Out'),
+              title: Text(AppLocalizations.of(context)!.signOut),
               onTap: () {
                 
               },
@@ -121,9 +122,9 @@ class _HomePageState extends State<HomePage> {
             _buildTotalCard(),
             DataTable(
               columns: <DataColumn> [
-                DataColumn(label: Expanded(child: Text('Category'))),
-                DataColumn(label: Expanded(child: Text('Spent'))),
-                DataColumn(label: Expanded(child: Text('Balance'))),
+                DataColumn(label: Expanded(child: Text(AppLocalizations.of(context)!.category))),
+                DataColumn(label: Expanded(child: Text(AppLocalizations.of(context)!.spent))),
+                DataColumn(label: Expanded(child: Text(AppLocalizations.of(context)!.balance))),
               ], 
               rows: <DataRow> [
                 DataRow(cells: <DataCell>[

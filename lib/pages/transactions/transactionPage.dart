@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
 import 'package:personalmoney/helpers/formatHelper.dart';
+import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/models/TransactionModel.dart';
 import 'package:personalmoney/pages/transactions/addTransaction.dart';
 import 'package:personalmoney/pages/transactions/detailtransaction.dart';
@@ -15,8 +16,7 @@ class _TransactionPageState extends State<TransactionPage> {
   final FormatHelper formatHelper = FormatHelper();
   
   List<TransactionModel> _transactions = [];
-  // double _totalAmount = 0.0;
-
+  
   @override
   void initState() {
     super.initState();
@@ -25,20 +25,8 @@ class _TransactionPageState extends State<TransactionPage> {
 
   Future<void> _loadTransactions() async {
     List<TransactionModel> transactions = await _sqlHelper.getTransactions();
-    // double totalAmount = 0.0;
-
-    // for (var transaction in transactions) {
-    //   if (transaction.transType == 'income') {
-    //     totalAmount += transaction.amount;
-    //   } else if (transaction.transType == 'expense') {
-    //     totalAmount -= transaction.amount;
-    //   }
-    // }
-
-    setState(() {
-      _transactions = transactions;
-      // _totalAmount = totalAmount;
-    });
+    
+    setState(() => _transactions = transactions);
   }
   
   @override
@@ -46,7 +34,7 @@ class _TransactionPageState extends State<TransactionPage> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: Text('Transactions'),
+        title: Text(AppLocalizations.of(context)!.transactions),
         actions: [
           IconButton(
             onPressed: () async {
@@ -55,7 +43,7 @@ class _TransactionPageState extends State<TransactionPage> {
               _loadTransactions();
             },
             icon: Icon(Icons.add_circle),
-            tooltip: 'Add Transaction',
+            tooltip: AppLocalizations.of(context)!.addTransactionTitle,
           )
         ],
       ),
@@ -71,7 +59,7 @@ class _TransactionPageState extends State<TransactionPage> {
   if (_transactions.isEmpty) {
     return Center(
       child: Text(
-        'No hay transacciones',
+        AppLocalizations.of(context)!.emptyTransactionMsg,
         style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: Colors.grey),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
 import 'package:personalmoney/helpers/SnakcHelper.dart';
 import 'package:personalmoney/helpers/formatHelper.dart';
+import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/models/TransactionModel.dart';
 
 class DetailTransactionPage extends StatefulWidget {
@@ -22,7 +23,7 @@ class _DetailTransactionPageState extends State<DetailTransactionPage> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: Text('Detail Transaction'),
+        title: Text(AppLocalizations.of(context)!.detailTransactionTitle),
       ),
       body: Padding(
         padding: EdgeInsets.all(8.0),
@@ -104,7 +105,7 @@ class _DetailTransactionPageState extends State<DetailTransactionPage> {
                           ),
                           onPressed: () {},
                           icon: Icon(Icons.edit),
-                          label: const Text('Edit'),
+                          label: Text(AppLocalizations.of(context)!.edit),
                         ),
                       ),
                       SizedBox(width: 10),
@@ -115,7 +116,7 @@ class _DetailTransactionPageState extends State<DetailTransactionPage> {
                           ),
                           onPressed: () {},
                           icon: Icon(Icons.delete),
-                          label: const Text('Delete'),
+                          label: Text(AppLocalizations.of(context)!.delete),
                         ),
                       ),
                     ],

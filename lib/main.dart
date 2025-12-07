@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personalmoney/pages/auth/loginPage.dart';
-import 'package:personalmoney/pages/home_page.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'l10n/app_localizations.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +29,18 @@ class PersonalMoney extends StatelessWidget {
           iconTheme: IconThemeData(color: Colors.white),
         ),
       ),
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en'), // English
+        Locale('es'), // Spanish
+        // Locale('pr'), // Portuguese
+        // Locale('fr'), // French
+      ],
       home: LoginPage() //HomePage()
     );
   }

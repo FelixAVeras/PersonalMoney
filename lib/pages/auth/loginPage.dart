@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:personalmoney/l10n/app_localizations.dart';
+import 'package:personalmoney/l10n/app_localizations_en.dart';
 import 'package:personalmoney/pages/auth/registerPage.dart';
 import 'package:personalmoney/pages/home_page.dart';
 
@@ -36,16 +38,16 @@ class _loginPageState extends State<LoginPage> {
                         children: [
                           TextFormField(
                             keyboardType: TextInputType.emailAddress,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               prefixIcon: Icon(Icons.alternate_email, color: Colors.teal),
-                              labelText: 'Email Address',
-                              hintText: 'ejemplo@ejemplo.com',
+                              labelText: AppLocalizations.of(context)!.email,
+                              hintText: 'abc123@defg.com',
                               labelStyle: TextStyle(fontWeight: FontWeight.w600),
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Insert a valid email';
+                                return AppLocalizations.of(context)!.invalidEmailMsg;
                               }
                               return null;
                             },
@@ -56,7 +58,7 @@ class _loginPageState extends State<LoginPage> {
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               prefixIcon: const Icon(Icons.lock_outline, color: Colors.teal),
-                              labelText: 'Password',
+                              labelText: AppLocalizations.of(context)!.password,
                               labelStyle: const TextStyle(fontWeight: FontWeight.w600),
                               suffix: InkWell(
                                 onTap: togglePasswordView,
@@ -68,7 +70,7 @@ class _loginPageState extends State<LoginPage> {
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Insert a password';
+                                return AppLocalizations.of(context)!.emptyPasswordMsg;
                               }
                               return null;
                             },
@@ -88,7 +90,7 @@ class _loginPageState extends State<LoginPage> {
                               }
                             },
                             child: Text(
-                              'Enter',
+                              AppLocalizations.of(context)!.btnEnter,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600,
@@ -98,7 +100,7 @@ class _loginPageState extends State<LoginPage> {
                           const SizedBox(height: 15.0),
                           TextButton(
                             child: Text(
-                              'Registrar Usuario',
+                              AppLocalizations.of(context)!.btnRegister,
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 17,
