@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personalmoney/helpers/category_localization_helper.dart';
 import 'package:personalmoney/helpers/formatHelper.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
+import 'package:personalmoney/l10n/app_localizations_en.dart';
 import 'package:personalmoney/models/CategoryModel.dart';
 import 'package:personalmoney/models/budgetModel.dart';
 import 'package:personalmoney/pages/budgets/addBudget.dart';
@@ -74,17 +75,26 @@ class _BudgetPageState extends State<BudgetPage> {
   String _formatCurrency(double value) => '\$${value.toStringAsFixed(2)}';
 
   Color _balanceColor(BudgetModel b) {
-    if (b.amount == 0) return Colors.black;
+    if (b.amount == 0) {
+      return Theme.of(context).brightness == Brightness.light
+      ? Colors.black
+      : Colors.white;
+    }
+    
     final double percent = b.balance / b.amount;
+    
     if (percent <= 0.10) return Colors.red;
     if (percent <= 0.20) return Colors.orange;
+    
     return Colors.green;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: Theme.of(context).brightness == Brightness.light
+      ? Colors.grey.shade200
+      : const Color(0xFF1E1E1E),
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.budget),
         actions: [
@@ -104,7 +114,9 @@ class _BudgetPageState extends State<BudgetPage> {
       body: loading
           ? const Center(child: CircularProgressIndicator())
           : budgets.isEmpty
-              ? const Center(child: Text("No hay presupuesto asignado"))
+              ? Center(child: Text(
+                AppLocalizations.of(context)!.emptyBudgetMsg,
+                style: TextStyle(fontWeight: FontWeight.w600, color: Colors.grey)))
               : SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: SingleChildScrollView(

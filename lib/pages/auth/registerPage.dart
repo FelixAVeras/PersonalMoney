@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personalmoney/l10n/app_localizations.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Register User'),
+        title: Text(AppLocalizations.of(context)!.btnRegister),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -29,19 +30,19 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(height: 15.0),
             TextField(
               controller: emailController, 
-              decoration: InputDecoration(labelText: 'Email', border: OutlineInputBorder())
+              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.email, border: OutlineInputBorder())
             ),
             const SizedBox(height: 15.0),
             TextField(
               controller: passwordController, 
-              decoration: InputDecoration(labelText: 'Password', border: OutlineInputBorder()), 
+              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.password, border: OutlineInputBorder()), 
               obscureText: true
             ),
             SizedBox(height: 20),
             ElevatedButton.icon(
               onPressed:() {},
               icon: Icon(Icons.save_alt), 
-              label: Text('Save Data')
+              label: Text(AppLocalizations.of(context)!.btnSaveChanges)
             ),
           ],
         ),

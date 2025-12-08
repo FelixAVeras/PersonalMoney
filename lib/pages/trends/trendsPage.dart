@@ -5,7 +5,9 @@ class TrendsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: Theme.of(context).brightness == Brightness.light
+      ? Colors.grey.shade200
+      : const Color(0xFF1E1E1E),
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.trends),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:personalmoney/pages/home_page.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:personalmoney/pages/auth/loginPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'l10n/app_localizations.dart';
 
@@ -56,10 +57,11 @@ class PersonalMoney extends StatelessWidget {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               title: 'Personal Money',
-              locale: currentLocale, // ← idioma actual dinámico
+              locale: currentLocale,
               theme: ThemeData(
                 useMaterial3: true,
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+                textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme),
                 appBarTheme: AppBarTheme(
                   elevation: 2,
                   centerTitle: true,
@@ -70,9 +72,8 @@ class PersonalMoney extends StatelessWidget {
                 ),
               ),
               darkTheme: ThemeData.dark().copyWith(
-                useMaterial3: true,
                 appBarTheme: const AppBarTheme(
-                  foregroundColor: Color(0xFFF8EDD9),
+                  foregroundColor: Colors.white,
                   elevation: 2,
                   centerTitle: true,
                   scrolledUnderElevation: 4,
@@ -91,7 +92,8 @@ class PersonalMoney extends StatelessWidget {
                 Locale('pt'),
                 Locale('fr'),
               ],
-              home: HomePage(),
+              // home: HomePage(),
+              home: LoginPage(),
             );
           },
         );

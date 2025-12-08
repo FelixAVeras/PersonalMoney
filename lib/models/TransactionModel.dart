@@ -47,7 +47,7 @@ class TransactionModel {
   final int? id;
   final String name;
   final String? date;
-  final String transType; // 'income' | 'expense'
+  String transType; // 'income' | 'expense'
   final double amount;
   final int? categoryId;
   final int? month;

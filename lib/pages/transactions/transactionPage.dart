@@ -33,7 +33,9 @@ class _TransactionPageState extends State<TransactionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Theme.of(context).brightness == Brightness.light
+      ? Colors.grey.shade200
+      : const Color(0xFF1E1E1E),
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.transactions),
         actions: [
@@ -61,7 +63,7 @@ class _TransactionPageState extends State<TransactionPage> {
     return Center(
       child: Text(
         AppLocalizations.of(context)!.emptyTransactionMsg,
-        style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: Colors.grey),
+        style: TextStyle(fontWeight: FontWeight.w600, color: Colors.grey),
       ),
     );
   }

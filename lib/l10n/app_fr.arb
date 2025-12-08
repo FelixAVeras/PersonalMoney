@@ -47,5 +47,16 @@
     "categoryEducation": "Éducation",
     "categoryHealth": "Santé et Bien-être",
     "categoryShopping": "Achats",
-    "categoryOthers": "Autres"
+    "categoryOthers": "Autres",
+    "left": "Restant",
+    "userProfile": "Profil utilisateur",
+    "changeImage": "Changer l'image",
+    "editInfo": "Informations de modification",
+    "securityPrivacy": "Sécurité et confidentialité",
+    "principalIncome": "Revenu principal",
+    "emptyBudgetMsg": "Aucun budget alloué",
+    "noPrincipalIncomeMsg": "Aucun bilan initial n'a été établi.",
+    "initialBalance": "Solde initial",
+    "invalidInitialBalanceMsg": "Saisissez le montant initial",
+    "continueWithoutAccount": "Continuer sans s'inscrire"
 }

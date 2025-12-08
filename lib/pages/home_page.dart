@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
-import 'package:personalmoney/helpers/category_localization_helper.dart';
 import 'package:personalmoney/helpers/formatHelper.dart';
 import 'package:personalmoney/helpers/overviewHelper.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
-import 'package:personalmoney/l10n/app_localizations_en.dart';
 import 'package:personalmoney/models/budgetModel.dart';
+import 'package:personalmoney/pages/auth/profilePage.dart';
 import 'package:personalmoney/pages/budgets/budgetPage.dart';
 import 'package:personalmoney/pages/overviewList.dart';
 import 'package:personalmoney/pages/settingPage.dart';
@@ -36,92 +35,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
-      // drawer: Drawer(
-      //   child: ListView(
-      //     padding: EdgeInsets.zero,
-      //     children: <Widget>[
-      //       DrawerHeader(
-      //         decoration: BoxDecoration(
-      //           color: Colors.teal,
-      //         ),
-      //         child: Image.asset('assets/pigbank.png', width: 128.0)
-      //       ),
-      //       // ListTile(
-      //       //   leading: Icon(Icons.person),
-      //       //   title: Text(AppLocalizations.of(context)!.profile),
-      //       //   onTap: () {
-      //       //     Navigator.pop(context);
-
-      //       //     Navigator.push(
-      //       //       context,
-      //       //       MaterialPageRoute(builder: (context) => ProfilePage())
-      //       //     );
-      //       //   },
-      //       // ),
-      //       // const Divider(),
-      //       ListTile(
-      //         leading: Icon(Icons.sync_alt),
-      //         title: Text(AppLocalizations.of(context)!.transactions),
-      //         onTap: () {
-      //           Navigator.pop(context);
-
-      //           Navigator.push(
-      //             context,
-      //             MaterialPageRoute(builder: (context) => TransactionPage())
-      //           );
-      //         },
-      //       ),
-      //       ListTile(
-      //         leading: Icon(Icons.attach_money),
-      //         title: Text(AppLocalizations.of(context)!.budget),
-      //         onTap: () {
-      //           Navigator.pop(context);
-
-      //           Navigator.push(
-      //             context,
-      //             MaterialPageRoute(builder: (context) => BudgetPage())
-      //           );
-      //         },
-      //       ),
-      //       // const Divider(),
-      //       // ListTile(
-      //       //   leading: Icon(Icons.bar_chart),
-      //       //   title: Text(AppLocalizations.of(context)!.trends),
-      //       //   onTap: () {
-                
-      //       //   },
-      //       // ),
-      //       ListTile(
-      //         leading: Icon(Icons.settings),
-      //         title: Text(AppLocalizations.of(context)!.settings),
-      //         onTap: () {
-      //           Navigator.pop(context);
-
-      //           Navigator.push(
-      //             context,
-      //             MaterialPageRoute(builder: (context) => SettingsPage())
-      //           );
-      //         },
-      //       ),
-      //       // const Divider(),
-      //       // ListTile(
-      //       //   leading: Icon(Icons.output),
-      //       //   title: Text(AppLocalizations.of(context)!.signOut),
-      //       //   onTap: () {
-                
-      //       //   },
-      //       //   trailing: Icon(Icons.arrow_back, color: Colors.red,),
-      //       // ),
-      //     ],
-      //   ),
-      // ),
+      backgroundColor: Colors.grey.shade200,
       body: [
         OverviewList(),
         TransactionPage(),
         BudgetPage(),
         TrendsPage(),
-        SettingsPage()
+        ProfilePage()
       ][currentPageIndex],
       bottomNavigationBar: NavigationBar(
         indicatorColor: Colors.teal,
@@ -154,9 +74,9 @@ class _HomePageState extends State<HomePage> {
             label: AppLocalizations.of(context)!.trends,
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.settings_rounded, color: Colors.white),
-            icon: Icon(Icons.settings_outlined),
-            label: AppLocalizations.of(context)!.settings,
+            selectedIcon: Icon(Icons.person_rounded, color: Colors.white),
+            icon: Icon(Icons.person_outline_rounded),
+            label: AppLocalizations.of(context)!.profile,
           ),
         ],
       ),

@@ -47,5 +47,16 @@
     "categoryEducation": "Education",
     "categoryHealth": "Health & Wellness",
     "categoryShopping": "Shopping",
-    "categoryOthers": "Others"
+    "categoryOthers": "Others",
+    "left": "Left",
+    "userProfile": "User Profile",
+    "changeImage": "Change Image",
+    "editInfo": "Edit Info",
+    "securityPrivacy": "Security & Privacy",
+    "principalIncome": "Principal Income",
+    "emptyBudgetMsg": "No Budgets",
+    "noPrincipalIncomeMsg": "An initial balance sheet has not been established.",
+    "initialBalance": "Initial Balance",
+    "invalidInitialBalanceMsg": "Enter initial amount",
+    "continueWithoutAccount": "Continue without account"
 }

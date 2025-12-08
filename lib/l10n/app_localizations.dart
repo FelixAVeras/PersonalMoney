@@ -395,6 +395,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Others'**
   String get categoryOthers;
+
+  /// No description provided for @left.
+  ///
+  /// In en, this message translates to:
+  /// **'Left'**
+  String get left;
+
+  /// No description provided for @userProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'User Profile'**
+  String get userProfile;
+
+  /// No description provided for @changeImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Image'**
+  String get changeImage;
+
+  /// No description provided for @editInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Info'**
+  String get editInfo;
+
+  /// No description provided for @securityPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Security & Privacy'**
+  String get securityPrivacy;
+
+  /// No description provided for @principalIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'Principal Income'**
+  String get principalIncome;
+
+  /// No description provided for @emptyBudgetMsg.
+  ///
+  /// In en, this message translates to:
+  /// **'No Budgets'**
+  String get emptyBudgetMsg;
+
+  /// No description provided for @noPrincipalIncomeMsg.
+  ///
+  /// In en, this message translates to:
+  /// **'An initial balance sheet has not been established.'**
+  String get noPrincipalIncomeMsg;
+
+  /// No description provided for @initialBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Initial Balance'**
+  String get initialBalance;
+
+  /// No description provided for @invalidInitialBalanceMsg.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter initial amount'**
+  String get invalidInitialBalanceMsg;
+
+  /// No description provided for @continueWithoutAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue without account'**
+  String get continueWithoutAccount;
 }
 
 class _AppLocalizationsDelegate

@@ -154,4 +154,37 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get categoryOthers => 'Otros';
+
+  @override
+  String get left => 'Restante';
+
+  @override
+  String get userProfile => 'Perfil de Usuario';
+
+  @override
+  String get changeImage => 'Cambiar Imagen';
+
+  @override
+  String get editInfo => 'Editar Informacion';
+
+  @override
+  String get securityPrivacy => 'Seguridad y privacidad';
+
+  @override
+  String get principalIncome => 'Ingresos Principales';
+
+  @override
+  String get emptyBudgetMsg => 'Sin Presupuesto asignado';
+
+  @override
+  String get noPrincipalIncomeMsg => 'No se ha establecido un balance inicial';
+
+  @override
+  String get initialBalance => 'Balance Inicial';
+
+  @override
+  String get invalidInitialBalanceMsg => 'Ingrese cantidad inicial';
+
+  @override
+  String get continueWithoutAccount => 'Continuar sin cuenta';
 }

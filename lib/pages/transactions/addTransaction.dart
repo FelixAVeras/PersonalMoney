@@ -97,7 +97,9 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Theme.of(context).brightness == Brightness.light
+      ? Colors.grey.shade200
+      : const Color(0xFF1E1E1E),
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.addTransactionTitle),
         actions: [

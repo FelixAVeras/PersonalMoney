@@ -155,4 +155,37 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get categoryOthers => 'Autres';
+
+  @override
+  String get left => 'Restant';
+
+  @override
+  String get userProfile => 'Profil utilisateur';
+
+  @override
+  String get changeImage => 'Changer l\'image';
+
+  @override
+  String get editInfo => 'Informations de modification';
+
+  @override
+  String get securityPrivacy => 'Sécurité et confidentialité';
+
+  @override
+  String get principalIncome => 'Revenu principal';
+
+  @override
+  String get emptyBudgetMsg => 'Aucun budget alloué';
+
+  @override
+  String get noPrincipalIncomeMsg => 'Aucun bilan initial n\'a été établi.';
+
+  @override
+  String get initialBalance => 'Solde initial';
+
+  @override
+  String get invalidInitialBalanceMsg => 'Saisissez le montant initial';
+
+  @override
+  String get continueWithoutAccount => 'Continuer sans s\'inscrire';
 }

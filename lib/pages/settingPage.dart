@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/main.dart';
+import 'package:personalmoney/pages/auth/profilePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -38,7 +39,9 @@ class SettingsPage extends StatelessWidget {
     bool syncEnabled = false;
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: Theme.of(context).brightness == Brightness.light
+      ? Colors.grey.shade200
+      : const Color(0xFF1E1E1E),
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context)!.settings,
@@ -50,14 +53,27 @@ class SettingsPage extends StatelessWidget {
           return ListView(
             padding: const EdgeInsets.all(8),
             children: [
+              // Card.outlined(
+              //   color: Theme.of(context).brightness == Brightness.light
+              //       ? Colors.white
+              //       : const Color(0xFF1E1E1E),
+              //   child: Column(
+              //     children: [
+              //       ListTile(
+              //         title: Text(
+              //           'Seguridad'
+              //         ),
+              //       ),
+                    
+              //     ],
+              //   ),
+              // ),
+              // const SizedBox(height: 12),
               Card.outlined(
-                color: Theme.of(context).brightness == Brightness.light
-                    ? Colors.white
-                    : const Color(0xFF1E1E1E),
                 child: Column(
                   children: [
                     ListTile(
-                      title: Text(AppLocalizations.of(context)!.appTheme),
+                      title: Text(AppLocalizations.of(context)!.appTheme, style: const TextStyle(fontWeight: FontWeight.bold)),
                     ),
                     RadioListTile<ThemeMode>(
                       title: Text(AppLocalizations.of(context)!.system),
@@ -88,14 +104,11 @@ class SettingsPage extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Card.outlined(
-                color: Theme.of(context).brightness == Brightness.light
-                    ? Colors.white
-                    : const Color(0xFF1E1E1E),
                 child: Column(
                   children: [
                     ListTile(
                       title: Text(
-                        AppLocalizations.of(context)!.language, // ← usa traducción
+                        AppLocalizations.of(context)!.language, style: const TextStyle(fontWeight: FontWeight.bold)
                       ),
                     ),
                     // Idioma del sistema
@@ -160,6 +173,19 @@ class SettingsPage extends StatelessWidget {
                         }
                       },
                     ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              Card.outlined(
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text(
+                        AppLocalizations.of(context)!.securityPrivacy, style: const TextStyle(fontWeight: FontWeight.bold)
+                      ),
+                    ),
+                    
                   ],
                 ),
               ),

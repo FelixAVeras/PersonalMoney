@@ -6,7 +6,7 @@ class SnackHelper {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        // behavior: SnackBarBehavior.floating,
+        behavior: SnackBarBehavior.floating,
         content: Text(message, style: TextStyle(fontSize: 16)),
       ),
     );

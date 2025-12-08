@@ -18,7 +18,9 @@ class _OverviewListState extends State<OverviewList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: Theme.of(context).brightness == Brightness.light
+      ? Colors.grey.shade200
+      : const Color(0xFF1E1E1E),
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.overview),
       ),
@@ -55,7 +57,7 @@ class _OverviewListState extends State<OverviewList> {
                         child: ConstrainedBox(
                           constraints: BoxConstraints(minWidth: tableWidth),
                           child: DataTable(
-                            columnSpacing: 16.0,
+                            columnSpacing: 2.0,
                             columns: [
                               DataColumn(
                                 label: Container(
@@ -140,7 +142,7 @@ class _OverviewListState extends State<OverviewList> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Spent',
+                  AppLocalizations.of(context)!.spent,
                   style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 4.0),
@@ -156,7 +158,7 @@ class _OverviewListState extends State<OverviewList> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Left',
+                  AppLocalizations.of(context)!.left,
                   style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 4.0),

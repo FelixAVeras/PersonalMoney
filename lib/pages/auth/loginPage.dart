@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
-import 'package:personalmoney/l10n/app_localizations_en.dart';
 import 'package:personalmoney/pages/auth/registerPage.dart';
 import 'package:personalmoney/pages/home_page.dart';
 
@@ -18,7 +17,7 @@ class _loginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
+      body: SingleChildScrollView(
       child: Container(
         child: Column(
           children: [
@@ -26,7 +25,9 @@ class _loginPageState extends State<LoginPage> {
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
+                  color: Theme.of(context).brightness == Brightness.light
+                  ? Colors.grey.shade200
+                  : const Color(0xFF1E1E1E),
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
                 child: Column(
@@ -78,8 +79,10 @@ class _loginPageState extends State<LoginPage> {
                           const SizedBox(height: 28.0),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 120),
-                              backgroundColor: Colors.teal
+                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 95),
+                              backgroundColor: Colors.teal,
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(10))
                             ),
                             onPressed: () {
                               if (validatedForm()) {
@@ -98,41 +101,41 @@ class _loginPageState extends State<LoginPage> {
                             ),
                           ),
                           const SizedBox(height: 15.0),
-                          TextButton(
+                          FilledButton.tonal(
+                            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage())),
+                            style: FilledButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 60),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(10))
+                            ),
                             child: Text(
                               AppLocalizations.of(context)!.btnRegister,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 17,
-                                color: Colors.grey.shade600
-                              ),
                             ),
-                            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage())),
                           ),
-                          // TextButton(
-                          //   child: const Text(
-                          //     'Continuar sin registro',
-                          //     style: TextStyle(
-                          //         color: Color(0xFF317039),
-                          //         fontWeight: FontWeight.w600,
-                          //         fontSize: 16),
-                          //   ),
-                          //   onPressed: () => Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(builder: (context) => HomePage()),
-                          //   ),
-                          // )
+                          const SizedBox(height: 15.0),
+                          TextButton(
+                            child: Text(
+                              AppLocalizations.of(context)!.continueWithoutAccount,
+                              style: TextStyle(
+                                  color: Colors.red.shade300,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16),
+                            ),
+                            onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => HomePage()),
+                            ),
+                          )
                           
                         ],
                       ),
                     ),
-                    const SizedBox(height: 32.0),
-                    Center(child: Column(
-                      children: [
-                        Text('Personal Money - 2025', style: TextStyle(fontSize: 16)),
-                        Icon(Icons.copyright_rounded)
-                      ],
-                    ))
+                    const SizedBox(height: 29.0),
+                    Center(
+                      child: Text(
+                        'Personal Money © 2019 - 2025', 
+                        style: TextStyle(fontSize: 16, color: Colors.grey.shade600)
+                      )
+                    )
                   ],
                 ),
               ),
@@ -153,7 +156,7 @@ class _loginPageState extends State<LoginPage> {
     final size = MediaQuery.of(context).size;
 
     return Container(
-      height: size.height * 0.35,
+      height: size.height * 0.30,
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.teal,
@@ -164,8 +167,8 @@ class _loginPageState extends State<LoginPage> {
       ),
       child: Column(
         children: [
-          const SizedBox(height: 30.0),
-          Image.asset('assets/pigbank.png', width: 128.0),
+          const SizedBox(height: 40.0),
+          Image.asset('assets/pigbank.png', width: 96.0),
           const SizedBox(height: 10.0),
           Text(
             'Personal Money', 

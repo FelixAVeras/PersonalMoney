@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
-import 'package:personalmoney/helpers/SnakcHelper.dart';
+import 'package:personalmoney/helpers/category_localization_helper.dart';
 import 'package:personalmoney/helpers/formatHelper.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/models/TransactionModel.dart';
@@ -29,7 +29,7 @@ class _DetailTransactionPageState extends State<DetailTransactionPage> {
         padding: EdgeInsets.all(8.0),
         child: SizedBox(
           width: double.infinity,
-          child: Card(
+          child: Card.outlined(
             // elevation: 3,
             // shape: RoundedRectangleBorder(
             //   borderRadius: BorderRadius.circular(12), // Bordes suaves
@@ -55,7 +55,9 @@ class _DetailTransactionPageState extends State<DetailTransactionPage> {
                           ),
                         ),
                         Text(
-                          widget.transaction.categoryName.toString(),
+                          CategoryLocalizationHelper.translateCategory(
+                            context, 
+                            widget.transaction.categoryName.toString()),
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -77,7 +79,9 @@ class _DetailTransactionPageState extends State<DetailTransactionPage> {
 
                   // Tipo
                   Text(
-                    widget.transaction.transType,
+                    widget.transaction.transType == 'Income' 
+                    ? AppLocalizations.of(context)!.income
+                    : AppLocalizations.of(context)!.expense,
                     style: TextStyle(
                       fontSize: 16,
                       color: widget.transaction.transType == 'income'
