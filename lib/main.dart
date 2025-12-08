@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:personalmoney/pages/auth/loginPage.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:personalmoney/pages/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,8 +10,8 @@ void main() async {
   final prefs = await SharedPreferences.getInstance();
   final savedTheme = prefs.getString('themeMode') ?? 'system';
   final savedLang = prefs.getString('language');
+  
   Locale? initialLocale;
-
   ThemeMode initialTheme;
 
   switch (savedTheme) {
@@ -59,11 +58,11 @@ class PersonalMoney extends StatelessWidget {
               title: 'Personal Money',
               locale: currentLocale, // ← idioma actual dinámico
               theme: ThemeData(
-                useMaterial3: false,
+                useMaterial3: true,
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
                 appBarTheme: AppBarTheme(
                   elevation: 2,
-                  centerTitle: false,
+                  centerTitle: true,
                   scrolledUnderElevation: 4,
                   backgroundColor: Colors.teal,
                   foregroundColor: Colors.white,
@@ -71,11 +70,11 @@ class PersonalMoney extends StatelessWidget {
                 ),
               ),
               darkTheme: ThemeData.dark().copyWith(
-                useMaterial3: false,
+                useMaterial3: true,
                 appBarTheme: const AppBarTheme(
                   foregroundColor: Color(0xFFF8EDD9),
                   elevation: 2,
-                  centerTitle: false,
+                  centerTitle: true,
                   scrolledUnderElevation: 4,
                 ),
               ),

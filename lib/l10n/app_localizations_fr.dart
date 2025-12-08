@@ -122,4 +122,37 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get language => 'Langue';
+
+  @override
+  String get addBudget => 'Ajouter un devis';
+
+  @override
+  String get categoryHome => 'Maison';
+
+  @override
+  String get categoryEntertainment => 'Divertissement';
+
+  @override
+  String get categoryFood => 'Nourriture';
+
+  @override
+  String get categoryCharity => 'Charité';
+
+  @override
+  String get categoryUtilities => 'Services publics';
+
+  @override
+  String get categoryAuto => 'Automobile';
+
+  @override
+  String get categoryEducation => 'Éducation';
+
+  @override
+  String get categoryHealth => 'Santé et Bien-être';
+
+  @override
+  String get categoryShopping => 'Achats';
+
+  @override
+  String get categoryOthers => 'Autres';
 }

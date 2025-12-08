@@ -1,56 +1,58 @@
 // class TransactionModel {
-//   int? id;
-//   String name;
-//   int? categoryId;
-//   double amount;
-//   String date;
-//   String transType;
+//   final int? id;
+//   final String name;
+//   final String? date;
+//   final String transType;
+//   final double amount;
+//   final int? categoryId;
+//   final String? categoryName; // ← nuevo
 
 //   TransactionModel({
 //     this.id,
 //     required this.name,
-//     this.categoryId,
 //     required this.amount,
-//     required this.date,
-//     required this.transType
+//     required this.transType,
+//     this.date,
+//     this.categoryId,
+//     this.categoryName,
 //   });
-
-//   Map<String, dynamic> toMap() {
-//     return {
-//       'id': id,
-//       'name': name,
-//       'category_id': categoryId,
-//       'amount': amount,
-//       'type': transType,
-//       'date': date,
-//     };
-//   }
 
 //   factory TransactionModel.fromMap(Map<String, dynamic> map) {
 //     return TransactionModel(
 //       id: map['id'],
 //       name: map['name'],
-//       categoryId: map['category_id'],
-//       amount: map['amount'],
-//       date: map['date'], 
-//       transType: map['type'],
+//       amount: (map['amount'] as num).toDouble(),       // ← FIX
+//       transType: map['type'] ?? map['transType'],       // ← FIX
+//       date: map['date'],
+//       categoryId: map['category_id'] ?? map['categoryId'], // ← FIX
+//       categoryName: map['category_name'], 
 //     );
 //   }
 
-//   @override
-//   String toString() {
-//     return 'TransactionModel{id: $id, name: $name, categoryId: $categoryId, amount: $amount, date: $date}';
+//   Map<String, dynamic> toMap() {
+//     return {
+//       'id': id,
+//       'name': name,
+//       'amount': amount,               // double OK
+//       'type': transType,              // Asegúrate que la columna se llama "type"
+//       'date': date,
+//       'category_id': categoryId,      // O "categoryId" según tu tabla
+//     };
 //   }
+
 // }
 
+// models/transaction_model.dart
 class TransactionModel {
   final int? id;
   final String name;
   final String? date;
-  final String transType;
+  final String transType; // 'income' | 'expense'
   final double amount;
   final int? categoryId;
-  final String? categoryName; // ← nuevo
+  final int? month;
+  final int? year;
+  final String? categoryName;
 
   TransactionModel({
     this.id,
@@ -59,18 +61,22 @@ class TransactionModel {
     required this.transType,
     this.date,
     this.categoryId,
+    this.month,
+    this.year,
     this.categoryName,
   });
 
   factory TransactionModel.fromMap(Map<String, dynamic> map) {
     return TransactionModel(
-      id: map['id'],
-      name: map['name'],
-      amount: map['amount'],
-      transType: map['type'],
-      date: map['date'],
-      categoryId: map['category_id'],
-      categoryName: map['category_name'],  // ← nuevo
+      id: map['id'] as int?,
+      name: map['name'] as String,
+      amount: (map['amount'] as num).toDouble(),
+      transType: (map['type'] ?? map['transType']) as String,
+      date: map['date'] as String?,
+      categoryId: map['category_id'] as int?,
+      month: map['month'] as int?,
+      year: map['year'] as int?,
+      categoryName: map['category_name'] as String?,
     );
   }
 
@@ -82,6 +88,8 @@ class TransactionModel {
       'type': transType,
       'date': date,
       'category_id': categoryId,
+      'month': month,
+      'year': year,
     };
   }
 }

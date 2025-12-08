@@ -121,4 +121,37 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get language => 'Linguagem';
+
+  @override
+  String get addBudget => 'Adicionar cotação';
+
+  @override
+  String get categoryHome => 'Casa';
+
+  @override
+  String get categoryEntertainment => 'Entretenimento';
+
+  @override
+  String get categoryFood => 'Comida';
+
+  @override
+  String get categoryCharity => 'Caridade';
+
+  @override
+  String get categoryUtilities => 'Serviços';
+
+  @override
+  String get categoryAuto => 'Automóvel';
+
+  @override
+  String get categoryEducation => 'Educação';
+
+  @override
+  String get categoryHealth => 'Saúde e Bem-estar';
+
+  @override
+  String get categoryShopping => 'Compras';
+
+  @override
+  String get categoryOthers => 'Outros';
 }

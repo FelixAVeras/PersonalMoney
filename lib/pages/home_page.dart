@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
+import 'package:personalmoney/helpers/category_localization_helper.dart';
+import 'package:personalmoney/helpers/formatHelper.dart';
+import 'package:personalmoney/helpers/overviewHelper.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
-import 'package:personalmoney/models/TransactionModel.dart';
-import 'package:personalmoney/pages/auth/profilePage.dart';
+import 'package:personalmoney/l10n/app_localizations_en.dart';
+import 'package:personalmoney/models/budgetModel.dart';
 import 'package:personalmoney/pages/budgets/budgetPage.dart';
+import 'package:personalmoney/pages/overviewList.dart';
 import 'package:personalmoney/pages/settingPage.dart';
 import 'package:personalmoney/pages/transactions/transactionPage.dart';
+import 'package:personalmoney/pages/trends/trendsPage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,255 +18,148 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final SQLHelper _sqlHelper = SQLHelper();
+  final SQLHelper sqlHelper = SQLHelper();
+  final OverviewHelper overviewHelper = OverviewHelper();
+  final FormatHelper formatHelper = FormatHelper();
   
-  List<TransactionModel> _transactions = [];
-  double _totalAmount = 0.0;
+  List<BudgetModel> budgets = [];
+  
+  Map<int, String> categoryNames = {};
+
+  List<Map<String, dynamic>> overviewData = [];
+
+  int currentPageIndex = 0;
 
   @override
-  void initState() {
-    super.initState();
-    // _loadTransactions();
-  }
-
-  // Future<void> _loadTransactions() async {
-  //   List<TransactionModel> transactions = await _sqlHelper.getTransactions();
-  //   double totalAmount = 0.0;
-
-  //   for (var transaction in transactions) {
-  //     if (transaction.transType == 'income') {
-  //       totalAmount += transaction.amount;
-  //     } else if (transaction.transType == 'expense') {
-  //       totalAmount -= transaction.amount;
-  //     }
-  //   }
-
-  //   setState(() {
-  //     _transactions = transactions;
-  //     _totalAmount = totalAmount;
-  //   });
-  // }
+  void initState() => super.initState();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.overview),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.teal,
-              ),
-              child: Image.asset('assets/pigbank.png', width: 128.0)
-            ),
-            // ListTile(
-            //   leading: Icon(Icons.person),
-            //   title: Text(AppLocalizations.of(context)!.profile),
-            //   onTap: () {
-            //     Navigator.pop(context);
+      backgroundColor: Colors.grey.shade300,
+      // drawer: Drawer(
+      //   child: ListView(
+      //     padding: EdgeInsets.zero,
+      //     children: <Widget>[
+      //       DrawerHeader(
+      //         decoration: BoxDecoration(
+      //           color: Colors.teal,
+      //         ),
+      //         child: Image.asset('assets/pigbank.png', width: 128.0)
+      //       ),
+      //       // ListTile(
+      //       //   leading: Icon(Icons.person),
+      //       //   title: Text(AppLocalizations.of(context)!.profile),
+      //       //   onTap: () {
+      //       //     Navigator.pop(context);
 
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => ProfilePage())
-            //     );
-            //   },
-            //   trailing: Icon(Icons.arrow_forward),
-            // ),
-            // const Divider(),
-            ListTile(
-              leading: Icon(Icons.sync_alt),
-              title: Text(AppLocalizations.of(context)!.transactions),
-              onTap: () {
-                Navigator.pop(context);
+      //       //     Navigator.push(
+      //       //       context,
+      //       //       MaterialPageRoute(builder: (context) => ProfilePage())
+      //       //     );
+      //       //   },
+      //       // ),
+      //       // const Divider(),
+      //       ListTile(
+      //         leading: Icon(Icons.sync_alt),
+      //         title: Text(AppLocalizations.of(context)!.transactions),
+      //         onTap: () {
+      //           Navigator.pop(context);
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => TransactionPage())
-                );
-              },
-              trailing: Icon(Icons.arrow_forward),
-            ),
-            const Divider(),
-            ListTile(
-              leading: Icon(Icons.attach_money),
-              title: Text(AppLocalizations.of(context)!.budget),
-              onTap: () {
-                Navigator.pop(context);
+      //           Navigator.push(
+      //             context,
+      //             MaterialPageRoute(builder: (context) => TransactionPage())
+      //           );
+      //         },
+      //       ),
+      //       ListTile(
+      //         leading: Icon(Icons.attach_money),
+      //         title: Text(AppLocalizations.of(context)!.budget),
+      //         onTap: () {
+      //           Navigator.pop(context);
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => BudgetPage())
-                );
-              },
-              trailing: Icon(Icons.arrow_forward),
-            ),
-            // const Divider(),
-            // ListTile(
-            //   leading: Icon(Icons.bar_chart),
-            //   title: Text(AppLocalizations.of(context)!.trends),
-            //   onTap: () {
+      //           Navigator.push(
+      //             context,
+      //             MaterialPageRoute(builder: (context) => BudgetPage())
+      //           );
+      //         },
+      //       ),
+      //       // const Divider(),
+      //       // ListTile(
+      //       //   leading: Icon(Icons.bar_chart),
+      //       //   title: Text(AppLocalizations.of(context)!.trends),
+      //       //   onTap: () {
                 
-            //   },
-            //   trailing: Icon(Icons.arrow_forward),
-            // ),
-            const Divider(),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text(AppLocalizations.of(context)!.settings),
-              onTap: () {
-                Navigator.pop(context);
+      //       //   },
+      //       // ),
+      //       ListTile(
+      //         leading: Icon(Icons.settings),
+      //         title: Text(AppLocalizations.of(context)!.settings),
+      //         onTap: () {
+      //           Navigator.pop(context);
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SettingsPage())
-                );
-              },
-              trailing: Icon(Icons.arrow_forward),
-            ),
-            // const Divider(),
-            // ListTile(
-            //   leading: Icon(Icons.output),
-            //   title: Text(AppLocalizations.of(context)!.signOut),
-            //   onTap: () {
+      //           Navigator.push(
+      //             context,
+      //             MaterialPageRoute(builder: (context) => SettingsPage())
+      //           );
+      //         },
+      //       ),
+      //       // const Divider(),
+      //       // ListTile(
+      //       //   leading: Icon(Icons.output),
+      //       //   title: Text(AppLocalizations.of(context)!.signOut),
+      //       //   onTap: () {
                 
-            //   },
-            //   trailing: Icon(Icons.arrow_back, color: Colors.red,),
-            // ),
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            _buildTotalCard(),
-            DataTable(
-              columns: <DataColumn> [
-                DataColumn(label: Expanded(child: Text(AppLocalizations.of(context)!.category))),
-                DataColumn(label: Expanded(child: Text(AppLocalizations.of(context)!.spent))),
-                DataColumn(label: Expanded(child: Text(AppLocalizations.of(context)!.balance))),
-              ], 
-              rows: <DataRow> [
-                DataRow(cells: <DataCell>[
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                ]),
-                DataRow(cells: <DataCell>[
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                ]),
-                DataRow(cells: <DataCell>[
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                ]),
-                DataRow(cells: <DataCell>[
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                ]),
-                DataRow(cells: <DataCell>[
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                ]),
-                DataRow(cells: <DataCell>[
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                ]),
-                DataRow(cells: <DataCell>[
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                ]),
-                DataRow(cells: <DataCell>[
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                ]),
-                DataRow(cells: <DataCell>[
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                ]),
-                DataRow(cells: <DataCell>[
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                ]),
-                DataRow(cells: <DataCell>[
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                ]),
-                DataRow(cells: <DataCell>[
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                ]),
-                DataRow(cells: <DataCell>[
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                ]),
-                DataRow(cells: <DataCell>[
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                ]),
-                DataRow(cells: <DataCell>[
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                  DataCell(Text('Elemento')),
-                ]),
-              ]
-            )
-          ],
-        ),
-      )
-    );
-  }
-
-  Widget _buildTotalCard() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card.outlined(
-        child: ListTile(
-          leading: Icon(Icons.wallet, size: 40, color: Colors.teal),
-          title: Text(
-            _formatAmount(_totalAmount),
-            style: TextStyle(
-              fontSize: 19.0, fontWeight: FontWeight.bold,
-              color: _totalAmount >= 0 ? Colors.green : Colors.grey.shade600,
-            ),
+      //       //   },
+      //       //   trailing: Icon(Icons.arrow_back, color: Colors.red,),
+      //       // ),
+      //     ],
+      //   ),
+      // ),
+      body: [
+        OverviewList(),
+        TransactionPage(),
+        BudgetPage(),
+        TrendsPage(),
+        SettingsPage()
+      ][currentPageIndex],
+      bottomNavigationBar: NavigationBar(
+        indicatorColor: Colors.teal,
+        selectedIndex: currentPageIndex,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        destinations: <Widget>[
+          NavigationDestination(
+            selectedIcon: Icon(Icons.pie_chart_rounded, color: Colors.white),
+            icon: Icon(Icons.pie_chart_outline_rounded),
+            label: AppLocalizations.of(context)!.overview,
           ),
-          subtitle: Text('Monto Total (Monto Actual)', style: TextStyle(fontSize: 16.0)),
-        ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.sync_alt_rounded, color: Colors.white),
+            icon: Icon(Icons.sync_alt_rounded),
+            label: AppLocalizations.of(context)!.transactions,
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.attach_money_rounded, color: Colors.white),
+            icon: Icon(Icons.attach_money_rounded),
+            label: AppLocalizations.of(context)!.budget,
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.bar_chart_rounded, color: Colors.white),
+            icon: Icon(Icons.bar_chart_rounded),
+            label: AppLocalizations.of(context)!.trends,
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.settings_rounded, color: Colors.white),
+            icon: Icon(Icons.settings_outlined),
+            label: AppLocalizations.of(context)!.settings,
+          ),
+        ],
       ),
     );
-  }
-
-  String _formatAmount(double amount) {
-    final formatter = NumberFormat.currency(
-      locale: 'en_US', 
-      symbol: '\$', 
-      decimalDigits: 2,
-    );
-    return formatter.format(amount);
-  }
-
-  String _formatDate(String date) {
-    final DateTime parsedDate = DateTime.parse(date);
-    final DateFormat formatter = DateFormat('dd-MM-yyyy');
-    
-    return formatter.format(parsedDate);
   }
 }

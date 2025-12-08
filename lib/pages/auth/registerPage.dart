@@ -40,7 +40,7 @@ class _RegisterPageState extends State<RegisterPage> {
             SizedBox(height: 20),
             ElevatedButton.icon(
               onPressed:() {},
-              icon: Icon(Icons.cloud_upload_outlined), 
+              icon: Icon(Icons.save_alt), 
               label: Text('Save Data')
             ),
           ],

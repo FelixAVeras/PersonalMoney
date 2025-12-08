@@ -192,7 +192,7 @@ class SettingsPage extends StatelessWidget {
               //           'Sincroniza automáticamente las listas guardadas en tu dispositivo',
               //           style: GoogleFonts.quicksand(fontWeight: FontWeight.w400),
               //         ),
-              //         secondary: Icon(Icons.cloud_upload_outlined, size: 28, color: Color(0xFF317039)),
+              //         secondary: Icon(Icons.save_alt, size: 28, color: Color(0xFF317039)),
               //         value: syncEnabled,
               //         onChanged: (value) async {
               //           syncEnabled = value;

@@ -36,5 +36,16 @@
     "light": "light",
     "dark": "Dark",
     "system": "Default System",
-    "language": "Language"
+    "language": "Language",
+    "addBudget": "Add Budget",
+    "categoryHome": "Home",
+    "categoryEntertainment": "Entertainment",
+    "categoryFood": "Food",
+    "categoryCharity": "Charity",
+    "categoryUtilities": "Utilities",
+    "categoryAuto": "Auto",
+    "categoryEducation": "Education",
+    "categoryHealth": "Health & Wellness",
+    "categoryShopping": "Shopping",
+    "categoryOthers": "Others"
 }

@@ -36,5 +36,16 @@
     "light": "Clair",
     "dark": "Sombre",
     "system": "Par défaut du système",
-    "language": "Langue"
+    "language": "Langue",
+    "addBudget": "Ajouter un devis",
+    "categoryHome": "Maison",
+    "categoryEntertainment": "Divertissement",
+    "categoryFood": "Nourriture",
+    "categoryCharity": "Charité",
+    "categoryUtilities": "Services publics",
+    "categoryAuto": "Automobile",
+    "categoryEducation": "Éducation",
+    "categoryHealth": "Santé et Bien-être",
+    "categoryShopping": "Achats",
+    "categoryOthers": "Autres"
 }

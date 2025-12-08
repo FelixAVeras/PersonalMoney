@@ -36,5 +36,16 @@
     "light": "Claro",
     "dark": "Escuro",
     "system": "Padrão do sistema",
-    "language": "Linguagem"
+    "language": "Linguagem",
+    "addBudget": "Adicionar cotação",
+    "categoryHome": "Casa",
+    "categoryEntertainment": "Entretenimento",
+    "categoryFood": "Comida",
+    "categoryCharity": "Caridade",
+    "categoryUtilities": "Serviços",
+    "categoryAuto": "Automóvel",
+    "categoryEducation": "Educação",
+    "categoryHealth": "Saúde e Bem-estar",
+    "categoryShopping": "Compras",
+    "categoryOthers": "Outros"
 }

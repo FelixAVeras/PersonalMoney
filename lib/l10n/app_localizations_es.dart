@@ -121,4 +121,37 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get language => 'Idioma';
+
+  @override
+  String get addBudget => 'Añadir Presupuesto';
+
+  @override
+  String get categoryHome => 'Hogar';
+
+  @override
+  String get categoryEntertainment => 'Entretenimiento';
+
+  @override
+  String get categoryFood => 'Comida';
+
+  @override
+  String get categoryCharity => 'Caridad';
+
+  @override
+  String get categoryUtilities => 'Servicios';
+
+  @override
+  String get categoryAuto => 'Automóvil';
+
+  @override
+  String get categoryEducation => 'Educación';
+
+  @override
+  String get categoryHealth => 'Salud y Bienestar';
+
+  @override
+  String get categoryShopping => 'Compras';
+
+  @override
+  String get categoryOthers => 'Otros';
 }

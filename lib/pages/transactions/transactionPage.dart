@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
+import 'package:personalmoney/helpers/category_localization_helper.dart';
 import 'package:personalmoney/helpers/formatHelper.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/models/TransactionModel.dart';
@@ -12,7 +13,7 @@ class TransactionPage extends StatefulWidget {
 }
 
 class _TransactionPageState extends State<TransactionPage> {
-  final SQLHelper _sqlHelper = SQLHelper();
+  final SQLHelper sqlHelper = SQLHelper();
   final FormatHelper formatHelper = FormatHelper();
   
   List<TransactionModel> _transactions = [];
@@ -24,7 +25,7 @@ class _TransactionPageState extends State<TransactionPage> {
   }
 
   Future<void> _loadTransactions() async {
-    List<TransactionModel> transactions = await _sqlHelper.getTransactions();
+    List<TransactionModel> transactions = await sqlHelper.getTransactions();
     
     setState(() => _transactions = transactions);
   }
@@ -75,48 +76,41 @@ class _TransactionPageState extends State<TransactionPage> {
       final category = categories[index];
       final items = grouped[category]!;
 
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // -------- Header Categoria ----------
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Row(
-              children: [
-                Icon(formatHelper.getCategoryIcon(category), size: 26, color: Colors.blueGrey),
-                SizedBox(width: 10),
-                Text(
-                  category,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ],
+      return Card.outlined(
+        child: Column(
+          children: [
+            SizedBox(width: 10),
+            Center(
+              child: Text(
+                CategoryLocalizationHelper.translateCategory(context, category),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              )
             ),
-          ),
-
-          // -------- Lista de transacciones --------
-          ...items.map((transaction) {
-            return ListTile(
-              leading: Icon(
-                transaction.transType == 'income'
-                    ? Icons.arrow_upward
-                    : Icons.arrow_downward,
-                color: transaction.transType == 'income' ? Colors.green : Colors.red,
-              ),
-              title: Text(transaction.name),
-              subtitle: Text(formatHelper.formatDate(transaction.date.toString())),
-              trailing: Text(
-                formatHelper.formatAmount(transaction.amount),
-                style: TextStyle(
+            
+            ...items.map((transaction) {
+              return ListTile(
+                leading: Icon(
+                  transaction.transType == 'income'
+                      ? Icons.arrow_upward
+                      : Icons.arrow_downward,
                   color: transaction.transType == 'income' ? Colors.green : Colors.red,
-                  fontWeight: FontWeight.bold,
                 ),
-              ),
-              onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => DetailTransactionPage(transaction: transaction))
-            ));
-          }).toList(),
-        ],
+                title: Text(transaction.name),
+                subtitle: Text(formatHelper.formatDate(transaction.date.toString())),
+                trailing: Text(
+                  formatHelper.formatAmount(transaction.amount),
+                  style: TextStyle(
+                    color: transaction.transType == 'income' ? Colors.green : Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DetailTransactionPage(transaction: transaction))
+              ));
+            }).toList(),
+          ],
+        )
       );
     },
   );
