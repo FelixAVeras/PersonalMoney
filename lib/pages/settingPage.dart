@@ -175,19 +175,19 @@ class SettingsPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 12),
-              Card.outlined(
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: Text(
-                        AppLocalizations.of(context)!.securityPrivacy, style: const TextStyle(fontWeight: FontWeight.bold)
-                      ),
-                    ),
+              // const SizedBox(height: 12),
+              // Card.outlined(
+              //   child: Column(
+              //     children: [
+              //       ListTile(
+              //         title: Text(
+              //           AppLocalizations.of(context)!.securityPrivacy, style: const TextStyle(fontWeight: FontWeight.bold)
+              //         ),
+              //       ),
                     
-                  ],
-                ),
-              ),
+              //     ],
+              //   ),
+              // ),
 
               // const SizedBox(height: 12),
               // Card(
