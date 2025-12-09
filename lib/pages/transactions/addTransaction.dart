@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
 import 'package:personalmoney/helpers/SnakcHelper.dart';
 import 'package:personalmoney/helpers/category_localization_helper.dart';
+import 'package:personalmoney/helpers/formatHelper.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/models/CategoryModel.dart';
 import 'package:personalmoney/models/TransactionModel.dart';
@@ -24,6 +25,7 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
   ExpenseType _expenseType = ExpenseType.expense;
 
   final SQLHelper sqlHelper = SQLHelper();
+  final FormatHelper formatHelper = FormatHelper();
   final BudgetService budgetService = BudgetService();
 
   @override
@@ -50,11 +52,7 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
 
     try {
       final description = _descriptionController.text.trim();
-
-      // Manejar separadores decimales
-      final rawAmount =
-          _amountController.text.replaceAll(".", "").replaceAll(",", ".");
-      final amount = double.tryParse(rawAmount);
+      final amount = formatHelper.parseAmount(_amountController.text);
 
       if (amount == null || amount <= 0) throw Exception("Monto inválido");
 
@@ -74,8 +72,10 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
 
       if (transaction.transType == "expense") {
         await budgetService.subtractFromCategory(
-          transaction.categoryId!,
-          transaction.amount,
+          categoryId: transaction.categoryId!,
+          amount: transaction.amount,
+          month: now.month,
+          year: now.year
         );
       }
 

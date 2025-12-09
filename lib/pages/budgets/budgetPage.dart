@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:personalmoney/helpers/category_localization_helper.dart';
 import 'package:personalmoney/helpers/formatHelper.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
-import 'package:personalmoney/l10n/app_localizations_en.dart';
 import 'package:personalmoney/models/CategoryModel.dart';
 import 'package:personalmoney/models/budgetModel.dart';
 import 'package:personalmoney/pages/budgets/addBudget.dart';
@@ -45,17 +44,12 @@ class _BudgetPageState extends State<BudgetPage> {
       final month = now.month;
       final year = now.year;
 
-      // 1) Cargar budgets (maps con category_name)
-      final List<Map<String, dynamic>> budgetMaps =
-          await SQLHelper.getBudgetsWithCategoryName(month, year);
+      final List<Map<String, dynamic>> budgetMaps = await SQLHelper.getBudgetsWithCategoryName(month, year);
 
-      // Convertir a BudgetModel
       budgets = budgetMaps.map((m) => BudgetModel.fromMap(m)).toList();
 
-      // 2) Cargar categorías (devuelve List<Map<String,dynamic>>)
       final List<CategoryModel> cats = await sqlHelper.getCategories();
 
-      // crear mapa id -> name
       categoryNames = {
         for (var c in cats) (c.id): (c.name)
       };
@@ -100,12 +94,9 @@ class _BudgetPageState extends State<BudgetPage> {
         actions: [
           IconButton(
             onPressed: () async {
-              // Abrir AddBudgetPage y recargar al volver
-              await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const AddBudgetPage()),
-              );
-              await load(); // recargar al volver
+              await Navigator.push(context, MaterialPageRoute(builder: (context) => const AddBudgetPage()));
+              
+              await load();
             },
             icon: const Icon(Icons.add_circle),
           ),
@@ -136,7 +127,7 @@ class _BudgetPageState extends State<BudgetPage> {
                         ],
                         rows: budgets.map((b) {
                           final name =
-                              categoryNames[b.categoryId] ?? 'Desconocida';
+                              categoryNames[b.categoryId] ?? AppLocalizations.of(context)!.unknowCategory;
                           final balText = _formatCurrency(b.balance);
 
                           return DataRow(

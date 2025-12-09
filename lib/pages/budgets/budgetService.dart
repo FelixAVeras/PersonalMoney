@@ -12,6 +12,23 @@ class BudgetService {
     required int month,
     required int year,
   }) async {
+
+    double sum = categoryAmounts.values.fold(0, (a, b) => a + b);
+    double remaining = initialAmount - sum;
+
+    final categories = await _sqlHelper.getCategories();
+    
+    final others = categories.firstWhere(
+      (c) => c.name.toLowerCase() == "others",
+      orElse: () => categories.last,
+    );
+
+    // Si queda dinero sin asignar → mandarlo a Others
+    if (remaining > 0) {
+      categoryAmounts[others.id] = (categoryAmounts[others.id] ?? 0) + remaining;
+    }
+
+    // Guardar MonthlyBalance
     await SQLHelper.insertMonthlyBalance(
       MonthlyBalanceModel(
         initialBalance: initialAmount,
@@ -21,59 +38,87 @@ class BudgetService {
       ),
     );
 
+    // Guardar categorías
     for (final entry in categoryAmounts.entries) {
       final categoryId = entry.key;
       final amount = entry.value;
 
       final existing = await _sqlHelper.getBudgetByCategoryMonth(categoryId, month, year);
-      
+
       if (existing != null) {
         await _sqlHelper.updateBudget(existing.copyWith(amount: amount));
       } else {
-        await SQLHelper.insertBudget(BudgetModel(
-          categoryId: categoryId,
-          amount: amount,
-          spent: 0,
-          month: month,
-          year: year,
-        ));
+        await SQLHelper.insertBudget(
+          BudgetModel(
+            categoryId: categoryId,
+            amount: amount,
+            spent: 0,
+            month: month,
+            year: year,
+          ),
+        );
       }
     }
   }
 
+  /// Agregar gasto a una categoría y al balance mensual
   Future<void> applyTransactionExpense({
     required int categoryId,
     required int month,
     required int year,
     required double amount,
   }) async {
-    await SQLHelper.addSpentToBudget(categoryId, month, year, amount);
-    await SQLHelper.addSpentToMonthlyBalance(month, year, amount);
+    await _sqlHelper.addSpentToBudget(categoryId, month, year, amount);
+    await _sqlHelper.addSpentToMonthlyBalance(month, year, amount);
   }
 
-  Future<void> subtractFromCategory(int categoryId, double amount) async {
-    BudgetModel? budget = await _sqlHelper.getBudgetByCategory(categoryId);
+  /// Quitar gasto cuando se BORRA o EDITA una transacción
+  Future<void> revertTransactionExpense({
+    required int categoryId,
+    required int month,
+    required int year,
+    required double amount,
+  }) async {
+    await _sqlHelper.subtractSpentFromBudget(categoryId, month, year, amount);
+    await _sqlHelper.subtractSpentFromMonthlyBalance(month, year, amount);
+  }
+
+  /// Gasto directo (sin monthlyBalance)
+  Future<void> subtractFromCategory({
+    required int categoryId,
+    required int month,
+    required int year,
+    required double amount,
+  }) async {
+    BudgetModel? budget =
+        await _sqlHelper.getBudgetByCategoryMonth(categoryId, month, year);
 
     if (budget == null) {
-      print("❌ No existe presupuesto para esta categoría: $categoryId");
+      print("❌ No existe presupuesto para esta categoría ($categoryId) en $month/$year");
       return;
     }
 
     double newSpent = budget.spent + amount;
 
-    if (newSpent > budget.amount) {
-      print("⚠️ El gasto supera el presupuesto asignado.");
-    }
-
-    BudgetModel updated = BudgetModel(
-      id: budget.id,
-      categoryId: budget.categoryId,
-      amount: budget.amount,
-      spent: newSpent,
-      month: budget.month,
-      year: budget.year,
-    );
+    BudgetModel updated = budget.copyWith(spent: newSpent);
 
     await _sqlHelper.updateBudget(updated);
+
+    // Importantísimo ✔️
+    await _sqlHelper.addSpentToMonthlyBalance(month, year, amount);
   }
+
+  Future<void> addToCategory(int categoryId, double amount) async {
+    DateTime now = DateTime.now();
+    int month = now.month;
+    int year = now.year;
+
+    await applyTransactionExpense(
+      categoryId: categoryId,
+      month: month,
+      year: year,
+      amount: amount,
+    );
+  }
+
 }

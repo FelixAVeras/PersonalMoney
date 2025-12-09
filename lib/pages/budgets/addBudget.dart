@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
+import 'package:personalmoney/helpers/SnakcHelper.dart';
 import 'package:personalmoney/helpers/category_localization_helper.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
-import 'package:personalmoney/l10n/app_localizations_en.dart';
 import 'package:personalmoney/models/CategoryModel.dart';
 import 'package:personalmoney/pages/budgets/budgetService.dart';
 
@@ -44,7 +44,7 @@ class _AddBudgetPageState extends State<AddBudgetPage> {
     final initial = double.tryParse(initialAmountController.text.replaceAll(',', '.'));
     
     if (initial == null || initial <= 0) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Monto inicial inválido')));
+      SnackHelper.showMessage(context, AppLocalizations.of(context)!.invalidInitialBalanceMsg);
       return;
     }
 
@@ -59,7 +59,11 @@ class _AddBudgetPageState extends State<AddBudgetPage> {
     }
 
     if ((sum - initial).abs() > 0.0001) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('La suma de las categorías debe ser igual a la cantidad inicial. (Suma actual: $sum)')));
+
+      SnackHelper.showMessage(
+        context, 
+        AppLocalizations.of(context)!.categoriesSumMustMatchInitial
+      );
     
       return;
     }

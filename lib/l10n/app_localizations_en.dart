@@ -188,4 +188,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get continueWithoutAccount => 'Continue without account';
+
+  @override
+  String get unknowCategory => 'Unknow Category';
+
+  @override
+  String get categoriesSumMustMatchInitial =>
+      'The sum of the categories must match the initial amount';
+
+  @override
+  String get deleteConfirm => 'Are you sure you want to delete this?';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get editTransactionTitle => 'Edit Transaction';
+
+  @override
+  String get transactionType => 'Transaction Type';
 }

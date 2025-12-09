@@ -113,6 +113,30 @@ class SQLHelper {
     return maps.map((m) => TransactionModel.fromMap(m)).toList();
   }
 
+  Future<int> updateTransaction(TransactionModel t) async {
+    final dbClient = await db();
+
+    return await dbClient.update(
+      'transactions',
+      t.toMap(),
+      where: 'id = ?',
+      whereArgs: [t.id],
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+
+  Future<int> deleteTransaction(int id) async {
+    final dbClient = await db();
+
+    return await dbClient.delete(
+      'transactions',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+
   // -------------------------
   // Budgets
   // -------------------------
@@ -158,12 +182,12 @@ class SQLHelper {
   // }
 
   // add spent to budget (increment spent)
-  static Future<void> addSpentToBudget(int categoryId, int month, int year, double value) async {
-    final dbClient = await db();
-    await dbClient.rawUpdate('''
-      UPDATE budgets SET spent = spent + ? WHERE category_id = ? AND month = ? AND year = ?
-    ''', [value, categoryId, month, year]);
-  }
+  // static Future<void> addSpentToBudget(int categoryId, int month, int year, double value) async {
+  //   final dbClient = await db();
+  //   await dbClient.rawUpdate('''
+  //     UPDATE budgets SET spent = spent + ? WHERE category_id = ? AND month = ? AND year = ?
+  //   ''', [value, categoryId, month, year]);
+  // }
 
   // -------------------------
   // Monthly balance
@@ -193,23 +217,23 @@ class SQLHelper {
     ''', [m.initialBalance, m.spent, m.id]);
   }
 
-  static Future<void> addSpentToMonthlyBalance(int month, int year, double value) async {
-    final dbClient = await db();
-    final mb = await getMonthlyBalance(month, year);
-    if (mb == null) {
-      // create new
-      await insertMonthlyBalance(MonthlyBalanceModel(
-        initialBalance: 0,
-        spent: value,
-        month: month,
-        year: year,
-      ));
-    } else {
-      await dbClient.rawUpdate('''
-        UPDATE monthly_balance SET spent = spent + ? WHERE id = ?
-      ''', [value, mb.id]);
-    }
-  }
+  // static Future<void> addSpentToMonthlyBalance(int month, int year, double value) async {
+  //   final dbClient = await db();
+  //   final mb = await getMonthlyBalance(month, year);
+  //   if (mb == null) {
+  //     // create new
+  //     await insertMonthlyBalance(MonthlyBalanceModel(
+  //       initialBalance: 0,
+  //       spent: value,
+  //       month: month,
+  //       year: year,
+  //     ));
+  //   } else {
+  //     await dbClient.rawUpdate('''
+  //       UPDATE monthly_balance SET spent = spent + ? WHERE id = ?
+  //     ''', [value, mb.id]);
+  //   }
+  // }
 
   // -------------------------
   // Overview helpers
@@ -288,24 +312,24 @@ class SQLHelper {
   }
 
   /// Actualiza el registro de budget (por id). Retorna el número de filas afectadas.
-  Future<int> updateBudget(BudgetModel budget) async {
-    final Database dbClient = await db();
-    // Asegúrate que toMap use las claves correctas: 'category_id','amount','spent','month','year'
-    final data = {
-      'category_id': budget.categoryId,
-      'amount': budget.amount,
-      'spent': budget.spent,
-      'month': budget.month,
-      'year': budget.year,
-    };
+  // Future<int> updateBudget(BudgetModel budget) async {
+  //   final Database dbClient = await db();
+  //   // Asegúrate que toMap use las claves correctas: 'category_id','amount','spent','month','year'
+  //   final data = {
+  //     'category_id': budget.categoryId,
+  //     'amount': budget.amount,
+  //     'spent': budget.spent,
+  //     'month': budget.month,
+  //     'year': budget.year,
+  //   };
 
-    return await dbClient.update(
-      'budgets',
-      data,
-      where: 'id = ?',
-      whereArgs: [budget.id],
-    );
-  }
+  //   return await dbClient.update(
+  //     'budgets',
+  //     data,
+  //     where: 'id = ?',
+  //     whereArgs: [budget.id],
+  //   );
+  // }
 
   Future<List<Map<String, dynamic>>> getOverviewData() async {
     // Obtenemos la instancia de la base de datos
@@ -343,8 +367,85 @@ class SQLHelper {
 
     if (value == null) return 0.0;
     if (value is int) return value.toDouble();
-    
+
     return value as double;
+  }
+
+  Future<List<Map<String, dynamic>>> getCategorySpending(int month, int year) async {
+    final dbClient = await db();
+
+    final result = await dbClient.rawQuery('''
+      SELECT c.name AS category, SUM(t.amount) AS total
+      FROM transactions t
+      INNER JOIN categories c ON t.category_id = c.id
+      WHERE t.transType = 'Expense' AND t.month = ? AND t.year = ?
+      GROUP BY t.category_id
+    ''', [month, year]);
+
+    return result;
+  }
+
+  Future<void> addSpentToBudget(int categoryId, int month, int year, double amount) async {
+    final dbClient = await db();
+
+    await dbClient.rawUpdate('''
+      UPDATE budgets
+      SET spent = spent + ?
+      WHERE category_id = ? AND month = ? AND year = ?
+    ''', [amount, categoryId, month, year]);
+  }
+
+  Future<void> subtractSpentFromBudget(int categoryId, int month, int year, double amount) async {
+    final dbClient = await db();
+
+    await dbClient.rawUpdate('''
+      UPDATE budgets
+      SET spent = MAX(spent - ?, 0)
+      WHERE category_id = ? AND month = ? AND year = ?
+    ''', [amount, categoryId, month, year]);
+  }
+
+  Future<void> addSpentToMonthlyBalance(int month, int year, double amount) async {
+    final dbClient = await db();
+
+    await dbClient.rawUpdate('''
+      UPDATE monthly_balance
+      SET spent = spent + ?
+      WHERE month = ? AND year = ?
+    ''', [amount, month, year]);
+  }
+
+  Future<void> subtractSpentFromMonthlyBalance(int month, int year, double amount) async {
+    final dbClient = await db();
+
+    await dbClient.rawUpdate('''
+      UPDATE monthly_balances
+      SET spent = MAX(spent - ?, 0)
+      WHERE month = ? AND year = ?
+    ''', [amount, month, year]);
+  }
+
+  // Future<BudgetModel?> getBudgetByCategoryMonth(int categoryId, int month, int year) async {
+  //   final dbClient = await db();
+  //   final result = await dbClient.query(
+  //     'budgets',
+  //     where: 'category_id = ? AND month = ? AND year = ?',
+  //     whereArgs: [categoryId, month, year],
+  //   );
+
+  //   if (result.isEmpty) return null;
+  //   return BudgetModel.fromMap(result.first);
+  // }
+
+  Future<void> updateBudget(BudgetModel model) async {
+    final dbClient = await db();
+
+    await dbClient.update(
+      'budgets',
+      model.toMap(),
+      where: 'id = ?',
+      whereArgs: [model.id],
+    );
   }
 
 

@@ -58,5 +58,11 @@
     "noPrincipalIncomeMsg": "An initial balance sheet has not been established.",
     "initialBalance": "Initial Balance",
     "invalidInitialBalanceMsg": "Enter initial amount",
-    "continueWithoutAccount": "Continue without account"
+    "continueWithoutAccount": "Continue without account",
+    "unknowCategory": "Unknow Category",
+    "categoriesSumMustMatchInitial": "The sum of the categories must match the initial amount",
+    "deleteConfirm": "Are you sure you want to delete this?",
+    "cancel": "Cancel",
+    "editTransactionTitle": "Edit Transaction",
+    "transactionType": "Transaction Type"
 }

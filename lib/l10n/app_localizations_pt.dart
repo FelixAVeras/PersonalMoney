@@ -188,4 +188,23 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get continueWithoutAccount => 'Continuar sem se registrar';
+
+  @override
+  String get unknowCategory => 'Categoria desconhecida';
+
+  @override
+  String get categoriesSumMustMatchInitial =>
+      'A soma das categorias deve ser igual ao valor inicial';
+
+  @override
+  String get deleteConfirm => 'Tem certeza de que deseja excluir isso?';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get editTransactionTitle => 'Editar transação';
+
+  @override
+  String get transactionType => 'Tipo de transação';
 }

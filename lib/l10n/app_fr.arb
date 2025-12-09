@@ -58,5 +58,11 @@
     "noPrincipalIncomeMsg": "Aucun bilan initial n'a été établi.",
     "initialBalance": "Solde initial",
     "invalidInitialBalanceMsg": "Saisissez le montant initial",
-    "continueWithoutAccount": "Continuer sans s'inscrire"
+    "continueWithoutAccount": "Continuer sans s'inscrire",
+    "unknowCategory": "Catégorie inconnue",
+    "categoriesSumMustMatchInitial": "La somme des catégories doit correspondre au montant initial",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer ceci ?",
+    "cancel": "Annuler",
+    "editTransactionTitle": "Modifier la transaction",
+    "transactionType": "Type de transaction"
 }

@@ -18,6 +18,10 @@ class _TransactionPageState extends State<TransactionPage> {
   
   List<TransactionModel> _transactions = [];
   
+  //TODO: Definir funcion addIncome(), sumar saldo a cantidad incial cuando tenga una transaccion con el tipo "Income"
+
+  //TODO: Poder editar la cantidad inicial y que esta se refleje en Budgets
+
   @override
   void initState() {
     super.initState();

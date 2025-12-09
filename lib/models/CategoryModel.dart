@@ -1,19 +1,19 @@
 class CategoryModel {
   int id;
   String name;
-  // String description;
+  String? description;
 
   CategoryModel({
     required this.id,
     required this.name,
-    // required this.description,
+    this.description,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'name': name,
-      // 'description': description,
+      'description': description,
     };
   }
 
@@ -21,13 +21,12 @@ class CategoryModel {
     return CategoryModel(
       id: map['id'],
       name: map['name'],
-      // description: map['description'],
+      description: map['description'],
     );
   }
 
   @override
   String toString() {
-    // return 'CategoryModel{id: $id, name: $name, description: $description}';
-    return 'CategoryModel{id: $id, name: $name}';
+    return 'CategoryModel{id: $id, name: $name, description: $description}';
   }
 }

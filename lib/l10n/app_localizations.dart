@@ -461,6 +461,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Continue without account'**
   String get continueWithoutAccount;
+
+  /// No description provided for @unknowCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknow Category'**
+  String get unknowCategory;
+
+  /// No description provided for @categoriesSumMustMatchInitial.
+  ///
+  /// In en, this message translates to:
+  /// **'The sum of the categories must match the initial amount'**
+  String get categoriesSumMustMatchInitial;
+
+  /// No description provided for @deleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this?'**
+  String get deleteConfirm;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @editTransactionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Transaction'**
+  String get editTransactionTitle;
+
+  /// No description provided for @transactionType.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Type'**
+  String get transactionType;
 }
 
 class _AppLocalizationsDelegate

@@ -4,6 +4,8 @@ import 'package:personalmoney/helpers/category_localization_helper.dart';
 import 'package:personalmoney/helpers/formatHelper.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/models/TransactionModel.dart';
+import 'package:personalmoney/pages/budgets/budgetService.dart';
+import 'package:personalmoney/pages/transactions/editTransactionPage.dart';
 
 class DetailTransactionPage extends StatefulWidget {
   final TransactionModel transaction;
@@ -15,13 +17,65 @@ class DetailTransactionPage extends StatefulWidget {
 }
 
 class _DetailTransactionPageState extends State<DetailTransactionPage> {
-  SQLHelper _sqlHelper = SQLHelper();
-  FormatHelper formatHelper = FormatHelper();
+  final SQLHelper _sqlHelper = SQLHelper();
+  final FormatHelper formatHelper = FormatHelper();
+  final BudgetService budgetService = BudgetService();
+
+  /// ➤ Navegar al editar
+  updateTransaction() async {
+    final updated = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => EditTransactionPage(transaction: widget.transaction),
+      ),
+    );
+
+    if (updated == true) {
+      setState(() {});
+    }
+  }
+
+  /// ➤ Eliminar transacción
+  deleteTransaction(int id) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(AppLocalizations.of(context)!.delete),
+        content: Text(AppLocalizations.of(context)!.deleteConfirm),
+        actions: [
+          TextButton(
+            child: Text(AppLocalizations.of(context)!.cancel),
+            onPressed: () => Navigator.pop(context, false),
+          ),
+          TextButton(
+            child: Text(AppLocalizations.of(context)!.delete),
+            onPressed: () => Navigator.pop(context, true),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm != true) return;
+
+    // Si era un gasto, devolver el monto al presupuesto
+    if (widget.transaction.transType == "expense") {
+      await budgetService.addToCategory(
+        widget.transaction.categoryId!,
+        widget.transaction.amount,
+      );
+    }
+
+    await _sqlHelper.deleteTransaction(id);
+
+    Navigator.pop(context, true);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Theme.of(context).brightness == Brightness.light
+      ? Colors.grey.shade200
+      : const Color(0xFF1E1E1E),
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.detailTransactionTitle),
       ),
@@ -30,19 +84,12 @@ class _DetailTransactionPageState extends State<DetailTransactionPage> {
         child: SizedBox(
           width: double.infinity,
           child: Card.outlined(
-            // elevation: 3,
-            // shape: RoundedRectangleBorder(
-            //   borderRadius: BorderRadius.circular(12), // Bordes suaves
-            // ),
-            // color: Colors.white, // Fondo blanco limpio
-            // shadowColor: Colors.black26, // Sombra sutil
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Nombre de la transacción
                   Center(
                     child: Column(
                       children: [
@@ -51,13 +98,13 @@ class _DetailTransactionPageState extends State<DetailTransactionPage> {
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black87,
                           ),
                         ),
                         Text(
                           CategoryLocalizationHelper.translateCategory(
-                            context, 
-                            widget.transaction.categoryName.toString()),
+                            context,
+                            widget.transaction.categoryName ?? '',
+                          ),
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -65,23 +112,21 @@ class _DetailTransactionPageState extends State<DetailTransactionPage> {
                           ),
                         ),
                       ],
-                    )
+                    ),
                   ),
 
-                  const Divider(color: Colors.black87,),
+                  const Divider(),
 
-                  // Monto
                   Text(
                     formatHelper.formatAmount(widget.transaction.amount),
-                    style: const TextStyle(fontSize: 16, color: Colors.black87),
+                    style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 10),
 
-                  // Tipo
                   Text(
-                    widget.transaction.transType == 'Income' 
-                    ? AppLocalizations.of(context)!.income
-                    : AppLocalizations.of(context)!.expense,
+                    widget.transaction.transType == 'income'
+                        ? AppLocalizations.of(context)!.income
+                        : AppLocalizations.of(context)!.expense,
                     style: TextStyle(
                       fontSize: 16,
                       color: widget.transaction.transType == 'income'
@@ -92,14 +137,12 @@ class _DetailTransactionPageState extends State<DetailTransactionPage> {
                   ),
                   const SizedBox(height: 10),
 
-                  // Fecha
                   Text(
                     formatHelper.formatDate(widget.transaction.date.toString()),
-                    style: const TextStyle(fontSize: 16, color: Colors.black87),
+                    style: const TextStyle(fontSize: 16),
                   ),
 
-                  const SizedBox(height: 10),
-                  const Divider(color: Colors.black87,),
+                  const Divider(),
                   Row(
                     children: [
                       Expanded(
@@ -107,9 +150,10 @@ class _DetailTransactionPageState extends State<DetailTransactionPage> {
                           style: TextButton.styleFrom(
                             foregroundColor: Colors.orange,
                           ),
-                          onPressed: () {},
+                          onPressed: updateTransaction,
                           icon: Icon(Icons.edit),
-                          label: Text(AppLocalizations.of(context)!.edit),
+                          label:
+                              Text(AppLocalizations.of(context)!.edit),
                         ),
                       ),
                       SizedBox(width: 10),
@@ -118,9 +162,11 @@ class _DetailTransactionPageState extends State<DetailTransactionPage> {
                           style: TextButton.styleFrom(
                             foregroundColor: Colors.red,
                           ),
-                          onPressed: () {},
+                          onPressed: () =>
+                              deleteTransaction(widget.transaction.id!),
                           icon: Icon(Icons.delete),
-                          label: Text(AppLocalizations.of(context)!.delete),
+                          label:
+                              Text(AppLocalizations.of(context)!.delete),
                         ),
                       ),
                     ],

@@ -40,8 +40,9 @@ class _HomePageState extends State<HomePage> {
         OverviewList(),
         TransactionPage(),
         BudgetPage(),
-        TrendsPage(),
-        ProfilePage()
+        // TrendsPage(),
+        // ProfilePage()
+        SettingsPage()
       ][currentPageIndex],
       bottomNavigationBar: NavigationBar(
         indicatorColor: Colors.teal,
@@ -68,15 +69,20 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.attach_money_rounded),
             label: AppLocalizations.of(context)!.budget,
           ),
+          // NavigationDestination(
+          //   selectedIcon: Icon(Icons.bar_chart_rounded, color: Colors.white),
+          //   icon: Icon(Icons.bar_chart_rounded),
+          //   label: AppLocalizations.of(context)!.trends,
+          // ),
+          // NavigationDestination(
+          //   selectedIcon: Icon(Icons.person_rounded, color: Colors.white),
+          //   icon: Icon(Icons.person_outline_rounded),
+          //   label: AppLocalizations.of(context)!.profile,
+          // ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.bar_chart_rounded, color: Colors.white),
-            icon: Icon(Icons.bar_chart_rounded),
-            label: AppLocalizations.of(context)!.trends,
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.person_rounded, color: Colors.white),
-            icon: Icon(Icons.person_outline_rounded),
-            label: AppLocalizations.of(context)!.profile,
+            selectedIcon: Icon(Icons.settings_rounded, color: Colors.white),
+            icon: Icon(Icons.settings_outlined),
+            label: AppLocalizations.of(context)!.settings,
           ),
         ],
       ),

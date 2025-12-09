@@ -188,4 +188,23 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get continueWithoutAccount => 'Continuer sans s\'inscrire';
+
+  @override
+  String get unknowCategory => 'Catégorie inconnue';
+
+  @override
+  String get categoriesSumMustMatchInitial =>
+      'La somme des catégories doit correspondre au montant initial';
+
+  @override
+  String get deleteConfirm => 'Êtes-vous sûr de vouloir supprimer ceci ?';
+
+  @override
+  String get cancel => 'Annuler';
+
+  @override
+  String get editTransactionTitle => 'Modifier la transaction';
+
+  @override
+  String get transactionType => 'Type de transaction';
 }

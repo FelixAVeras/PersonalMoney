@@ -58,5 +58,11 @@
     "noPrincipalIncomeMsg": "Um balanço patrimonial inicial ainda não foi elaborado",
     "initialBalance": "Saldo inicial",
     "invalidInitialBalanceMsg": "Ingrese quantidade inicial",
-    "continueWithoutAccount": "Continuar sem se registrar"
+    "continueWithoutAccount": "Continuar sem se registrar",
+    "unknowCategory": "Categoria desconhecida",
+    "categoriesSumMustMatchInitial": "A soma das categorias deve ser igual ao valor inicial",
+    "deleteConfirm": "Tem certeza de que deseja excluir isso?",
+    "cancel": "Cancelar",
+    "editTransactionTitle": "Editar transação",
+    "transactionType": "Tipo de transação"
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/main.dart';
-import 'package:personalmoney/pages/auth/profilePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -36,7 +35,7 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool syncEnabled = false;
+    // bool syncEnabled = false;
 
     return Scaffold(
       backgroundColor: Theme.of(context).brightness == Brightness.light

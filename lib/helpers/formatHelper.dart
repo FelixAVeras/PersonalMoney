@@ -8,6 +8,7 @@ class FormatHelper {
       symbol: '\$', 
       decimalDigits: 2,
     );
+
     return formatter.format(amount);
   }
 
@@ -43,4 +44,34 @@ class FormatHelper {
         return Icons.question_mark;
     }
   }
+
+  double? parseAmount(String input) {
+    String s = input.trim();
+
+    // Caso: "7953" o "7953.62" -> OK (inglés)
+    if (RegExp(r'^\d+(\.\d+)?$').hasMatch(s)) {
+      return double.tryParse(s);
+    }
+
+    // Caso: "7,953.62" (miles US) -> eliminar coma
+    if (RegExp(r'^\d{1,3}(,\d{3})*(\.\d+)?$').hasMatch(s)) {
+      s = s.replaceAll(',', '');
+      return double.tryParse(s);
+    }
+
+    // Caso: "7.953,62" (formato europeo)
+    if (RegExp(r'^\d{1,3}(\.\d{3})*(,\d+)?$').hasMatch(s)) {
+      s = s.replaceAll('.', '').replaceAll(',', '.');
+      return double.tryParse(s);
+    }
+
+    // Caso simple: "7953,62" → decimal con coma
+    if (s.contains(',') && !s.contains('.')) {
+      s = s.replaceAll(',', '.');
+      return double.tryParse(s);
+    }
+
+    return null;
+  }
+
 }
