@@ -6,7 +6,8 @@ import 'package:personalmoney/models/CategoryModel.dart';
 import 'package:personalmoney/models/budgetModel.dart';
 import 'package:personalmoney/pages/budgets/addBudget.dart';
 import 'package:personalmoney/pages/budgets/budgetService.dart';
-import 'package:personalmoney/helpers/DbHelper.dart'; // SQLHelper estático
+import 'package:personalmoney/helpers/DbHelper.dart';
+import 'package:personalmoney/pages/categoryPage.dart';
 
 class BudgetPage extends StatefulWidget {
   const BudgetPage({super.key});
@@ -46,7 +47,7 @@ class _BudgetPageState extends State<BudgetPage> {
 
       final List<Map<String, dynamic>> budgetMaps = await SQLHelper.getBudgetsWithCategoryName(month, year);
 
-      budgets = budgetMaps.map((m) => BudgetModel.fromMap(m)).toList();
+      budgets = budgetMaps.map((m) => BudgetModel.fromMap(m)).where((b) => b.amount > 0).toList();
 
       final List<CategoryModel> cats = await sqlHelper.getCategories();
 
@@ -99,7 +100,18 @@ class _BudgetPageState extends State<BudgetPage> {
               await load();
             },
             icon: const Icon(Icons.add_circle),
+            tooltip: AppLocalizations.of(context)!.addBudget,
           ),
+          // PopupMenuButton(
+          //   icon: Icon(Icons.more_vert_rounded),
+          //   onSelected: (value) async => Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryPage())),
+          //   itemBuilder: (context) => [
+          //     PopupMenuItem(
+          //       value: 'cleanBudgets', 
+          //       child: Text('Limpiar Presupuestos')
+          //     )
+          //   ]
+          // )
         ],
       ),
       body: loading
@@ -115,43 +127,44 @@ class _BudgetPageState extends State<BudgetPage> {
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       padding: const EdgeInsets.all(8),
-                      child: DataTable(
-                        columnSpacing: 24,
-                        columns: [
-                          DataColumn(
-                              label:
-                                  Text(AppLocalizations.of(context)!.category)),
-                          DataColumn(
-                              label:
-                                  Text(AppLocalizations.of(context)!.balance)),
-                        ],
-                        rows: budgets.map((b) {
-                          final name =
-                              categoryNames[b.categoryId] ?? AppLocalizations.of(context)!.unknowCategory;
-                          final balText = _formatCurrency(b.balance);
+                      child: Card.outlined(
+                        child: DataTable(
+                          columnSpacing: 24,
+                          columns: [
+                            DataColumn(
+                                label:
+                                    Text(AppLocalizations.of(context)!.category)),
+                            DataColumn(
+                                label:
+                                    Text(AppLocalizations.of(context)!.balance)),
+                          ],
+                          rows: budgets.map((b) {
+                            final name =
+                                categoryNames[b.categoryId] ?? AppLocalizations.of(context)!.unknowCategory;
+                            final balText = _formatCurrency(b.balance);
 
-                          return DataRow(
-                            cells: [
-                              DataCell(Row(
-                                children: [
-                                  Icon(formatHelper.getCategoryIcon(name),
-                                      size: 18),
-                                  const SizedBox(width: 10.0),
-                                  Flexible(
-                                      child: Text(CategoryLocalizationHelper
-                                          .translateCategory(context, name))),
-                                ],
-                              )),
-                              DataCell(Text(
-                                balText,
-                                style: TextStyle(
-                                    color: _balanceColor(b),
-                                    fontWeight: FontWeight.w600),
-                              )),
-                            ],
-                          );
-                        }).toList(),
-                      ),
+                            return DataRow(
+                              cells: [
+                                DataCell(Row(
+                                  children: [
+                                    Icon(formatHelper.getCategoryIcon(name), size: 18),
+                                    const SizedBox(width: 10.0),
+                                    Flexible(
+                                      child: Text(CategoryLocalizationHelper.translateCategory(context, name))
+                                    ),
+                                  ],
+                                )),
+                                DataCell(Text(
+                                  balText,
+                                  style: TextStyle(
+                                      color: _balanceColor(b),
+                                      fontWeight: FontWeight.w600),
+                                )),
+                              ],
+                            );
+                          }).toList(),
+                        ),
+                      )
                     ),
                   ),
                 ),

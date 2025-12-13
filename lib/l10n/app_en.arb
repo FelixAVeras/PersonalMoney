@@ -64,5 +64,6 @@
     "deleteConfirm": "Are you sure you want to delete this?",
     "cancel": "Cancel",
     "editTransactionTitle": "Edit Transaction",
-    "transactionType": "Transaction Type"
+    "transactionType": "Transaction Type",
+    "remainingBalance": "Remaining Balance"
 }

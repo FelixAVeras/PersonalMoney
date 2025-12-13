@@ -1,3 +1,70 @@
+// plugins {
+//     id "com.android.application"
+//     id "kotlin-android"
+//     id "dev.flutter.flutter-gradle-plugin"
+// }
+
+// def localProperties = new Properties()
+// def localPropertiesFile = rootProject.file('local.properties')
+// if (localPropertiesFile.exists()) {
+//     localPropertiesFile.withReader('UTF-8') { reader ->
+//         localProperties.load(reader)
+//     }
+// }
+
+// def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+// if (flutterVersionCode == null) {
+//     flutterVersionCode = '1'
+// }
+
+// def flutterVersionName = localProperties.getProperty('flutter.versionName')
+// if (flutterVersionName == null) {
+//     flutterVersionName = '1.0'
+// }
+
+// android {
+//     namespace 'com.example.personalmoney'
+//     compileSdkVersion 36
+
+//     sourceSets {
+//         main.java.srcDirs += 'src/main/kotlin'
+//     }
+
+//     lintOptions {
+//         disable 'InvalidPackage'
+//     }
+
+//     defaultConfig {
+//         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+//         applicationId "com.example.personalmoney"
+//         minSdkVersion 26
+//         targetSdkVersion 36
+//         versionCode flutterVersionCode.toInteger()
+//         versionName flutterVersionName
+//     }
+
+//     compileOptions {
+//         sourceCompatibility JavaVersion.VERSION_11 // Ajusta a VERSION_17 si usas Java 17
+//         targetCompatibility JavaVersion.VERSION_11 // Ajusta a VERSION_17 si usas Java 17
+//     }
+
+//     kotlinOptions {
+//         jvmTarget = "11" // Asegúrate de que coincida con el valor de compileOptions
+//     }
+
+//     buildTypes {
+//         release {
+//             // TODO: Add your own signing config for the release build.
+//             // Signing with the debug keys for now, so `flutter run --release` works.
+//             signingConfig signingConfigs.debug
+//         }
+//     }
+// }
+
+// flutter {
+//     source '../..'
+// }
+
 plugins {
     id "com.android.application"
     id "kotlin-android"
@@ -12,52 +79,53 @@ if (localPropertiesFile.exists()) {
     }
 }
 
-def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
-if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
-def flutterVersionName = localProperties.getProperty('flutter.versionName')
-if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
-}
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode') ?: '1'
+def flutterVersionName = localProperties.getProperty('flutter.versionName') ?: '1.0'
 
 android {
-    namespace 'com.example.personalmoney'
+    namespace 'com.felixdev.personalmoney'
     compileSdkVersion 36
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    lintOptions {
-        disable 'InvalidPackage'
-    }
-
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.personalmoney"
+        applicationId "com.felixdev.personalmoney"
         minSdkVersion 26
         targetSdkVersion 36
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11 // Ajusta a VERSION_17 si usas Java 17
-        targetCompatibility JavaVersion.VERSION_11 // Ajusta a VERSION_17 si usas Java 17
-    }
-
-    kotlinOptions {
-        jvmTarget = "11" // Asegúrate de que coincida con el valor de compileOptions
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = "11"
     }
 }
 

@@ -207,4 +207,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get transactionType => 'Transaction Type';
+
+  @override
+  String get remainingBalance => 'Remaining Balance';
 }

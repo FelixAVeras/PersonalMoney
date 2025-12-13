@@ -105,10 +105,15 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Column(
                 children: [
                   ListTile(
-                    title: Text(AppLocalizations.of(context)!.principalIncome, style: const TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Text(_initialAmount != null
-                          ? formatHelper.formatAmount(_initialAmount!)
-                          : AppLocalizations.of(context)!.noPrincipalIncomeMsg),
+                    title: Text(_initialAmount != null
+                    ? formatHelper.formatAmount(_initialAmount!)
+                    : AppLocalizations.of(context)!.noPrincipalIncomeMsg, style: const TextStyle(fontWeight: FontWeight.bold)),
+                    subtitle: Text(AppLocalizations.of(context)!.principalIncome),
+                    trailing: IconButton(
+                      onPressed: () {}, 
+                      icon: Icon(Icons.edit, color: Colors.teal), 
+                      tooltip: AppLocalizations.of(context)!.edit
+                    ),
                   ),
                 ],
               ),

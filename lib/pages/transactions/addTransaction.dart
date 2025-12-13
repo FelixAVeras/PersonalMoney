@@ -36,7 +36,6 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
 
   Future<void> _loadCategories() async {
     final cats = await sqlHelper.getCategories();
-
     if (!mounted) return;
     setState(() => _categories = cats);
   }
@@ -54,14 +53,17 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
       final description = _descriptionController.text.trim();
       final amount = formatHelper.parseAmount(_amountController.text);
 
-      if (amount == null || amount <= 0) throw Exception("Monto inválido");
+      if (amount == null || amount <= 0) {
+        throw Exception("Monto inválido");
+      }
 
       final now = DateTime.now();
 
       final transaction = TransactionModel(
         name: description,
         amount: amount,
-        transType: _expenseType == ExpenseType.expense ? "expense" : "income",
+        transType:
+            _expenseType == ExpenseType.expense ? "expense" : "income",
         date: now.toIso8601String(),
         categoryId: _selectedCategoryId,
         month: now.month,
@@ -75,7 +77,7 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
           categoryId: transaction.categoryId!,
           amount: transaction.amount,
           month: now.month,
-          year: now.year
+          year: now.year,
         );
       }
 
@@ -97,87 +99,131 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).brightness == Brightness.light
-      ? Colors.grey.shade200
-      : const Color(0xFF1E1E1E),
+      resizeToAvoidBottomInset: true, // 👈 IMPORTANTE
+      backgroundColor:
+          Theme.of(context).brightness == Brightness.light
+              ? Colors.grey.shade200
+              : const Color(0xFF1E1E1E),
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.addTransactionTitle),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.save_alt),
-            onPressed: () async {
-              if (_formKey.currentState!.validate()) {
-                final success = await _saveTransaction();
-                final msg = success
-                    ? AppLocalizations.of(context)!.transactionSaved
-                    : AppLocalizations.of(context)!.errorSavingTransactionMsg;
-
-                if (context.mounted) {
-                  SnackHelper.showMessage(context, msg);
-                  if (success) Navigator.pop(context, true);
-                }
-              }
-            },
-          )
-        ],
+        title: Text(
+          AppLocalizations.of(context)!.addTransactionTitle,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Form(
           key: _formKey,
-          child: Column(
+          child: ListView(
             children: [
               TextFormField(
                 controller: _descriptionController,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.title),
-                  border: OutlineInputBorder(),
-                  labelText: AppLocalizations.of(context)!.description,
+                  prefixIcon: const Icon(Icons.title),
+                  border: const OutlineInputBorder(),
+                  labelText:
+                      AppLocalizations.of(context)!.description,
                 ),
                 validator: (v) =>
-                    (v == null || v.isEmpty) ? AppLocalizations.of(context)!.emptyDescriptionMsg : null,
+                    (v == null || v.isEmpty)
+                        ? AppLocalizations.of(context)!
+                            .emptyDescriptionMsg
+                        : null,
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
+
               DropdownButtonFormField<int>(
                 decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.category,
-                  border: OutlineInputBorder(),
+                  labelText:
+                      AppLocalizations.of(context)!.category,
+                  border: const OutlineInputBorder(),
                 ),
                 value: _selectedCategoryId,
                 items: _categories.map((cat) {
                   return DropdownMenuItem<int>(
                     value: cat.id,
-                    child: Text(CategoryLocalizationHelper.translateCategory(context, cat.name)),
+                    child: Text(
+                      CategoryLocalizationHelper.translateCategory(
+                        context,
+                        cat.name,
+                      ),
+                    ),
                   );
                 }).toList(),
-                onChanged: (v) => setState(() => _selectedCategoryId = v),
+                onChanged: (v) =>
+                    setState(() => _selectedCategoryId = v),
               ),
-              SizedBox(height: 12),
+
+              const SizedBox(height: 12),
+
               RadioListTile<ExpenseType>(
                 value: ExpenseType.expense,
                 groupValue: _expenseType,
                 activeColor: Colors.red,
-                title: Text(AppLocalizations.of(context)!.expense),
-                onChanged: (v) => setState(() => _expenseType = v!),
+                title:
+                    Text(AppLocalizations.of(context)!.expense),
+                onChanged: (v) =>
+                    setState(() => _expenseType = v!),
               ),
+
               RadioListTile<ExpenseType>(
                 value: ExpenseType.income,
                 groupValue: _expenseType,
                 activeColor: Colors.teal,
-                title: Text(AppLocalizations.of(context)!.income),
-                onChanged: (v) => setState(() => _expenseType = v!),
+                title:
+                    Text(AppLocalizations.of(context)!.income),
+                onChanged: (v) =>
+                    setState(() => _expenseType = v!),
               ),
-              SizedBox(height: 12),
+
+              const SizedBox(height: 12),
+
               TextFormField(
                 controller: _amountController,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                keyboardType:
+                    const TextInputType.numberWithOptions(
+                        decimal: true),
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.money),
-                  border: OutlineInputBorder(),
-                  labelText: AppLocalizations.of(context)!.amount,
+                  prefixIcon: const Icon(Icons.money),
+                  border: const OutlineInputBorder(),
+                  labelText:
+                      AppLocalizations.of(context)!.amount,
                 ),
                 validator: (v) =>
-                    (v == null || v.isEmpty) ? AppLocalizations.of(context)!.emptyAmountMsg : null,
+                    (v == null || v.isEmpty)
+                        ? AppLocalizations.of(context)!
+                            .emptyAmountMsg
+                        : null,
+              ),
+
+              const SizedBox(height: 16),
+
+              ElevatedButton.icon(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    final success = await _saveTransaction();
+                    final msg = success
+                        ? AppLocalizations.of(context)!
+                            .transactionSaved
+                        : AppLocalizations.of(context)!
+                            .errorSavingTransactionMsg;
+
+                    if (context.mounted) {
+                      SnackHelper.showMessage(context, msg);
+                      if (success) {
+                        Navigator.pop(context, true);
+                      }
+                    }
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal,
+                  foregroundColor: Colors.white,
+                  elevation: 4,
+                ),
+                icon: const Icon(Icons.save_alt),
+                label: Text(
+                  AppLocalizations.of(context)!.btnSaveChanges,
+                ),
               ),
             ],
           ),

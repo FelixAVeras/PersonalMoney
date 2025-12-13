@@ -31,7 +31,6 @@ void main() async {
     initialLocale = Locale(savedLang);
   }
 
-
   runApp(PersonalMoney(initialTheme: initialTheme, initialLocale: initialLocale,));
 }
 
@@ -64,21 +63,25 @@ class PersonalMoney extends StatelessWidget {
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
                 // textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme),
                 appBarTheme: AppBarTheme(
-                  elevation: 2,
+                  // elevation: 2,
                   centerTitle: false,
-                  scrolledUnderElevation: 4,
+                  scrolledUnderElevation: 6,
                   backgroundColor: Colors.teal,
+                  // backgroundColor: Color(0xFFF78c2ad), //New Color in the update,
                   foregroundColor: Colors.white,
                   iconTheme: IconThemeData(color: Colors.white),
                 ),
+                cardTheme: CardThemeData(
+                  elevation: 2
+                )
               ),
               darkTheme: ThemeData.dark().copyWith(
                 useMaterial3: false,
                 appBarTheme: const AppBarTheme(
                   foregroundColor: Colors.white,
-                  elevation: 2,
+                  // elevation: 2,
                   centerTitle: false,
-                  scrolledUnderElevation: 4,
+                  scrolledUnderElevation: 6,
                 ),
               ),
               themeMode: currentMode,
@@ -93,6 +96,7 @@ class PersonalMoney extends StatelessWidget {
                 Locale('es'),
                 Locale('pt'),
                 Locale('fr'),
+                //TODO: Agregar idiomas para los paises(Alemania, Haiti, Italia)
               ],
               home: HomePage(),
               // home: LoginPage(),

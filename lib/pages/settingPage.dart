@@ -3,9 +3,14 @@ import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
   Future<void> _saveThemePreference(ThemeMode mode) async {
     final prefs = await SharedPreferences.getInstance();
     String themeString;
@@ -32,6 +37,8 @@ class SettingsPage extends StatelessWidget {
     PersonalMoney.localeNotifier.value = Locale(langCode);
   }
 
+  bool notificationSwitch = false;
+  bool biometricSwitch = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,22 +59,6 @@ class SettingsPage extends StatelessWidget {
           return ListView(
             padding: const EdgeInsets.all(8),
             children: [
-              // Card.outlined(
-              //   color: Theme.of(context).brightness == Brightness.light
-              //       ? Colors.white
-              //       : const Color(0xFF1E1E1E),
-              //   child: Column(
-              //     children: [
-              //       ListTile(
-              //         title: Text(
-              //           'Seguridad'
-              //         ),
-              //       ),
-                    
-              //     ],
-              //   ),
-              // ),
-              // const SizedBox(height: 12),
               Card.outlined(
                 child: Column(
                   children: [
@@ -184,7 +175,24 @@ class SettingsPage extends StatelessWidget {
               //           AppLocalizations.of(context)!.securityPrivacy, style: const TextStyle(fontWeight: FontWeight.bold)
               //         ),
               //       ),
-                    
+              //       SwitchListTile(
+              //         value: notificationSwitch, 
+              //         onChanged: (bool value) {
+              //           setState(() => notificationSwitch = value);
+              //         },
+              //         activeColor: Colors.teal,
+              //         secondary: Icon(Icons.notifications),
+              //         title: Text('Recibir Notificaciones')
+              //       ),
+              //       SwitchListTile(
+              //         value: biometricSwitch, 
+              //         secondary: Icon(Icons.fingerprint),
+              //         onChanged: (bool value) {
+              //           setState(() => biometricSwitch = value);
+              //         },
+              //         activeColor: Colors.teal,
+              //         title: Text('Utilizar Datos Biometricos establecidos')
+              //       ),
               //     ],
               //   ),
               // ),

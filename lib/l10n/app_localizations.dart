@@ -497,6 +497,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Transaction Type'**
   String get transactionType;
+
+  /// No description provided for @remainingBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining Balance'**
+  String get remainingBalance;
 }
 
 class _AppLocalizationsDelegate

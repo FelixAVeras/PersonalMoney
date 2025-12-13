@@ -64,5 +64,6 @@
     "deleteConfirm": "Êtes-vous sûr de vouloir supprimer ceci ?",
     "cancel": "Annuler",
     "editTransactionTitle": "Modifier la transaction",
-    "transactionType": "Type de transaction"
+    "transactionType": "Type de transaction",
+    "remainingBalance": "Solde restant"
 }
