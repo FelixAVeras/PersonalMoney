@@ -14,7 +14,8 @@ class FormatHelper {
 
   String formatDate(String date) {
     final DateTime parsedDate = DateTime.parse(date);
-    final DateFormat formatter = DateFormat('dd-MM-yyyy');
+    // final DateFormat formatter = DateFormat('dd-MM-yyyy');
+    final DateFormat formatter = DateFormat('MMMM d, y');
     
     return formatter.format(parsedDate);
   }

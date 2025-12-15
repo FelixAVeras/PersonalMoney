@@ -448,5 +448,15 @@ class SQLHelper {
     );
   }
 
+  Future<Map<String, dynamic>?> getLastTransaction() async {
+    final dbClient = await db();
 
+    final result = await dbClient.query(
+      'transactions',
+      orderBy: 'date DESC',
+      limit: 1,
+    );
+
+    return result.isNotEmpty ? result.first : null;
+  }
 }

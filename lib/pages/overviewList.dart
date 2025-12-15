@@ -247,14 +247,14 @@ class _OverviewListState extends State<OverviewList> {
           final double totalLeft = totalAmount - totalSpent;
 
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(4),
             child: Column(
               children: [
-                _buildTotalCard(
-                  totalSpent,
-                  totalLeft,
-                  totalAmount,
-                ),
+                _buildTotalCard(totalSpent, totalLeft, totalAmount),
+
+                const SizedBox(height: 8),
+
+                _buildLastTransactionCard(),
 
                 const SizedBox(height: 8),
 
@@ -361,8 +361,7 @@ class _OverviewListState extends State<OverviewList> {
 
   // ================= TOTAL CARD =================
 
-  Widget _buildTotalCard(
-      double totalSpent, double totalLeft, double totalAmount) {
+  Widget _buildTotalCard(double totalSpent, double totalLeft, double totalAmount) {
     final double progress = totalAmount <= 0
         ? 0
         : (totalSpent / totalAmount).clamp(0.0, 1.0);
@@ -438,4 +437,101 @@ class _OverviewListState extends State<OverviewList> {
       ),
     );
   }
+
+  // Last Expese/Income
+  Widget _buildLastTransactionCard() {
+    return FutureBuilder<Map<String, dynamic>?>(
+      future: sqlHelper.getLastTransaction(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const SizedBox();
+        }
+
+        if (!snapshot.hasData || snapshot.data == null) {
+          return Card.outlined(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: const [
+                  Icon(Icons.info_outline),
+                  SizedBox(width: 12),
+                  Text('No hay transacciones aún'),
+                ],
+              ),
+            ),
+          );
+        }
+
+        final tx = snapshot.data!;
+        final transacName = tx['name'];
+        final isIncome = tx['type'] == 'income';
+        final amount = tx['amount'];
+        // final category = tx['category'];
+        final description = tx['description'];
+        final date = formatHelper.formatDate(tx['date']);
+
+        print(tx);
+
+        return Card(
+          elevation: 2,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor:
+                      isIncome ? Colors.green.withOpacity(0.15) : Colors.red.withOpacity(0.15),
+                  child: Icon(
+                    isIncome ? Icons.arrow_upward : Icons.arrow_downward,
+                    color: isIncome ? Colors.green : Colors.red,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        isIncome ? 'Último ingreso' : 'Último gasto',
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        transacName,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      // Text(
+                      //   category,
+                      //   style: Theme.of(context).textTheme.titleMedium,
+                      // ),
+                      if (description != null && description.isNotEmpty)
+                        Text(
+                          description,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      const SizedBox(height: 4),
+                      Text(
+                        date,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
+                ),
+                Text(
+                  formatHelper.formatAmount(amount),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: isIncome ? Colors.green : Colors.red,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+
 }
