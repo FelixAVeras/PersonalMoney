@@ -210,4 +210,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get remainingBalance => 'Remaining Balance';
+
+  @override
+  String get noTransactions => 'No transactions yet';
+
+  @override
+  String get lastSpend => 'Last Spend';
+
+  @override
+  String get lastIncome => 'Last Income';
 }

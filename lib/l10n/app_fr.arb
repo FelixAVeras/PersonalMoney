@@ -65,5 +65,8 @@
     "cancel": "Annuler",
     "editTransactionTitle": "Modifier la transaction",
     "transactionType": "Type de transaction",
-    "remainingBalance": "Solde restant"
+    "remainingBalance": "Solde restant",
+    "noTransactions": "Aucune transaction pour le moment",
+    "lastSpend": "Dernière dépense",
+    "lastIncome": "Dernier revenu"
 }

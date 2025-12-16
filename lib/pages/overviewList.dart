@@ -472,15 +472,14 @@ class _OverviewListState extends State<OverviewList> {
 
         print(tx);
 
-        return Card(
-          elevation: 2,
+        return Card.outlined(
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
               children: [
                 CircleAvatar(
                   backgroundColor:
-                      isIncome ? Colors.green.withOpacity(0.15) : Colors.red.withOpacity(0.15),
+                      isIncome ? Colors.green.withValues(alpha: 0.15) : Colors.red.withValues(alpha: 0.15),
                   child: Icon(
                     isIncome ? Icons.arrow_upward : Icons.arrow_downward,
                     color: isIncome ? Colors.green : Colors.red,

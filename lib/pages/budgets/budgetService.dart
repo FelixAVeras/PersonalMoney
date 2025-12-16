@@ -121,4 +121,14 @@ class BudgetService {
     );
   }
 
+  Future<void> updateBudget(BudgetModel budget) async {
+    final db = await SQLHelper.db();
+
+    await db.update(
+      'budgets',
+      budget.toMap(),
+      where: 'id = ?',
+      whereArgs: [budget.id],
+    );
+  }
 }

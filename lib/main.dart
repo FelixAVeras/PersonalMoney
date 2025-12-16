@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:google_fonts/google_fonts.dart';
 // import 'package:personalmoney/pages/auth/loginPage.dart';
 import 'package:personalmoney/pages/home_page.dart';
@@ -56,33 +57,41 @@ class PersonalMoney extends StatelessWidget {
           builder: (_, ThemeMode currentMode, __) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
-              title: 'Personal Money',
+              title: 'Personal Money - Expense Tracker',
               locale: currentLocale,
               theme: ThemeData(
-                useMaterial3: false,
+                useMaterial3: true,
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-                // textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme),
+                textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme),
                 appBarTheme: AppBarTheme(
-                  // elevation: 2,
-                  centerTitle: false,
-                  scrolledUnderElevation: 6,
-                  backgroundColor: Colors.teal,
-                  // backgroundColor: Color(0xFFF78c2ad), //New Color in the update,
+                  elevation: 2,
+                  scrolledUnderElevation: 4,
+                  centerTitle: true,
+                  // backgroundColor: Colors.teal,
+                  backgroundColor: Color(0xFFF78c2ad), //New Color in the update,
                   foregroundColor: Colors.white,
                   iconTheme: IconThemeData(color: Colors.white),
                 ),
-                cardTheme: CardThemeData(
-                  elevation: 2
-                )
+                // cardTheme: CardThemeData( // Delete this in te update
+                //   elevation: 2,
+                //   color: Colors.white
+                // )
               ),
               darkTheme: ThemeData.dark().copyWith(
                 useMaterial3: false,
+                textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme),
                 appBarTheme: const AppBarTheme(
+                  elevation: 2,
+                  scrolledUnderElevation: 4,
+                  centerTitle: true,
+                  // backgroundColor: Colors.teal,
+                  backgroundColor: Color(0xFFF78c2ad), //New Color in the update,
                   foregroundColor: Colors.white,
-                  // elevation: 2,
-                  centerTitle: false,
-                  scrolledUnderElevation: 6,
                 ),
+                // cardTheme: CardThemeData( // Delete this in te update
+                //   elevation: 2,
+                //   color: Colors.black,
+                // )
               ),
               themeMode: currentMode,
               localizationsDelegates: [

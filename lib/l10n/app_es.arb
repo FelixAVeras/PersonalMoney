@@ -65,5 +65,8 @@
     "cancel": "Cancelar",
     "editTransactionTitle": "Editar Transaccion",
     "transactionType": "Tipo de Transaccion",
-    "remainingBalance": "Balance Restante"
+    "remainingBalance": "Balance Restante",
+    "noTransactions": "Aún no hay transacciones",
+    "lastSpend": "Último gasto",
+    "lastIncome": "Último ingreso"
 }

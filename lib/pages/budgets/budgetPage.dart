@@ -7,7 +7,7 @@ import 'package:personalmoney/models/budgetModel.dart';
 import 'package:personalmoney/pages/budgets/addBudget.dart';
 import 'package:personalmoney/pages/budgets/budgetService.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
-import 'package:personalmoney/pages/categoryPage.dart';
+import 'package:personalmoney/pages/budgets/editBudgetPage.dart';
 
 class BudgetPage extends StatefulWidget {
   const BudgetPage({super.key});
@@ -102,72 +102,53 @@ class _BudgetPageState extends State<BudgetPage> {
             icon: const Icon(Icons.add_circle),
             tooltip: AppLocalizations.of(context)!.addBudget,
           ),
-          // PopupMenuButton(
-          //   icon: Icon(Icons.more_vert_rounded),
-          //   onSelected: (value) async => Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryPage())),
-          //   itemBuilder: (context) => [
-          //     PopupMenuItem(
-          //       value: 'cleanBudgets', 
-          //       child: Text('Limpiar Presupuestos')
-          //     )
-          //   ]
-          // )
         ],
       ),
       body: loading
-          ? const Center(child: CircularProgressIndicator())
-          : budgets.isEmpty
-              ? Center(child: Text(
-                AppLocalizations.of(context)!.emptyBudgetMsg,
-                style: TextStyle(fontWeight: FontWeight.w600, color: Colors.grey)))
-              : SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.all(8),
-                      child: Card.outlined(
-                        child: DataTable(
-                          columnSpacing: 24,
-                          columns: [
-                            DataColumn(
-                                label:
-                                    Text(AppLocalizations.of(context)!.category)),
-                            DataColumn(
-                                label:
-                                    Text(AppLocalizations.of(context)!.balance)),
-                          ],
-                          rows: budgets.map((b) {
-                            final name =
-                                categoryNames[b.categoryId] ?? AppLocalizations.of(context)!.unknowCategory;
-                            final balText = _formatCurrency(b.balance);
+      ? const Center(child: CircularProgressIndicator())
+      : budgets.isEmpty
+      ? Center(
+          child: Text(
+            AppLocalizations.of(context)!.emptyBudgetMsg,
+          ),
+        )
+      : ListView.builder(
+          padding: const EdgeInsets.all(8),
+          itemCount: budgets.length,
+          itemBuilder: (context, index) {
+            final b = budgets[index];
+            final name = categoryNames[b.categoryId] ??
+                AppLocalizations.of(context)!.unknowCategory;
 
-                            return DataRow(
-                              cells: [
-                                DataCell(Row(
-                                  children: [
-                                    Icon(formatHelper.getCategoryIcon(name), size: 18),
-                                    const SizedBox(width: 10.0),
-                                    Flexible(
-                                      child: Text(CategoryLocalizationHelper.translateCategory(context, name))
-                                    ),
-                                  ],
-                                )),
-                                DataCell(Text(
-                                  balText,
-                                  style: TextStyle(
-                                      color: _balanceColor(b),
-                                      fontWeight: FontWeight.w600),
-                                )),
-                              ],
-                            );
-                          }).toList(),
-                        ),
-                      )
-                    ),
+            return Card.outlined(
+              margin: const EdgeInsets.symmetric(vertical: 4),
+              child: ListTile(
+                leading: Icon(formatHelper.getCategoryIcon(name)),
+                title: Text(formatHelper.formatAmount(b.amount)),
+                subtitle: Text(
+                  CategoryLocalizationHelper.translateCategory(
+                    context,
+                    name,
                   ),
+                  style: TextStyle(color: Color(0xFFF3969A), fontWeight: FontWeight.w600),
                 ),
+                trailing: Icon(Icons.arrow_forward),
+                onTap: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditBudgetPage(
+                        budget: b,
+                        categoryName: name,
+                      ),
+                    ),
+                  );
+                  await load();
+                },
+              ),
+            );
+          },
+        ),
     );
   }
 }

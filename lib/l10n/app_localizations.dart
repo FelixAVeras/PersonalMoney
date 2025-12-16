@@ -503,6 +503,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remaining Balance'**
   String get remainingBalance;
+
+  /// No description provided for @noTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions yet'**
+  String get noTransactions;
+
+  /// No description provided for @lastSpend.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Spend'**
+  String get lastSpend;
+
+  /// No description provided for @lastIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Income'**
+  String get lastIncome;
 }
 
 class _AppLocalizationsDelegate

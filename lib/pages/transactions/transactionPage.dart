@@ -49,7 +49,7 @@ class _TransactionPageState extends State<TransactionPage> {
               
               _loadTransactions();
             },
-            icon: Icon(Icons.add_circle),
+            icon: Icon(Icons.add_circle_rounded),
             tooltip: AppLocalizations.of(context)!.addTransactionTitle,
           )
         ],

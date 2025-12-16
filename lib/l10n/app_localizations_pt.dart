@@ -210,4 +210,13 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get remainingBalance => 'Saldo restante';
+
+  @override
+  String get noTransactions => 'Ainda não há transações';
+
+  @override
+  String get lastSpend => 'Última despesa';
+
+  @override
+  String get lastIncome => 'Última receita';
 }

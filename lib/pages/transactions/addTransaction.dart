@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
-import 'package:personalmoney/helpers/SnakcHelper.dart';
+import 'package:personalmoney/helpers/SnackHelper.dart';
 import 'package:personalmoney/helpers/category_localization_helper.dart';
 import 'package:personalmoney/helpers/formatHelper.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
@@ -117,6 +117,7 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
             children: [
               TextFormField(
                 controller: _descriptionController,
+                textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.title),
                   border: const OutlineInputBorder(),
@@ -169,30 +170,21 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
                 value: ExpenseType.income,
                 groupValue: _expenseType,
                 activeColor: Colors.teal,
-                title:
-                    Text(AppLocalizations.of(context)!.income),
-                onChanged: (v) =>
-                    setState(() => _expenseType = v!),
+                title: Text(AppLocalizations.of(context)!.income),
+                onChanged: (v) => setState(() => _expenseType = v!),
               ),
 
               const SizedBox(height: 12),
 
               TextFormField(
                 controller: _amountController,
-                keyboardType:
-                    const TextInputType.numberWithOptions(
-                        decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.money),
                   border: const OutlineInputBorder(),
-                  labelText:
-                      AppLocalizations.of(context)!.amount,
+                  labelText: AppLocalizations.of(context)!.amount,
                 ),
-                validator: (v) =>
-                    (v == null || v.isEmpty)
-                        ? AppLocalizations.of(context)!
-                            .emptyAmountMsg
-                        : null,
+                validator: (v) => (v == null || v.isEmpty) ? AppLocalizations.of(context)!.emptyAmountMsg : null,
               ),
 
               const SizedBox(height: 16),
@@ -202,13 +194,12 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
                   if (_formKey.currentState!.validate()) {
                     final success = await _saveTransaction();
                     final msg = success
-                        ? AppLocalizations.of(context)!
-                            .transactionSaved
-                        : AppLocalizations.of(context)!
-                            .errorSavingTransactionMsg;
+                      ? AppLocalizations.of(context)!.transactionSaved
+                      : AppLocalizations.of(context)!.errorSavingTransactionMsg;
 
                     if (context.mounted) {
                       SnackHelper.showMessage(context, msg);
+                      
                       if (success) {
                         Navigator.pop(context, true);
                       }
@@ -216,9 +207,8 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal,
+                  backgroundColor: Color(0xFFF78c2ad),
                   foregroundColor: Colors.white,
-                  elevation: 4,
                 ),
                 icon: const Icon(Icons.save_alt),
                 label: Text(

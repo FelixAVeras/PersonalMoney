@@ -187,7 +187,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
-import 'package:personalmoney/helpers/SnakcHelper.dart';
+import 'package:personalmoney/helpers/SnackHelper.dart';
 import 'package:personalmoney/helpers/category_localization_helper.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/models/CategoryModel.dart';

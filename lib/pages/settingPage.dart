@@ -72,6 +72,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       onChanged: (mode) {
                         if (mode != null) _saveThemePreference(mode);
                       },
+                      activeColor: Color(0xFFF3969A),
                     ),
                     RadioListTile<ThemeMode>(
                       title: Text(AppLocalizations.of(context)!.light),
@@ -80,6 +81,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       onChanged: (mode) {
                         if (mode != null) _saveThemePreference(mode);
                       },
+                      activeColor: Color(0xFFF3969A),
                     ),
                     RadioListTile<ThemeMode>(
                       title: Text(AppLocalizations.of(context)!.dark),
@@ -88,6 +90,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       onChanged: (mode) {
                         if (mode != null) _saveThemePreference(mode);
                       },
+                      activeColor: Color(0xFFF3969A),
                     ),
                   ],
                 ),
@@ -115,6 +118,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           PersonalMoney.localeNotifier.value = null;
                         }
                       },
+                      activeColor: Color(0xFFF3969A),
                     ),
                     // Español
                     RadioListTile<String>(
@@ -126,8 +130,8 @@ class _SettingsPageState extends State<SettingsPage> {
                           _saveLanguagePreference(value);
                         }
                       },
+                      activeColor: Color(0xFFF3969A),
                     ),
-
                     // Inglés
                     RadioListTile<String>(
                       title: Text("English"),
@@ -138,6 +142,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           _saveLanguagePreference(value);
                         }
                       },
+                      activeColor: Color(0xFFF3969A),
                     ),
 
                     // Portugués
@@ -150,6 +155,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           _saveLanguagePreference(value);
                         }
                       },
+                      activeColor: Color(0xFFF3969A),
                     ),
 
                     // Francés
@@ -162,6 +168,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           _saveLanguagePreference(value);
                         }
                       },
+                      activeColor: Color(0xFFF3969A),
                     ),
                   ],
                 ),

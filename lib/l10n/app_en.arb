@@ -65,5 +65,8 @@
     "cancel": "Cancel",
     "editTransactionTitle": "Edit Transaction",
     "transactionType": "Transaction Type",
-    "remainingBalance": "Remaining Balance"
+    "remainingBalance": "Remaining Balance",
+    "noTransactions": "No transactions yet",
+    "lastSpend": "Last Spend",
+    "lastIncome": "Last Income"
 }
