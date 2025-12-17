@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,10 +40,11 @@ class _SettingsPageState extends State<SettingsPage> {
 
   bool notificationSwitch = false;
   bool biometricSwitch = false;
+  bool userProSwitch = false;
 
   @override
   Widget build(BuildContext context) {
-    // bool syncEnabled = false;
+    bool syncEnabled = false;
 
     return Scaffold(
       backgroundColor: Theme.of(context).brightness == Brightness.light
@@ -173,97 +175,124 @@ class _SettingsPageState extends State<SettingsPage> {
                   ],
                 ),
               ),
-              // const SizedBox(height: 12),
-              // Card.outlined(
-              //   child: Column(
-              //     children: [
-              //       ListTile(
-              //         title: Text(
-              //           AppLocalizations.of(context)!.securityPrivacy, style: const TextStyle(fontWeight: FontWeight.bold)
-              //         ),
-              //       ),
-              //       SwitchListTile(
-              //         value: notificationSwitch, 
-              //         onChanged: (bool value) {
-              //           setState(() => notificationSwitch = value);
-              //         },
-              //         activeColor: Colors.teal,
-              //         secondary: Icon(Icons.notifications),
-              //         title: Text('Recibir Notificaciones')
-              //       ),
-              //       SwitchListTile(
-              //         value: biometricSwitch, 
-              //         secondary: Icon(Icons.fingerprint),
-              //         onChanged: (bool value) {
-              //           setState(() => biometricSwitch = value);
-              //         },
-              //         activeColor: Colors.teal,
-              //         title: Text('Utilizar Datos Biometricos establecidos')
-              //       ),
-              //     ],
-              //   ),
-              // ),
+              const SizedBox(height: 12),
+              Card.outlined(
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(Icons.attach_money),
+                      title: Text('Tipos de Moneda', style: const TextStyle(fontWeight: FontWeight.bold)),
+                      subtitle: Text('Establecer cambios de monedas'),
+                      trailing: Icon(Icons.arrow_forward_rounded),
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              Card.outlined(
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text(
+                        'Sincronizacion de datos',
+                        style: GoogleFonts.quicksand(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 17,
+                        ),
+                      ),
+                    ),
+                    SwitchListTile(
+                      title: Text(
+                        'Subir datos a nube',
+                        style: GoogleFonts.quicksand(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                        ),
+                      ),
+                      subtitle: Text(
+                        'Sincroniza automáticamente las datos guardados en tu dispositivo',
+                        style: GoogleFonts.quicksand(fontWeight: FontWeight.w400),
+                      ),
+                      secondary: Icon(Icons.cloud_upload),
+                      value: syncEnabled,
+                      onChanged: (value) async {
+                        syncEnabled = value;
 
-              // const SizedBox(height: 12),
-              // Card(
-              //   color: Theme.of(context).brightness == Brightness.light
-              //       ? Colors.white
-              //       : const Color(0xFF1E1E1E),
-              //   child: Column(
-              //     children: [
-              //       ListTile(
-              //         title: Text(
-              //           'Sincronizacion de datos',
-              //           style: GoogleFonts.quicksand(
-              //             fontWeight: FontWeight.w600,
-              //             fontSize: 17,
-              //           ),
-              //         ),
-              //       ),
-              //       SwitchListTile(
-              //         title: Text(
-              //           'Guardar listas en la nube',
-              //           style: GoogleFonts.quicksand(
-              //             fontWeight: FontWeight.w600,
-              //             fontSize: 16,
-              //           ),
-              //         ),
-              //         subtitle: Text(
-              //           'Sincroniza automáticamente las listas guardadas en tu dispositivo',
-              //           style: GoogleFonts.quicksand(fontWeight: FontWeight.w400),
-              //         ),
-              //         secondary: Icon(Icons.save_alt, size: 28, color: Color(0xFF317039)),
-              //         value: syncEnabled,
-              //         onChanged: (value) async {
-              //           syncEnabled = value;
+                        // Aquí guardas la preferencia local
+                        final prefs = await SharedPreferences.getInstance();
+                        await prefs.setBool('syncEnabled', value);
 
-              //           // Aquí guardas la preferencia local
-              //           final prefs = await SharedPreferences.getInstance();
-              //           await prefs.setBool('syncEnabled', value);
+                        if (value) {
+                          // ------------------------------------
+                          // 🔄 LÓGICA DE SINCRONIZACIÓN
+                          // ------------------------------------
+                          // 1. Leer datos de la base de datos local
+                          // 2. Enviar datos al API
+                          // 3. Manejar errores
+                          // 4. Confirmar sincronización
+                          //
+                          // Ejemplo (pseudo):
+                          //
+                          // final localData = await db.getAllLists();
+                          // await api.uploadLists(localData);
+                          // ------------------------------------
+                        }
 
-              //           if (value) {
-              //             // ------------------------------------
-              //             // 🔄 LÓGICA DE SINCRONIZACIÓN
-              //             // ------------------------------------
-              //             // 1. Leer datos de la base de datos local
-              //             // 2. Enviar datos al API
-              //             // 3. Manejar errores
-              //             // 4. Confirmar sincronización
-              //             //
-              //             // Ejemplo (pseudo):
-              //             //
-              //             // final localData = await db.getAllLists();
-              //             // await api.uploadLists(localData);
-              //             // ------------------------------------
-              //           }
-
-              //           // Si usas StatefulWidget:
-              //           // setState(() {});
-              //         },
-              //       ),
-              //     ],
-              //   ),
-              // ),
+                        // Si usas StatefulWidget:
+                        // setState(() {});
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              Card.outlined(
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text(
+                        AppLocalizations.of(context)!.securityPrivacy, style: const TextStyle(fontWeight: FontWeight.bold)
+                      ),
+                    ),
+                    SwitchListTile(
+                      value: notificationSwitch, 
+                      onChanged: (bool value) {
+                        setState(() => notificationSwitch = value);
+                      },
+                      activeColor: Color(0xFFF3969A),
+                      secondary: Icon(Icons.notifications),
+                      title: Text('Notificaciones')
+                    ),
+                    SwitchListTile(
+                      value: biometricSwitch, 
+                      secondary: Icon(Icons.fingerprint),
+                      onChanged: (bool value) {
+                        setState(() => biometricSwitch = value);
+                      },
+                      activeColor: Color(0xFFF3969A),
+                      title: Text('Datos Biometricos')
+                    ),
+                    SwitchListTile(
+                      value: userProSwitch, 
+                      secondary: Icon(Icons.upgrade_rounded),
+                      onChanged: (bool value) {
+                        setState(() => userProSwitch = value);
+                      },
+                      activeColor: Color(0xFFF3969A),
+                      title: Text('PersonalMoney PRO')
+                    ),
+                    // SizedBox(height: 10),
+                    const Divider(),
+                    ListTile(
+                      leading: Icon(Icons.person_off, color: Colors.red),
+                      title: Text('Eliminar Cuenta', style: TextStyle(color: Colors.red)),
+                      onTap: () {},
+                    ),
+                    SizedBox(height: 8),
+                  ],
+                ),
+              ),
             ],
           );
         },

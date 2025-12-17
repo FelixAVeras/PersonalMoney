@@ -94,7 +94,7 @@ class PersonalMoney extends StatelessWidget {
                 Locale('es'),
                 Locale('pt'),
                 Locale('fr'),
-                //TODO: Agregar idiomas para los paises(Alemania, Haiti, Italia)
+                //TODO: Agregar idiomas para los paises(Alemania, Italia)
               ],
               home: HomePage(),
             );
