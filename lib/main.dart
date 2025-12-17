@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:google_fonts/google_fonts.dart';
-// import 'package:personalmoney/pages/auth/loginPage.dart';
 import 'package:personalmoney/pages/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'l10n/app_localizations.dart';
@@ -67,31 +65,21 @@ class PersonalMoney extends StatelessWidget {
                   elevation: 2,
                   scrolledUnderElevation: 4,
                   centerTitle: true,
-                  // backgroundColor: Colors.teal,
-                  backgroundColor: Color(0xFFF78c2ad), //New Color in the update,
+                  backgroundColor: Color(0xFFF78c2ad),
                   foregroundColor: Colors.white,
                   iconTheme: IconThemeData(color: Colors.white),
                 ),
-                // cardTheme: CardThemeData( // Delete this in te update
-                //   elevation: 2,
-                //   color: Colors.white
-                // )
               ),
               darkTheme: ThemeData.dark().copyWith(
-                useMaterial3: false,
                 textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme),
                 appBarTheme: const AppBarTheme(
                   elevation: 2,
                   scrolledUnderElevation: 4,
                   centerTitle: true,
-                  // backgroundColor: Colors.teal,
-                  backgroundColor: Color(0xFFF78c2ad), //New Color in the update,
+                  backgroundColor: Color(0xFFF78c2ad),
                   foregroundColor: Colors.white,
+                  iconTheme: IconThemeData(color: Colors.white),
                 ),
-                // cardTheme: CardThemeData( // Delete this in te update
-                //   elevation: 2,
-                //   color: Colors.black,
-                // )
               ),
               themeMode: currentMode,
               localizationsDelegates: [
@@ -108,7 +96,6 @@ class PersonalMoney extends StatelessWidget {
                 //TODO: Agregar idiomas para los paises(Alemania, Haiti, Italia)
               ],
               home: HomePage(),
-              // home: LoginPage(),
             );
           },
         );

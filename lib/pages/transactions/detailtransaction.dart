@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
+import 'package:personalmoney/helpers/SnackHelper.dart';
 import 'package:personalmoney/helpers/category_localization_helper.dart';
 import 'package:personalmoney/helpers/formatHelper.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
@@ -40,8 +41,16 @@ class _DetailTransactionPageState extends State<DetailTransactionPage> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.delete),
-        content: Text(AppLocalizations.of(context)!.deleteConfirm),
+        title: Text(AppLocalizations.of(context)!.delete, style: TextStyle(
+          color: Theme.of(context).brightness == Brightness.light
+          ? Colors.black
+          : Colors.white,
+        ),),
+        content: Text(AppLocalizations.of(context)!.deleteConfirm, style: TextStyle(
+            color: Theme.of(context).brightness == Brightness.light
+            ? Colors.black
+            : Colors.white,
+          ),),
         actions: [
           TextButton(
             child: Text(AppLocalizations.of(context)!.cancel),
@@ -49,7 +58,11 @@ class _DetailTransactionPageState extends State<DetailTransactionPage> {
           ),
           TextButton(
             child: Text(AppLocalizations.of(context)!.delete),
-            onPressed: () => Navigator.pop(context, true),
+            onPressed: () {
+              Navigator.pop(context, true);
+
+              SnackHelper.showMessage(context, 'Transaccion Eliminada');
+            }
           ),
         ],
       ),
@@ -95,9 +108,12 @@ class _DetailTransactionPageState extends State<DetailTransactionPage> {
                       children: [
                         Text(
                           widget.transaction.name,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
+                            color: Theme.of(context).brightness == Brightness.light
+                            ? Colors.black
+                            : Colors.white,
                           ),
                         ),
                         Text(
@@ -119,7 +135,9 @@ class _DetailTransactionPageState extends State<DetailTransactionPage> {
 
                   Text(
                     formatHelper.formatAmount(widget.transaction.amount),
-                    style: const TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 16, color: Theme.of(context).brightness == Brightness.light
+                      ? Colors.black
+                      : Colors.white),
                   ),
                   const SizedBox(height: 10),
 
@@ -139,7 +157,10 @@ class _DetailTransactionPageState extends State<DetailTransactionPage> {
 
                   Text(
                     formatHelper.formatDate(widget.transaction.date.toString()),
-                    style: const TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 16,
+                      color: Theme.of(context).brightness == Brightness.light
+                      ? Colors.black
+                      : Colors.white,),
                   ),
 
                   const Divider(),

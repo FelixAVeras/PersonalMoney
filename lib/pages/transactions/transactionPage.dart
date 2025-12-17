@@ -89,7 +89,13 @@ class _TransactionPageState extends State<TransactionPage> {
             Center(
               child: Text(
                 CategoryLocalizationHelper.translateCategory(context, category),
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 20, 
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).brightness == Brightness.light
+                  ? Colors.black
+                  : Colors.white
+                ),
               )
             ),
             
