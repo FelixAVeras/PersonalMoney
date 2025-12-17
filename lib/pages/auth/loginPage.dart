@@ -111,20 +111,20 @@ class _loginPageState extends State<LoginPage> {
                               AppLocalizations.of(context)!.btnRegister,
                             ),
                           ),
-                          const SizedBox(height: 15.0),
-                          TextButton(
-                            child: Text(
-                              AppLocalizations.of(context)!.continueWithoutAccount,
-                              style: TextStyle(
-                                  color: Colors.red.shade300,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16),
-                            ),
-                            onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => HomePage()),
-                            ),
-                          )
+                          // const SizedBox(height: 15.0),
+                          // TextButton(
+                          //   child: Text(
+                          //     AppLocalizations.of(context)!.continueWithoutAccount,
+                          //     style: TextStyle(
+                          //         color: Colors.red.shade300,
+                          //         fontWeight: FontWeight.w600,
+                          //         fontSize: 16),
+                          //   ),
+                          //   onPressed: () => Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(builder: (context) => HomePage()),
+                          //   ),
+                          // )
                           
                         ],
                       ),
@@ -132,7 +132,7 @@ class _loginPageState extends State<LoginPage> {
                     const SizedBox(height: 29.0),
                     Center(
                       child: Text(
-                        'Personal Money © 2019 - 2025', 
+                        'Personal Money © 2021', 
                         style: TextStyle(fontSize: 16, color: Colors.grey.shade600)
                       )
                     )
