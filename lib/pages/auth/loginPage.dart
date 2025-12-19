@@ -10,9 +10,10 @@ class LoginPage extends StatefulWidget {
 
 class _loginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  
   bool hidePassword = true;
-
   bool isRemember = false;
+  bool rememberUsername = false;
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +41,7 @@ class _loginPageState extends State<LoginPage> {
                           TextFormField(
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              prefixIcon: Icon(Icons.alternate_email, color: Colors.teal),
+                              icon: Icon(Icons.alternate_email, color: Color(0xFFF78c2ad)),
                               labelText: AppLocalizations.of(context)!.email,
                               hintText: 'abc123@defg.com',
                               labelStyle: TextStyle(fontWeight: FontWeight.w600),
@@ -57,15 +57,15 @@ class _loginPageState extends State<LoginPage> {
                           TextFormField(
                             obscureText: hidePassword,
                             decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              prefixIcon: const Icon(Icons.lock_outline, color: Colors.teal),
+                              // border: OutlineInputBorder(),
+                              icon: const Icon(Icons.lock_outline, color: Color(0xFFF78c2ad)),
                               labelText: AppLocalizations.of(context)!.password,
                               labelStyle: const TextStyle(fontWeight: FontWeight.w600),
                               suffix: InkWell(
                                 onTap: togglePasswordView,
                                 child: Icon(
                                   hidePassword ? Icons.visibility : Icons.visibility_off,
-                                  color: Colors.teal,
+                                  color: Color(0xFFF78c2ad)
                                 ),
                               ),
                             ),
@@ -77,10 +77,19 @@ class _loginPageState extends State<LoginPage> {
                             },
                           ),
                           const SizedBox(height: 28.0),
+                          SwitchListTile(
+                            value: rememberUsername, 
+                            onChanged: (bool value) {
+                              setState(() => rememberUsername = value);
+                            },
+                            activeColor: Color(0xFFF3969A),
+                            title: Text('Recordar usuario')
+                          ),
+                          const SizedBox(height: 28.0),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 95),
-                              backgroundColor: Colors.teal,
+                              backgroundColor: Color(0xFFF78c2ad),
                               elevation: 2,
                               shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(10))
                             ),
@@ -101,9 +110,10 @@ class _loginPageState extends State<LoginPage> {
                             ),
                           ),
                           const SizedBox(height: 15.0),
-                          FilledButton.tonal(
+                          FilledButton(
                             onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage())),
                             style: FilledButton.styleFrom(
+                              backgroundColor: Color(0xFFF3969A),
                               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 60),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(10))
                             ),
@@ -159,7 +169,7 @@ class _loginPageState extends State<LoginPage> {
       height: size.height * 0.30,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.teal,
+        color: Color(0xFFF78c2ad),
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(20.0),
           bottomRight: Radius.circular(20.0),

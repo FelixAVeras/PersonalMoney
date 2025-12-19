@@ -175,20 +175,20 @@ class _SettingsPageState extends State<SettingsPage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 12),
-              Card.outlined(
-                child: Column(
-                  children: [
-                    ListTile(
-                      leading: Icon(Icons.attach_money),
-                      title: Text('Tipos de Moneda', style: const TextStyle(fontWeight: FontWeight.bold)),
-                      subtitle: Text('Establecer cambios de monedas'),
-                      trailing: Icon(Icons.arrow_forward_rounded),
-                      onTap: () {},
-                    ),
-                  ],
-                ),
-              ),
+              // const SizedBox(height: 12),
+              // Card.outlined(
+              //   child: Column(
+              //     children: [
+              //       ListTile(
+              //         leading: Icon(Icons.attach_money),
+              //         title: Text('Tipos de Moneda', style: const TextStyle(fontWeight: FontWeight.bold)),
+              //         subtitle: Text('Establecer cambios de monedas'),
+              //         trailing: Icon(Icons.arrow_forward_rounded),
+              //         onTap: () {},
+              //       ),
+              //     ],
+              //   ),
+              // ),
               const SizedBox(height: 12),
               Card.outlined(
                 child: Column(

@@ -8,7 +8,7 @@ import 'package:personalmoney/pages/auth/profilePage.dart';
 // import 'package:personalmoney/pages/auth/profilePage.dart';
 import 'package:personalmoney/pages/budgets/budgetPage.dart';
 import 'package:personalmoney/pages/overviewList.dart';
-import 'package:personalmoney/pages/settingPage.dart';
+import 'package:personalmoney/pages/settings/settingPage.dart';
 import 'package:personalmoney/pages/transactions/transactionPage.dart';
 import 'package:personalmoney/pages/trends/trendsPage.dart';
 // import 'package:personalmoney/pages/trends/trendsPage.dart';

@@ -25,24 +25,37 @@ class _RegisterPageState extends State<RegisterPage> {
           children: [
             TextField(
               controller: nameController, 
-              decoration: InputDecoration(labelText: 'Full Name', border: OutlineInputBorder())
+              decoration: InputDecoration(labelText: 'Full Name')
             ),
             const SizedBox(height: 15.0),
             TextField(
               controller: emailController, 
-              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.email, border: OutlineInputBorder())
+              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.email)
             ),
             const SizedBox(height: 15.0),
             TextField(
               controller: passwordController, 
-              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.password, border: OutlineInputBorder()), 
+              decoration: InputDecoration(labelText: AppLocalizations.of(context)!.password), 
               obscureText: true
             ),
             SizedBox(height: 20),
             ElevatedButton.icon(
               onPressed:() {},
-              icon: Icon(Icons.save_alt), 
-              label: Text(AppLocalizations.of(context)!.btnSaveChanges)
+              style: ElevatedButton.styleFrom(
+                // padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 95),
+                backgroundColor: Color(0xFFF78c2ad),
+                elevation: 2,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(10))
+              ),
+              icon: Icon(Icons.save_alt, color: Colors.white), 
+              label: Text(
+                AppLocalizations.of(context)!.btnSaveChanges, 
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16
+                ),
+              )
             ),
           ],
         ),

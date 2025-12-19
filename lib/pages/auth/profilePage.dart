@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
 import 'package:personalmoney/helpers/formatHelper.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
-import 'package:personalmoney/pages/settingPage.dart';
+import 'package:personalmoney/pages/settings/settingPage.dart';
 
 class ProfilePage extends StatefulWidget {
   @override

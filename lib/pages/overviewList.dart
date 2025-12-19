@@ -265,6 +265,7 @@ class _OverviewListState extends State<OverviewList> {
               minHeight: 20,
               backgroundColor: Colors.grey.shade300,
               valueColor: AlwaysStoppedAnimation(progressColor),
+              borderRadius: BorderRadiusGeometry.circular(10),
             ),
 
             const SizedBox(height: 6),
