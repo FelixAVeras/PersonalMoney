@@ -74,5 +74,4 @@ class FormatHelper {
 
     return null;
   }
-
 }

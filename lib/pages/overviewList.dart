@@ -199,9 +199,9 @@ class _OverviewListState extends State<OverviewList> {
 
     Color progressColor;
     if (progress >= 0.9) {
-      progressColor = Colors.red;
+      progressColor = Color(0xFFFF7851);
     } else if (progress >= 0.7) {
-      progressColor = Colors.orange;
+      progressColor = Color(0xFFFFCE67);
     } else {
       progressColor = Colors.green;
     }
@@ -388,7 +388,7 @@ class _OverviewListState extends State<OverviewList> {
                   formatHelper.formatAmount(amount),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: isIncome ? Colors.green : Colors.red,
+                    color: isIncome ? Colors.green : Color(0xFFFF7851),
                     fontSize: 16,
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:personalmoney/helpers/appColors.dart';
 import 'package:personalmoney/pages/auth/loginPage.dart';
 import 'package:personalmoney/pages/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -66,7 +67,7 @@ class PersonalMoney extends StatelessWidget {
                   elevation: 2,
                   scrolledUnderElevation: 4,
                   centerTitle: true,
-                  backgroundColor: Color(0xFFF78c2ad),
+                  backgroundColor: AppColors.primary, //Color(0xFFF78c2ad),
                   foregroundColor: Colors.white,
                   iconTheme: IconThemeData(color: Colors.white),
                 ),
@@ -77,7 +78,7 @@ class PersonalMoney extends StatelessWidget {
                   elevation: 2,
                   scrolledUnderElevation: 4,
                   centerTitle: true,
-                  backgroundColor: Color(0xFFF78c2ad),
+                  backgroundColor: AppColors.primary, //Color(0xFFF78c2ad),
                   foregroundColor: Colors.white,
                   iconTheme: IconThemeData(color: Colors.white),
                 ),
