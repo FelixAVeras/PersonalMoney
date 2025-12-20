@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/pages/auth/registerPage.dart';
 import 'package:personalmoney/pages/home_page.dart';
+import 'package:personalmoney/services/AuthService.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,6 +16,43 @@ class _loginPageState extends State<LoginPage> {
   bool hidePassword = true;
   bool isRemember = false;
   bool rememberUsername = false;
+  bool isLoading = false;
+
+  String? loginError = '';
+
+  static const String kRememberUsernameKey = 'remember_username';
+  static const String kSavedEmailKey = 'saved_email';
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  Future<void> loadLoginPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      rememberUsername = prefs.getBool(kRememberUsernameKey) ?? false;
+
+      if (rememberUsername) {
+        emailController.text = prefs.getString(kSavedEmailKey) ?? '';
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    loadLoginPreferences();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +78,7 @@ class _loginPageState extends State<LoginPage> {
                       child: Column(
                         children: [
                           TextFormField(
+                            controller: emailController,
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               icon: Icon(Icons.alternate_email, color: Color(0xFFF78c2ad)),
@@ -56,6 +96,7 @@ class _loginPageState extends State<LoginPage> {
                           const SizedBox(height: 18.0),
                           TextFormField(
                             obscureText: hidePassword,
+                            controller: passwordController,
                             decoration: InputDecoration(
                               // border: OutlineInputBorder(),
                               icon: const Icon(Icons.lock_outline, color: Color(0xFFF78c2ad)),
@@ -79,11 +120,19 @@ class _loginPageState extends State<LoginPage> {
                           const SizedBox(height: 28.0),
                           SwitchListTile(
                             value: rememberUsername, 
-                            onChanged: (bool value) {
+                            onChanged: (bool value) async {
+                              final prefs = await SharedPreferences.getInstance();
+
                               setState(() => rememberUsername = value);
+
+                              await prefs.setBool(kRememberUsernameKey, value);
+
+                              if(!value) {
+                                await prefs.remove(kSavedEmailKey);
+                              }
                             },
-                            activeColor: Color(0xFFF3969A),
-                            title: Text('Recordar usuario')
+                            activeThumbColor: Color(0xFFF3969A),
+                            title: Text(AppLocalizations.of(context)!.rememberUserSwitch)
                           ),
                           const SizedBox(height: 28.0),
                           ElevatedButton(
@@ -93,15 +142,49 @@ class _loginPageState extends State<LoginPage> {
                               elevation: 2,
                               shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(10))
                             ),
-                            onPressed: () {
-                              if (validatedForm()) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => HomePage()),
-                                );
-                              }
-                            },
-                            child: Text(
+                            onPressed: () => Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(builder: (context) => HomePage()),
+                              (context) => false
+                            ),
+                            // onPressed: isLoading 
+                            // ? null
+                            // : () async {
+                            //   if (!validatedForm()) return;
+                              
+                            //   setState(() {
+                            //     isLoading = true;
+                            //     loginError = null;
+                            //   });
+
+                            //   final success = await AuthService.login(
+                            //     emailController.text.trim(), 
+                            //     passwordController.text
+                            //   );
+
+                            //   if(!mounted) return;
+
+                            //   setState(() => isLoading = false);
+
+                            //   if (success) {
+                            //     final prefs = await SharedPreferences.getInstance();
+
+                            //     if (rememberUsername) {
+                            //       await prefs.setString(kSavedEmailKey, emailController.text.trim());
+                            //     }
+
+                            //     Navigator.pushAndRemoveUntil(
+                            //       context,
+                            //       MaterialPageRoute(builder: (context) => HomePage()),
+                            //       (context) => false
+                            //     );
+                            //   } else {
+                            //     _showErrorAlert(AppLocalizations.of(context)!.invalidCredentialsMsg);
+                            //   }
+                            // },
+                            child: isLoading 
+                              ? CircularProgressIndicator(color: Colors.white)
+                              : Text(
                               AppLocalizations.of(context)!.btnEnter,
                               style: TextStyle(
                                   color: Colors.white,
@@ -121,21 +204,6 @@ class _loginPageState extends State<LoginPage> {
                               AppLocalizations.of(context)!.btnRegister,
                             ),
                           ),
-                          // const SizedBox(height: 15.0),
-                          // TextButton(
-                          //   child: Text(
-                          //     AppLocalizations.of(context)!.continueWithoutAccount,
-                          //     style: TextStyle(
-                          //         color: Colors.red.shade300,
-                          //         fontWeight: FontWeight.w600,
-                          //         fontSize: 16),
-                          //   ),
-                          //   onPressed: () => Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(builder: (context) => HomePage()),
-                          //   ),
-                          // )
-                          
                         ],
                       ),
                     ),
@@ -155,12 +223,6 @@ class _loginPageState extends State<LoginPage> {
       ),
     ));
   }
-
-  // void togglePasswordView() {
-  //   setState(() {
-  //     hidePassword = !hidePassword;
-  //   });
-  // }
 
   Widget _loginBackground(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -209,4 +271,22 @@ class _loginPageState extends State<LoginPage> {
       hidePassword = !hidePassword;
     });
   }
+
+  void _showErrorAlert(String message) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => AlertDialog(
+        title: Text(AppLocalizations.of(context)!.invalidCredentialsTitle),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(AppLocalizations.of(context)!.accept),
+          ),
+        ],
+      ),
+    );
+  }
+
 }

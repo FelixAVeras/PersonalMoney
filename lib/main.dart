@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:personalmoney/helpers/appColors.dart';
-import 'package:personalmoney/pages/auth/loginPage.dart';
-import 'package:personalmoney/pages/home_page.dart';
+import 'package:personalmoney/helpers/AuthWrapper.dart';
+import 'package:personalmoney/helpers/theme/appColorsTheme.dart';
+import 'package:personalmoney/helpers/theme/appTextStyle.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'l10n/app_localizations.dart';
 
@@ -62,7 +61,7 @@ class PersonalMoney extends StatelessWidget {
               theme: ThemeData(
                 useMaterial3: true,
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-                textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme),
+                textTheme: AppTextTheme.lightTextTheme,
                 appBarTheme: AppBarTheme(
                   elevation: 2,
                   scrolledUnderElevation: 4,
@@ -73,7 +72,7 @@ class PersonalMoney extends StatelessWidget {
                 ),
               ),
               darkTheme: ThemeData.dark().copyWith(
-                textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme),
+                textTheme: AppTextTheme.darkTextTheme,
                 appBarTheme: const AppBarTheme(
                   elevation: 2,
                   scrolledUnderElevation: 4,
@@ -97,7 +96,7 @@ class PersonalMoney extends StatelessWidget {
                 Locale('fr'),
                 //TODO: Agregar idiomas para los paises(Alemania, Italia)
               ],
-              home: LoginPage(),
+              home: AuthWrapper() //LoginPage(),
             );
           },
         );

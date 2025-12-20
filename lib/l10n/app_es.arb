@@ -68,5 +68,11 @@
     "remainingBalance": "Balance Restante",
     "noTransactions": "Aún no hay transacciones",
     "lastSpend": "Último gasto",
-    "lastIncome": "Último ingreso"
+    "lastIncome": "Último ingreso",
+    "accept": "Aceptar",
+    "rememberUserSwitch": "Recordar usuario",
+    "invalidCredentialsTitle": "Error de autenticación",
+    "invalidCredentialsMsg": "El correo y/o la contraseña son incorrectos, por favor verifica",
+    "noData": "Sin datos",
+    "confirmSignOut": "¿Estás seguro de que deseas cerrar sesión?"
 }

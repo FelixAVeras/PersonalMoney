@@ -89,13 +89,7 @@ class _TransactionPageState extends State<TransactionPage> {
             Center(
               child: Text(
                 CategoryLocalizationHelper.translateCategory(context, category),
-                style: TextStyle(
-                  fontSize: 20, 
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).brightness == Brightness.light
-                  ? Colors.black
-                  : Colors.white
-                ),
+                style: Theme.of(context).textTheme.headlineMedium,
               )
             ),
             
@@ -107,7 +101,11 @@ class _TransactionPageState extends State<TransactionPage> {
                       : Icons.arrow_downward,
                   color: transaction.transType == 'income' ? Colors.green : Colors.red,
                 ),
-                title: Text(transaction.name),
+                title: Text(
+                  transaction.name, 
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.bold)
+                  ),
                 subtitle: Text(formatHelper.formatDate(transaction.date.toString())),
                 trailing: Text(
                   formatHelper.formatAmount(transaction.amount),

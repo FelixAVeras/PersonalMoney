@@ -68,5 +68,11 @@
     "remainingBalance": "Remaining Balance",
     "noTransactions": "No transactions yet",
     "lastSpend": "Last Spend",
-    "lastIncome": "Last Income"
+    "lastIncome": "Last Income",
+    "accept": "Accept",
+    "rememberUserSwitch": "Remember User",
+    "invalidCredentialsTitle": "Authentication Error",
+    "invalidCredentialsMsg": "Email and/or password are incorrect, please check",
+    "noData": "No Data",
+    "confirmSignOut": "Are you sure you want to sign out?"
 }

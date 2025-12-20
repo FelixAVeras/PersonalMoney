@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:personalmoney/helpers/AuthWrapper.dart';
 import 'package:personalmoney/helpers/DbHelper.dart';
 import 'package:personalmoney/helpers/formatHelper.dart';
+import 'package:personalmoney/helpers/theme/appColorsTheme.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
+import 'package:personalmoney/pages/auth/loginPage.dart';
 import 'package:personalmoney/pages/settings/settingPage.dart';
+import 'package:personalmoney/services/AuthService.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -120,8 +124,37 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const SizedBox(height: 20.0),
             TextButton(
-              onPressed: () {},
-              style: TextButton.styleFrom(foregroundColor: Colors.red), 
+              onPressed: () async {
+                final confirm = await showDialog<bool>(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                    title: Text(AppLocalizations.of(context)!.signOut),
+                    content: Text(AppLocalizations.of(context)!.confirmSignOut),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, false),
+                        child: Text(AppLocalizations.of(context)!.cancel),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, true),
+                        style:  TextButton.styleFrom(
+                          foregroundColor: AppColors.danger
+                        ),
+                        child: Text(AppLocalizations.of(context)!.signOut),
+                      ),
+                    ],
+                  ),
+                );
+
+                if (confirm == true) {
+                  await AuthService.logout();
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (_) => AuthWrapper()),
+                    (route) => false,
+                  );
+                }
+              },
+              style: TextButton.styleFrom(foregroundColor: AppColors.danger), 
               child: Text(AppLocalizations.of(context)!.signOut)
             )
           ],

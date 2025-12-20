@@ -68,5 +68,11 @@
     "remainingBalance": "Saldo restante",
     "noTransactions": "Ainda não há transações",
     "lastSpend": "Última despesa",
-    "lastIncome": "Última receita"
+    "lastIncome": "Última receita",
+    "accept": "Aceitar",
+    "rememberUserSwitch": "Lembrar usuário",
+    "invalidCredentialsTitle": "Erro de autenticação",
+    "invalidCredentialsMsg": "O e-mail e/ou a senha estão incorretos, por favor verifique",
+    "noData": "Sem dados",
+    "confirmSignOut": "Tem certeza de que deseja sair?"
 }

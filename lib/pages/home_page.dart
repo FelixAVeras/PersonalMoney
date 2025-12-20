@@ -5,13 +5,9 @@ import 'package:personalmoney/helpers/overviewHelper.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/models/budgetModel.dart';
 import 'package:personalmoney/pages/auth/profilePage.dart';
-// import 'package:personalmoney/pages/auth/profilePage.dart';
 import 'package:personalmoney/pages/budgets/budgetPage.dart';
 import 'package:personalmoney/pages/overviewList.dart';
-import 'package:personalmoney/pages/settings/settingPage.dart';
 import 'package:personalmoney/pages/transactions/transactionPage.dart';
-import 'package:personalmoney/pages/trends/trendsPage.dart';
-// import 'package:personalmoney/pages/trends/trendsPage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -42,9 +38,7 @@ class _HomePageState extends State<HomePage> {
         OverviewList(),
         TransactionPage(),
         BudgetPage(),
-        TrendsPage(),
         ProfilePage()
-        // SettingsPage()
       ][currentPageIndex],
       bottomNavigationBar: NavigationBar(
         indicatorColor: Color(0xFFF78c2ad),
@@ -70,11 +64,6 @@ class _HomePageState extends State<HomePage> {
             selectedIcon: Icon(Icons.attach_money_rounded, color: Colors.white),
             icon: Icon(Icons.attach_money_rounded),
             label: AppLocalizations.of(context)!.budget,
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.bar_chart_rounded, color: Colors.white),
-            icon: Icon(Icons.bar_chart_rounded),
-            label: AppLocalizations.of(context)!.trends,
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.person_rounded, color: Colors.white),

@@ -219,4 +219,23 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get lastIncome => 'Última receita';
+
+  @override
+  String get accept => 'Aceitar';
+
+  @override
+  String get rememberUserSwitch => 'Lembrar usuário';
+
+  @override
+  String get invalidCredentialsTitle => 'Erro de autenticação';
+
+  @override
+  String get invalidCredentialsMsg =>
+      'O e-mail e/ou a senha estão incorretos, por favor verifique';
+
+  @override
+  String get noData => 'Sem dados';
+
+  @override
+  String get confirmSignOut => 'Tem certeza de que deseja sair?';
 }

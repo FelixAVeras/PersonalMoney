@@ -219,4 +219,23 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get lastIncome => 'Dernier revenu';
+
+  @override
+  String get accept => 'Accepter';
+
+  @override
+  String get rememberUserSwitch => 'Se souvenir de l’utilisateur';
+
+  @override
+  String get invalidCredentialsTitle => 'Erreur d’authentification';
+
+  @override
+  String get invalidCredentialsMsg =>
+      'L’email et/ou le mot de passe sont incorrects, veuillez vérifier';
+
+  @override
+  String get noData => 'Aucune donnée';
+
+  @override
+  String get confirmSignOut => 'Êtes-vous sûr de vouloir vous déconnecter ?';
 }

@@ -3,6 +3,7 @@ import 'package:personalmoney/helpers/DbHelper.dart';
 import 'package:personalmoney/helpers/category_localization_helper.dart';
 import 'package:personalmoney/helpers/formatHelper.dart';
 import 'package:personalmoney/helpers/overviewHelper.dart';
+import 'package:personalmoney/helpers/theme/appColorsTheme.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
 
 class OverviewList extends StatefulWidget {
@@ -34,7 +35,7 @@ class _OverviewListState extends State<OverviewList> {
           }
 
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No hay datos'));
+            return Center(child: Text(AppLocalizations.of(context)!.noData));
           }
 
           final overviewData = snapshot.data!;
@@ -199,11 +200,11 @@ class _OverviewListState extends State<OverviewList> {
 
     Color progressColor;
     if (progress >= 0.9) {
-      progressColor = Color(0xFFFF7851);
+      progressColor = AppColors.danger;
     } else if (progress >= 0.7) {
-      progressColor = Color(0xFFFFCE67);
+      progressColor = AppColors.warning;
     } else {
-      progressColor = Colors.green;
+      progressColor = AppColors.success;
     }
 
     return Card.outlined(
@@ -223,8 +224,8 @@ class _OverviewListState extends State<OverviewList> {
                         fontSize: 16, 
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).brightness == Brightness.light
-                        ? Colors.black
-                        : Colors.white,
+                        ? AppColors.textBlack
+                        : AppColors.textWhite,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -243,8 +244,8 @@ class _OverviewListState extends State<OverviewList> {
                         fontSize: 16, 
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).brightness == Brightness.light
-                        ? Colors.black
-                        : Colors.white,
+                        ? AppColors.textBlack
+                        : AppColors.textWhite,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -275,8 +276,8 @@ class _OverviewListState extends State<OverviewList> {
               style: TextStyle(
                 fontWeight: FontWeight.w600, 
                 color: Theme.of(context).brightness == Brightness.light
-                ? Colors.black
-                : Colors.white,
+                ? AppColors.textBlack
+                : AppColors.textWhite,
               ),
             ),
           ],
@@ -306,8 +307,8 @@ class _OverviewListState extends State<OverviewList> {
                     'No hay transacciones aún',
                     style: TextStyle(
                       color: Theme.of(context).brightness == Brightness.light
-                        ? Colors.black
-                        : Colors.white,
+                        ? AppColors.textBlack
+                        : AppColors.textWhite,
                     ),
                   ),
                 ],
@@ -336,7 +337,7 @@ class _OverviewListState extends State<OverviewList> {
                       isIncome ? Colors.green.withValues(alpha: 0.15) : Colors.red.withValues(alpha: 0.15),
                   child: Icon(
                     isIncome ? Icons.arrow_upward : Icons.arrow_downward,
-                    color: isIncome ? Colors.green : Colors.red,
+                    color: isIncome ? AppColors.success : AppColors.danger,
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -350,8 +351,8 @@ class _OverviewListState extends State<OverviewList> {
                           : AppLocalizations.of(context)!.lastIncome,
                         style: TextStyle(
                           color: Theme.of(context).brightness == Brightness.light
-                          ? Colors.black
-                          : Colors.white,
+                          ? AppColors.textBlack
+                          : AppColors.textWhite,
                           fontSize: 12
                         )
                           
@@ -361,8 +362,8 @@ class _OverviewListState extends State<OverviewList> {
                         transacName,
                         style: TextStyle(
                           color: Theme.of(context).brightness == Brightness.light
-                          ? Colors.black
-                          : Colors.white,
+                          ? AppColors.textBlack
+                          : AppColors.textWhite,
                           fontWeight: FontWeight.bold
                         )
                       ),
@@ -376,8 +377,8 @@ class _OverviewListState extends State<OverviewList> {
                         date,
                         style: TextStyle(
                           color: Theme.of(context).brightness == Brightness.light
-                          ? Colors.black
-                          : Colors.white,
+                          ? AppColors.textBlack
+                          : AppColors.textWhite,
                           fontSize: 12
                         )
                       ),
@@ -388,7 +389,7 @@ class _OverviewListState extends State<OverviewList> {
                   formatHelper.formatAmount(amount),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: isIncome ? Colors.green : Color(0xFFFF7851),
+                    color: isIncome ? AppColors.success : AppColors.danger,
                     fontSize: 16,
                   ),
                 ),

@@ -521,6 +521,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Last Income'**
   String get lastIncome;
+
+  /// No description provided for @accept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get accept;
+
+  /// No description provided for @rememberUserSwitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Remember User'**
+  String get rememberUserSwitch;
+
+  /// No description provided for @invalidCredentialsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Authentication Error'**
+  String get invalidCredentialsTitle;
+
+  /// No description provided for @invalidCredentialsMsg.
+  ///
+  /// In en, this message translates to:
+  /// **'Email and/or password are incorrect, please check'**
+  String get invalidCredentialsMsg;
+
+  /// No description provided for @noData.
+  ///
+  /// In en, this message translates to:
+  /// **'No Data'**
+  String get noData;
+
+  /// No description provided for @confirmSignOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to sign out?'**
+  String get confirmSignOut;
 }
 
 class _AppLocalizationsDelegate

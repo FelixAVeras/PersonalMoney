@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:personalmoney/helpers/theme/appColorsTheme.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -275,12 +276,12 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     SwitchListTile(
                       value: userProSwitch, 
-                      secondary: Icon(Icons.upgrade_rounded),
+                      secondary: Image.asset('assets/pigbank.png', width: 32.0),
                       onChanged: (bool value) {
                         setState(() => userProSwitch = value);
                       },
                       activeColor: Color(0xFFF3969A),
-                      title: Text('PersonalMoney PRO')
+                      title: Text('PersonalMoney PRO', style: TextStyle(color: AppColors.info, fontWeight: FontWeight.bold))
                     ),
                     // SizedBox(height: 10),
                     const Divider(),
