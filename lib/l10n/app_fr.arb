@@ -74,5 +74,7 @@
     "invalidCredentialsTitle": "Erreur d’authentification",
     "invalidCredentialsMsg": "L’email et/ou le mot de passe sont incorrects, veuillez vérifier",
     "noData": "Aucune donnée",
-    "confirmSignOut": "Êtes-vous sûr de vouloir vous déconnecter ?"
+    "confirmSignOut": "Êtes-vous sûr de vouloir vous déconnecter ?",
+    "registerSuccessMsg": "L'utilisateur s'est enregistré avec succès",
+    "error": "Erreur"
 }

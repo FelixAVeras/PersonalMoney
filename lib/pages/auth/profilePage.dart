@@ -4,9 +4,9 @@ import 'package:personalmoney/helpers/DbHelper.dart';
 import 'package:personalmoney/helpers/formatHelper.dart';
 import 'package:personalmoney/helpers/theme/appColorsTheme.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
-import 'package:personalmoney/pages/auth/loginPage.dart';
+import 'package:personalmoney/models/UserModel.dart';
 import 'package:personalmoney/pages/settings/settingPage.dart';
-import 'package:personalmoney/services/AuthService.dart';
+import 'package:personalmoney/services/authService.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -17,9 +17,17 @@ class _ProfilePageState extends State<ProfilePage> {
   SQLHelper sqlHelper = SQLHelper();
   FormatHelper formatHelper = FormatHelper();
 
+  UserModel? user;
+
   double? _initialAmount;
 
   bool _loading = true;
+
+  Future<void> loadUser() async {
+    final u = await AuthService.getUser();
+
+    setState(() => user = u);
+  }
 
   Future<void> loadInitialAmount() async {
     final now = DateTime.now();
@@ -35,6 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
 
+    loadUser();
     loadInitialAmount();
   }
 
@@ -65,16 +74,8 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Column(
                 children: [
                   ListTile(
-                    leading: CircleAvatar(
-                      child: Text('UP'),
-                      backgroundColor: Colors.orange.shade50,
-                      foregroundColor: Colors.red.shade200,
-                    ),
-                    title: Row(
-                      children: [
-                        Text('Nombre Usuario', style: const TextStyle(fontWeight: FontWeight.bold)),
-                      ],
-                    ),
+                    title: Text(user!.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                    subtitle: Text(user!.plan.toUpperCase()),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

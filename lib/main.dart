@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:personalmoney/helpers/AuthWrapper.dart';
 import 'package:personalmoney/helpers/theme/appColorsTheme.dart';
@@ -8,6 +9,8 @@ import 'l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await dotenv.load(fileName: ".env");
 
   final prefs = await SharedPreferences.getInstance();
   final savedTheme = prefs.getString('themeMode') ?? 'system';

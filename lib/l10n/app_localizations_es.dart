@@ -237,4 +237,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get confirmSignOut => '¿Estás seguro de que deseas cerrar sesión?';
+
+  @override
+  String get registerSuccessMsg => 'Registro de usuario exitoso';
+
+  @override
+  String get error => 'Error';
 }

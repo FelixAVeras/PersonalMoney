@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personalmoney/pages/auth/loginPage.dart';
 import 'package:personalmoney/pages/home_page.dart';
-import 'package:personalmoney/services/AuthService.dart';
+import 'package:personalmoney/services/authService.dart';
 
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});

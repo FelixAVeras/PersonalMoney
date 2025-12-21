@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/pages/auth/registerPage.dart';
 import 'package:personalmoney/pages/home_page.dart';
-import 'package:personalmoney/services/AuthService.dart';
+import 'package:personalmoney/services/authService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -142,46 +142,7 @@ class _loginPageState extends State<LoginPage> {
                               elevation: 2,
                               shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(10))
                             ),
-                            onPressed: () => Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(builder: (context) => HomePage()),
-                              (context) => false
-                            ),
-                            // onPressed: isLoading 
-                            // ? null
-                            // : () async {
-                            //   if (!validatedForm()) return;
-                              
-                            //   setState(() {
-                            //     isLoading = true;
-                            //     loginError = null;
-                            //   });
-
-                            //   final success = await AuthService.login(
-                            //     emailController.text.trim(), 
-                            //     passwordController.text
-                            //   );
-
-                            //   if(!mounted) return;
-
-                            //   setState(() => isLoading = false);
-
-                            //   if (success) {
-                            //     final prefs = await SharedPreferences.getInstance();
-
-                            //     if (rememberUsername) {
-                            //       await prefs.setString(kSavedEmailKey, emailController.text.trim());
-                            //     }
-
-                            //     Navigator.pushAndRemoveUntil(
-                            //       context,
-                            //       MaterialPageRoute(builder: (context) => HomePage()),
-                            //       (context) => false
-                            //     );
-                            //   } else {
-                            //     _showErrorAlert(AppLocalizations.of(context)!.invalidCredentialsMsg);
-                            //   }
-                            // },
+                            onPressed: isLoading ? null : _handleLogin,
                             child: isLoading 
                               ? CircularProgressIndicator(color: Colors.white)
                               : Text(
@@ -210,7 +171,7 @@ class _loginPageState extends State<LoginPage> {
                     const SizedBox(height: 29.0),
                     Center(
                       child: Text(
-                        'Personal Money © 2021', 
+                        'Personal Money © 2021 - 2025', 
                         style: TextStyle(fontSize: 16, color: Colors.grey.shade600)
                       )
                     )
@@ -287,6 +248,41 @@ class _loginPageState extends State<LoginPage> {
         ],
       ),
     );
+  }
+
+  Future<void> _handleLogin() async {
+    if (!validatedForm()) return;
+
+    setState(() {
+      isLoading = true;
+      loginError = null;
+    });
+
+    try {
+      await AuthService.login(
+        email: emailController.text.trim(),
+        password: passwordController.text,
+      );
+
+      if (rememberUsername) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString(kSavedEmailKey, emailController.text.trim());
+      }
+
+      if (!mounted) return;
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (_) => HomePage()),
+        (_) => false,
+      );
+    } catch (e) {
+      _showErrorAlert(e.toString().replaceAll('Exception: ', ''));
+    } finally {
+      if (mounted) {
+        setState(() => isLoading = false);
+      }
+    }
   }
 
 }

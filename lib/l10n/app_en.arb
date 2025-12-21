@@ -74,5 +74,7 @@
     "invalidCredentialsTitle": "Authentication Error",
     "invalidCredentialsMsg": "Email and/or password are incorrect, please check",
     "noData": "No Data",
-    "confirmSignOut": "Are you sure you want to sign out?"
+    "confirmSignOut": "Are you sure you want to sign out?",
+    "registerSuccessMsg": "User register successfully",
+    "error": "Error"
 }

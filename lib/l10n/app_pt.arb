@@ -74,5 +74,7 @@
     "invalidCredentialsTitle": "Erro de autenticação",
     "invalidCredentialsMsg": "O e-mail e/ou a senha estão incorretos, por favor verifique",
     "noData": "Sem dados",
-    "confirmSignOut": "Tem certeza de que deseja sair?"
+    "confirmSignOut": "Tem certeza de que deseja sair?",
+    "registerSuccessMsg": "Cadastro de usuário com sucesso",
+    "error": "Erro"
 }

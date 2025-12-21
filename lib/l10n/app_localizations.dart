@@ -557,6 +557,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to sign out?'**
   String get confirmSignOut;
+
+  /// No description provided for @registerSuccessMsg.
+  ///
+  /// In en, this message translates to:
+  /// **'User register successfully'**
+  String get registerSuccessMsg;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
 }
 
 class _AppLocalizationsDelegate

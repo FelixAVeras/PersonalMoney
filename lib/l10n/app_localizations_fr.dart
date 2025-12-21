@@ -238,4 +238,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get confirmSignOut => 'Êtes-vous sûr de vouloir vous déconnecter ?';
+
+  @override
+  String get registerSuccessMsg =>
+      'L\'utilisateur s\'est enregistré avec succès';
+
+  @override
+  String get error => 'Erreur';
 }
