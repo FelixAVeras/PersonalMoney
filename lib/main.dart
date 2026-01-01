@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:personalmoney/helpers/AuthWrapper.dart';
 import 'package:personalmoney/helpers/theme/appColorsTheme.dart';
 import 'package:personalmoney/helpers/theme/appTextStyle.dart';
+import 'package:personalmoney/pages/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'l10n/app_localizations.dart';
 
@@ -99,7 +100,8 @@ class PersonalMoney extends StatelessWidget {
                 Locale('fr'),
                 //TODO: Agregar idiomas para los paises(Alemania, Italia)
               ],
-              home: AuthWrapper() //LoginPage(),
+              //home: AuthWrapper()
+              home: HomePage()
             );
           },
         );

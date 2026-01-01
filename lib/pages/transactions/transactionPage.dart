@@ -106,7 +106,7 @@ class _TransactionPageState extends State<TransactionPage> {
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontWeight: FontWeight.bold)
                   ),
-                subtitle: Text(formatHelper.formatDate(transaction.date.toString())),
+                subtitle: Text(formatHelper.formatDate(context, transaction.date.toString())),
                 trailing: Text(
                   formatHelper.formatAmount(transaction.amount),
                   style: TextStyle(

@@ -165,6 +165,11 @@ class _loginPageState extends State<LoginPage> {
                               AppLocalizations.of(context)!.btnRegister,
                             ),
                           ),
+                          const SizedBox(height: 10.0),
+                          TextButton(
+                            onPressed: () {},
+                            child: Text('Olvide mi contraseña'),
+                          ),
                         ],
                       ),
                     ),

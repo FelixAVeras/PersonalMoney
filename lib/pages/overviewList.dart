@@ -323,7 +323,7 @@ class _OverviewListState extends State<OverviewList> {
         final amount = tx['amount'];
         // final category = tx['category'];
         final description = tx['description'];
-        final date = formatHelper.formatDate(tx['date']);
+        final date = formatHelper.formatDate(context, tx['date']);
 
         print(tx);
 

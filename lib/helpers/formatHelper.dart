@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class FormatHelper {
+  static String getLocale(BuildContext context) {
+    return Localizations.localeOf(context).languageCode;
+  }
+
   String formatAmount(double amount) {
     final formatter = NumberFormat.currency(
       locale: 'en_US', 
@@ -12,10 +16,16 @@ class FormatHelper {
     return formatter.format(amount);
   }
 
-  String formatDate(String date) {
+  String formatDate(BuildContext context, String date) {
     final DateTime parsedDate = DateTime.parse(date);
-    // final DateFormat formatter = DateFormat('dd-MM-yyyy');
-    final DateFormat formatter = DateFormat('MMMM d, y');
+    final DateFormat formatter = DateFormat('MMMM d, y', getLocale(context));
+    
+    return formatter.format(parsedDate);
+  }
+  
+  String formatDateWithTime(BuildContext context, String date) {
+    final DateTime parsedDate = DateTime.parse(date);
+    final DateFormat formatter = DateFormat('MMMM d, y - hh:mm:ss a', getLocale(context));
     
     return formatter.format(parsedDate);
   }

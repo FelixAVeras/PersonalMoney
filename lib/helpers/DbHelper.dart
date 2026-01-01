@@ -1,4 +1,6 @@
 import 'package:personalmoney/models/CategoryModel.dart';
+import 'package:personalmoney/models/DebtsModel.dart';
+import 'package:personalmoney/models/DebtsPayment.dart';
 import 'package:personalmoney/models/MonthlyBalanceModel.dart';
 import 'package:personalmoney/models/TransactionModel.dart';
 import 'package:personalmoney/models/budgetModel.dart';
@@ -65,6 +67,26 @@ class SQLHelper {
         month INTEGER NOT NULL,
         year INTEGER NOT NULL
       );
+    ''');
+
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS debts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        description TEXT NOT NULL,
+        total_amount REAL NOT NULL,
+        created_at TEXT NOT NULL, -- Fecha de creación del registro
+        is_settled INTEGER DEFAULT 0 -- 0: Pendiente, 1: Pagada totalmente
+      );
+    ''');
+
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS debt_payments (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        debt_id INTEGER NOT NULL,
+        amount REAL NOT NULL,
+        payment_date TEXT NOT NULL,
+        FOREIGN KEY (debt_id) REFERENCES debts (id) ON DELETE CASCADE
+      )
     ''');
 
     // seed categorías básicas (opcional)
@@ -425,18 +447,6 @@ class SQLHelper {
     ''', [amount, month, year]);
   }
 
-  // Future<BudgetModel?> getBudgetByCategoryMonth(int categoryId, int month, int year) async {
-  //   final dbClient = await db();
-  //   final result = await dbClient.query(
-  //     'budgets',
-  //     where: 'category_id = ? AND month = ? AND year = ?',
-  //     whereArgs: [categoryId, month, year],
-  //   );
-
-  //   if (result.isEmpty) return null;
-  //   return BudgetModel.fromMap(result.first);
-  // }
-
   Future<void> updateBudget(BudgetModel model) async {
     final dbClient = await db();
 
@@ -456,6 +466,88 @@ class SQLHelper {
       orderBy: 'date DESC',
       limit: 1,
     );
+
+    return result.isNotEmpty ? result.first : null;
+  }
+
+  Future<List<Map<String, dynamic>>> getAllDebtsWithBalance() async {
+    final dbClient = await db(); // Tu instancia de sqflite
+    return await dbClient.rawQuery('''
+      SELECT 
+      d.id, 
+      d.description, 
+      d.total_amount, 
+      d.created_at,
+      -- Aquí ocurre la magia: Total menos la suma de abonos
+      (d.total_amount - IFNULL(SUM(p.amount), 0)) AS remaining_amount
+    FROM debts d
+    LEFT JOIN debt_payments p ON d.id = p.debt_id
+    GROUP BY d.id
+    ORDER BY d.created_at DESC
+    ''');
+  }
+
+  Future<int> insertDebt(DebtModel debt) async {
+    final dbClient = await db();
+    return await dbClient.insert('debts', debt.toMap());
+  }
+
+    // Obtener historial de pagos de una deuda específica
+  Future<List<Map<String, dynamic>>> getPaymentsForDebt(int debtId) async {
+    final dbClient = await db();
+    return await dbClient.query('debt_payments', 
+      where: 'debt_id = ?', 
+      whereArgs: [debtId], 
+      orderBy: 'payment_date DESC');
+  }
+
+  // Registrar un nuevo abono
+  Future<int> insertPayment(int debtId, double amount) async {
+    final dbClient = await db(); // o getDatabase()
+    
+    return await dbClient.insert(
+      'debt_payments',
+      {
+        'debt_id': debtId,
+        'amount': amount,
+        'payment_date': DateTime.now().toIso8601String(),
+      },
+    );
+  }
+
+  // Actualizar deuda (Editar)
+  Future<int> updateDebt(DebtModel debt) async {
+    final dbClient = await db();
+    return await dbClient.update('debts', debt.toMap(), 
+      where: 'id = ?', 
+      whereArgs: [debt.id]);
+  }
+
+  // Eliminar deuda (Borrará los pagos automáticamente si usaste ON DELETE CASCADE)
+  Future<int> deleteDebt(int id) async {
+    final dbClient = await db();
+    return await dbClient.delete('debts', where: 'id = ?', whereArgs: [id]);
+  }
+
+  // Marcar como saldada (Saldar)
+  Future<void> settleDebt(int debtId) async {
+    final dbClient = await db();
+    await dbClient.update('debts', {'is_settled': 1}, 
+      where: 'id = ?', 
+      whereArgs: [debtId]);
+  }
+
+  Future<Map<String, dynamic>?> getDebtWithRemainingAmount(int debtId) async {
+    final dbClient = await db();
+    final List<Map<String, dynamic>> result = await dbClient.rawQuery('''
+      SELECT 
+        d.*, 
+        (d.total_amount - IFNULL(SUM(p.amount), 0)) AS remaining_amount
+      FROM debts d
+      LEFT JOIN debt_payments p ON d.id = p.debt_id
+      WHERE d.id = ?
+      GROUP BY d.id
+    ''', [debtId]);
 
     return result.isNotEmpty ? result.first : null;
   }

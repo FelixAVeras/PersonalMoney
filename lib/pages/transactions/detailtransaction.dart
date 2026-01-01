@@ -156,7 +156,7 @@ class _DetailTransactionPageState extends State<DetailTransactionPage> {
                   const SizedBox(height: 10),
 
                   Text(
-                    formatHelper.formatDate(widget.transaction.date.toString()),
+                    formatHelper.formatDate(context, widget.transaction.date.toString()),
                     style: TextStyle(fontSize: 16,
                       color: Theme.of(context).brightness == Brightness.light
                       ? Colors.black

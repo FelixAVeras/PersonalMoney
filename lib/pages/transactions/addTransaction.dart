@@ -119,8 +119,8 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
                 controller: _descriptionController,
                 textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.title),
-                  border: const OutlineInputBorder(),
+                  icon: const Icon(Icons.title),
+                  
                   labelText:
                       AppLocalizations.of(context)!.description,
                 ),
@@ -136,7 +136,7 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
                 decoration: InputDecoration(
                   labelText:
                       AppLocalizations.of(context)!.category,
-                  border: const OutlineInputBorder(),
+                  
                 ),
                 value: _selectedCategoryId,
                 items: _categories.map((cat) {
@@ -180,8 +180,8 @@ class _AddtransactionPageState extends State<AddtransactionPage> {
                 controller: _amountController,
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.money),
-                  border: const OutlineInputBorder(),
+                  icon: const Icon(Icons.money),
+                  
                   labelText: AppLocalizations.of(context)!.amount,
                 ),
                 validator: (v) => (v == null || v.isEmpty) ? AppLocalizations.of(context)!.emptyAmountMsg : null,

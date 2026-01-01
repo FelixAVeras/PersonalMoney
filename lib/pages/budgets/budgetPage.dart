@@ -95,7 +95,7 @@ class _BudgetPageState extends State<BudgetPage> {
         actions: [
           IconButton(
             onPressed: () async {
-              await Navigator.push(context, MaterialPageRoute(builder: (context) => const AddBudgetPage()));
+              await Navigator.push(context, MaterialPageRoute(builder: (context) => AddBudgetPage()));
               
               await load();
             },

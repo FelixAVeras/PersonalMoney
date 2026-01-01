@@ -6,6 +6,7 @@ import 'package:personalmoney/l10n/app_localizations.dart';
 import 'package:personalmoney/models/budgetModel.dart';
 import 'package:personalmoney/pages/auth/profilePage.dart';
 import 'package:personalmoney/pages/budgets/budgetPage.dart';
+import 'package:personalmoney/pages/debts/debtsPage.dart';
 import 'package:personalmoney/pages/overviewList.dart';
 import 'package:personalmoney/pages/transactions/transactionPage.dart';
 
@@ -38,6 +39,7 @@ class _HomePageState extends State<HomePage> {
         OverviewList(),
         TransactionPage(),
         BudgetPage(),
+        DebtsPage(),
         ProfilePage()
       ][currentPageIndex],
       bottomNavigationBar: NavigationBar(
@@ -64,6 +66,12 @@ class _HomePageState extends State<HomePage> {
             selectedIcon: Icon(Icons.attach_money_rounded, color: Colors.white),
             icon: Icon(Icons.attach_money_rounded),
             label: AppLocalizations.of(context)!.budget,
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.receipt_long_rounded, color: Colors.white),
+            icon: Icon(Icons.receipt_long_outlined),
+            // label: AppLocalizations.of(context)!.budget,
+            label: 'Deudas',
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.person_rounded, color: Colors.white),
